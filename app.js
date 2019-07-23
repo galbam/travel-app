@@ -21,7 +21,7 @@ require('./configs/passport');
 // IF YOU STILL DIDN'T, GO TO 'configs/passport.js' AND UN-COMMENT OUT THE WHOLE FILE
 
 mongoose
-  .connect("mongodb://localhost/travel-app", {
+  .connect("mongodb://localhost/travel-board", {
     useNewUrlParser: true
   })
   .then(x => {
@@ -81,7 +81,7 @@ app.use(passport.session());
 
 
 // default value for title local
-app.locals.title = "Travel App Server";
+app.locals.title = "Travel Board Server";
 
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 
@@ -93,6 +93,21 @@ app.use("/", index);
 
 // const auth = require("./routes/auth");
 // app.use("/api/auth", auth);
+
+
+const trip = require("./routes/trips");
+app.use("/api/trips", trip);
+
+
+const activity = require("./routes/activities");
+app.use("/api/activities", activity);
+
+
+//DOCUMENTATION
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 
