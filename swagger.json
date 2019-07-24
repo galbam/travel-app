@@ -10,12 +10,6 @@
     }
   },
   "host": "localhost:5555",
-  "tags": [
-    {
-      "name": "Users",
-      "description": "API for users in the system"
-    }
-  ],
   "schemes": [
     "http"
   ],
@@ -26,19 +20,21 @@
     "application/json"
   ],
   "paths": {
-    "/users": {
+    "/api/trips": {
       "post": {
         "tags": [
-          "Users"
+          "Trip"
         ],
-        "description": "Create new user in system",
+        "description": "Create new Trip",
         "parameters": [
           {
-            "name": "user",
-            "in": "body",
-            "description": "User that we want to create",
+            "budget": "2000",
+            "description": "Trip to Paris",
+            "startDate": "6/10/2019",
+            "endDate": "6/30/2019",
+            "total_expenses": 1500,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Trip"
             }
           }
         ],
@@ -47,86 +43,86 @@
         ],
         "responses": {
           "200": {
-            "description": "New user is created",
+            "description": "Trip was created",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Trip"
             }
           }
         }
       },
       "get": {
         "tags": [
-          "Users"
+          "Trip"
         ],
-        "summary": "Get all users in system",
+        "summary": "Get all Trips",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/Trip"
             }
           }
         }
       }
     },
-    "/users/{userId}": {
+    "/api/trips/{tripId}": {
       "parameters": [
         {
-          "name": "userId",
+          "name": "tripId",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "ID of trip that we want to find",
           "type": "string"
         }
       ],
       "get": {
         "tags": [
-          "Users"
+          "Trip"
         ],
-        "summary": "Get user with given ID",
+        "summary": "Get Trip with given ID",
         "responses": {
           "200": {
-            "description": "User is found",
+            "description": "Trip is found",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Trip"
             }
           }
         }
       },
       "delete": {
-        "summary": "Delete user with given ID",
+        "summary": "Delete Trip with given ID",
         "tags": [
-          "Users"
+          "Trip"
         ],
         "responses": {
           "200": {
-            "description": "User is deleted",
+            "description": "Trip is deleted",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Trip"
             }
           }
         }
       },
       "put": {
-        "summary": "Update user with give ID",
+        "summary": "Update Trip with give ID",
         "tags": [
-          "Users"
+          "Trip"
         ],
         "parameters": [
           {
-            "name": "user",
+            "name": "trip",
             "in": "body",
-            "description": "User with new values of properties",
+            "description": "Trip with new values of properties",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Trip"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "User is updated",
+            "description": "Trip is updated",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Trip"
             }
           }
         }
@@ -134,31 +130,27 @@
     }
   },
   "definitions": {
-    "User": {
+    "Trip": {
       "required": [
-        "email",
-        "_id"
+        "title"
       ],
       "properties": {
-        "_id": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "email": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "lastName": {
+        "budget": {
           "type": "string"
         },
-        "firstName": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
           "type": "string"
         }
       }
-    },
-    "Users": {
-      "type": "array",
-      "$ref": "#/definitions/User"
     }
   }
 }
