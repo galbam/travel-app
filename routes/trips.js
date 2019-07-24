@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
     });
 });
 
-//Get one trip
+//Get one Trip
 router.get("/:id", (req, res) => {
   const id = req.params.id;
 
@@ -50,6 +50,7 @@ router.post("/", (req, res) => {
     });
 });
 
+//Update Trip
 router.put("/:id", (req, res) => {
   const id = req.params.id;
   const { budget, title, description, startDate, endDate } = req.body;
@@ -69,6 +70,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
+//Delete Trip
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
 

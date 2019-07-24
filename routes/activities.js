@@ -3,7 +3,7 @@ const router = express.Router();
 const Trip = require("../models/Trip");
 const Activity = require("../models/Activity");
 
-//
+//Get Activities
 router.get("/", (req, res) => {
 
   Activity.find()
@@ -15,6 +15,20 @@ router.get("/", (req, res) => {
     });
 });
 
+//Get one Activity
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+
+  Activity.findById(id)
+    .then(trip => {
+      res.json(trip);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+});
+
+//Create an Activity; we need the id of a Trip
 router.post("/", (req, res) => {
   const { date, title, description, tripId } = req.body;
 
@@ -36,6 +50,48 @@ router.post("/", (req, res) => {
     })
     .catch(error => {
       res.json(error);
+    });
+});
+
+//Update Activity
+router.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const { date, title, description, card_type, details, expenses } = req.body;
+  const { imageUrl, links } = details;
+
+  Activity.findByIdAndUpdate(id, {
+    date,
+    title,
+    description,
+    card_type,
+    details: {
+      imageUrl,
+      links
+    },
+    expenses
+  })
+    .then(() => {
+      res.json({ message: `Activity with id ${id} was successfully updated` });
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+//Delete Activity
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+
+  Activity.findByIdAndDelete(id)
+    .then(activityObj => {
+      return Trip.findByIdAndUpdate(activityObj.trip, {
+        $pull: { activity: id }
+      }).then(() => {
+        res.json({ message: `Activity with id ${id} was successfully deleted` });
+      });
+    })
+    .catch(err => {
+      res.json(err);
     });
 });
 

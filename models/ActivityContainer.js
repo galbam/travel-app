@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const activitySchemaContainerSchema = new Schema({
+const activityContainerSchema = new Schema({
      trip: { type: Schema.Types.ObjectId, ref: "Trip" },
-     activity: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
+     draftActivity: [{ type: Schema.Types.ObjectId, ref: "DraftActivity" }],
      owner: { type: Schema.Types.ObjectId, ref: "User" }
 });
 
-const ActivityContainer = mongoose.model("ActivityContainer", activitySchemaContainerSchema);
+const ActivityContainer = mongoose.model("ActivityContainer", activityContainerSchema);
 
 module.exports = ActivityContainer;
