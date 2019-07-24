@@ -5,6 +5,7 @@ import { DateRangePicker } from "react-dates";
 import moment from "moment";
 
 import Box from "./Box";
+import EmptyBox from "./EmptyBox";
 
 class Calendar extends Component {
   state = {
@@ -17,22 +18,19 @@ class Calendar extends Component {
 
   render() {
     let days;
-    let dayOfWeek;
-    let weekArray = [];
+    let emptyDaysBefore;
+    let emptyDaysAfter;
+
     if (this.state.startDate && this.state.endDate) {
       days =
         moment
           .duration(this.state.endDate.diff(this.state.startDate))
           .asDays() + 1;
 
-      
-      dayOfWeek = (this.state.startDate.toString().split(" ").slice(0, 3));
-
-      
-      for (let i = 0; i < days; i++) {
-      weekArray.push(dayOfWeek) 
-      
-      }
+      emptyDaysBefore = this.state.startDate.format("d").toString() - 1;
+      emptyDaysAfter = 7 - this.state.endDate.format("d").toString();
+      if (emptyDaysAfter === 7)  emptyDaysAfter = 0;
+      console.log(emptyDaysAfter);
     }
 
     return (
@@ -51,15 +49,30 @@ class Calendar extends Component {
           onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
           firstDayOfWeek={1}
         />
-        
+
         <div className="box-container">
-        {this.state.startDate && this.state.endDate &&
-          [...Array(days)].map((e, i) => {
-            return <Box key={i} dayOfWeek={this.state.startDate.clone().add(i,'days')} >
-                {
-                  console.log(this.state.startDate.clone().add(i,'days'))}
-               </Box>
-          })}
+          {this.state.startDate &&
+            this.state.endDate &&
+            [...Array(emptyDaysBefore)].map((e, i) => {
+              return <EmptyBox key={i} />;
+            })}
+
+          {this.state.startDate &&
+            this.state.endDate &&
+            [...Array(days)].map((e, i) => {
+              return (
+                <Box
+                  key={i}
+                  dayOfWeek={this.state.startDate.clone().add(i, "days")}
+                />
+              );
+            })}
+
+          {this.state.startDate &&
+            this.state.endDate &&
+            [...Array(emptyDaysAfter)].map((e, i) => {
+              return <EmptyBox key={i} />;
+            })}
         </div>
       </div>
     );
@@ -67,3 +80,5 @@ class Calendar extends Component {
 }
 
 export default Calendar;
+
+// console.log(this.state.startDate.clone().add(i,'days'))}

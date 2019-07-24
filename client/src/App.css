@@ -3,10 +3,20 @@
 }
 
 .box {
-  height: 400px;
+  height: 77vh;
   width: 9vw;
   background-color: royalblue;
-  margin: 0.5vw;
+ margin: 0.2vw;
+  color: white;
+  padding: 5px;
+ /*  flex-basis: 13.5%; */
+}
+
+.weekend-box {
+  height: 77vh;
+  width: 9vw;
+  background-color: rosybrown;
+ margin: 0.2vw;
   color: white;
   padding: 5px;
  /*  flex-basis: 13.5%; */
@@ -16,4 +26,11 @@
   display: flex;
   flex-wrap: wrap;
   width: 70vw;
+}
+
+.empty-box {
+  height: 77vh;
+  width: 9vw;
+  margin: 0.2vw;
+  background-color: lightgray;
 }
