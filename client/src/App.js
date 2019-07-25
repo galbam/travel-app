@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Day from "./containers/Day"
+import Calendar from "./containers/Calendar"
 
 class App extends Component {
 
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Hello world!</h1>
-        <Day />
+        <Calendar />
       </div>
     );
   }
