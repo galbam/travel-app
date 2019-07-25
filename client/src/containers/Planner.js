@@ -4,10 +4,10 @@ import "react-dates/lib/css/_datepicker.css";
 import { DateRangePicker } from "react-dates";
 import moment from "moment";
 
-import Box from "./Box";
-import EmptyBox from "./EmptyBox";
+import Box from "../components/Box";
 
-class Calendar extends Component {
+
+class Planner extends Component {
   state = {
     startDate: null,
     endDate: null,
@@ -18,19 +18,12 @@ class Calendar extends Component {
 
   render() {
     let days;
-    let emptyDaysBefore;
-    let emptyDaysAfter;
 
     if (this.state.startDate && this.state.endDate) {
       days =
         moment
           .duration(this.state.endDate.diff(this.state.startDate))
           .asDays() + 1;
-
-      emptyDaysBefore = this.state.startDate.format("d").toString() - 1;
-      emptyDaysAfter = 7 - this.state.endDate.format("d").toString();
-      if (emptyDaysAfter === 7)  emptyDaysAfter = 0;
-      console.log(emptyDaysAfter);
     }
 
     return (
@@ -51,11 +44,7 @@ class Calendar extends Component {
         />
 
         <div className="box-container">
-          {this.state.startDate &&
-            this.state.endDate &&
-            [...Array(emptyDaysBefore)].map((e, i) => {
-              return <EmptyBox key={i} />;
-            })}
+          
 
           {this.state.startDate &&
             this.state.endDate &&
@@ -68,17 +57,13 @@ class Calendar extends Component {
               );
             })}
 
-          {this.state.startDate &&
-            this.state.endDate &&
-            [...Array(emptyDaysAfter)].map((e, i) => {
-              return <EmptyBox key={i} />;
-            })}
+      
         </div>
       </div>
     );
   }
 }
 
-export default Calendar;
+export default Planner;
 
 // console.log(this.state.startDate.clone().add(i,'days'))}
