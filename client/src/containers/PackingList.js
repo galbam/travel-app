@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class Navbar extends Component {
+export class PackingList extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ export class Navbar extends Component {
   }
 }
 
-export default Navbar
+export default PackingList

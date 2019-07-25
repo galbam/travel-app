@@ -7,7 +7,7 @@ import moment from "moment";
 import Box from "../components/Box";
 
 
-class Calendar extends Component {
+class Planner extends Component {
   state = {
     startDate: null,
     endDate: null,
@@ -64,6 +64,6 @@ class Calendar extends Component {
   }
 }
 
-export default Calendar;
+export default Planner;
 
 // console.log(this.state.startDate.clone().add(i,'days'))}
