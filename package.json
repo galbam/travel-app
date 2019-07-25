@@ -8,6 +8,8 @@
     "dev-windows": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@material-ui/core": "^4.2.1",
+    "@material-ui/icons": "^4.2.1",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "connect-mongo": "^3.0.0",
@@ -15,14 +17,18 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-session": "^1.16.2",
+    "formik": "^1.5.8",
     "hbs": "^4.0.4",
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",
     "node-sass-middleware": "^0.11.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "serve-favicon": "^2.5.0",
-    "swagger-ui-express": "^4.0.7"
+    "swagger-ui-express": "^4.0.7",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
