@@ -1,5 +1,5 @@
 * {
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
   margin: 0;
 }
 
@@ -25,17 +25,30 @@
  /*  flex-basis: 13.5%; */
 }
 
+
+.scroll-container {
+  width: 80vw;
+  height: 100vh;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  white-space: nowrap;
+  padding: 5px;
+}
+
 .box-container {
   display: flex;
   flex-wrap: wrap;
-  width: 140vw;
+  width: 145vw;
 }
+
 
 .main {
   display: flex;
-  margin: 10px;
+  margin: 0;
   background-color: rgb(238,238,238);
-  width: 100%;
+  min-height: 100vh;
+  /* min-width: 100vw; */
+  /* overflow-x: scroll; */
 }
 
 li {
@@ -47,15 +60,18 @@ color: white;
 }
 .planner {
   display: flex;
+  overflow: hidden;
 }
 
 .user-container {
-  width: 200px;
+  /* width: 200px; */
   min-height: 100vh;
   height: 100%;
   background-color: rgb(27,172, 191);
   color: white;
   text-align: center;
+  padding: 5px;
+  min-width: 20%;
 }
 
 .navbar-style {

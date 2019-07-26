@@ -5,8 +5,8 @@ import { DateRangePicker } from "react-dates";
 import moment from "moment";
 // import Navbar from "./Navbar"
 
-import Box from "../components/Box";
-import Container from "../components/Container"
+import Day from "../components/Day";
+import UserContainer from "../components/UserContainer"
 
 class Planner extends Component {
   state = {
@@ -30,7 +30,7 @@ class Planner extends Component {
     return (
       <div className="planner">
        
-        <Container/>
+        <UserContainer/>
         
 
         <div className="calendar">
@@ -47,18 +47,19 @@ class Planner extends Component {
             onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
             firstDayOfWeek={1}
           />
-
+          <div className="scroll-container">
           <div className="box-container">
             {this.state.startDate &&
               this.state.endDate &&
               [...Array(days)].map((e, i) => {
                 return (
-                  <Box
+                  <Day
                     key={i}
                     dayOfWeek={this.state.startDate.clone().add(i, "days")}
                   />
                 );
               })}
+          </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Create from '../containers/Dialogs/Create';
 
-export class Container extends Component {
+export class UserContainer extends Component {
   render() {
     return (
       <div className="user-container">
@@ -12,4 +12,4 @@ export class Container extends Component {
   }
 }
 
-export default Container
+export default UserContainer
