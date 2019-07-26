@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class Box extends Component {
+export class Day extends Component {
   
 
   render() {
@@ -19,5 +19,5 @@ console.log(this.props.dayOfWeek.format("d").toString())
   }
 }
 
-export default Box
+export default Day
 
