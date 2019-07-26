@@ -18,6 +18,7 @@
     "express": "^4.16.3",
     "express-session": "^1.16.2",
     "formik": "^1.5.8",
+    "google-places-web": "^0.3.0",
     "hbs": "^4.0.4",
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",

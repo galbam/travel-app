@@ -103,6 +103,12 @@ const activity = require("./routes/activities");
 app.use("/api/activities", activity);
 
 
+//Inspiration
+const inspiration = require("./routes/inspirations");
+app.use("/api/inspirations", inspiration);
+
+
+
 //DOCUMENTATION
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
