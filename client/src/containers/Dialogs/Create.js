@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
-import Icon from "@material-ui/core/Icon";
+// import Icon from "@material-ui/core/Icon";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 export default class extends Component {
@@ -92,7 +92,7 @@ export default class extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        ;
+        
       </Fragment>
     );
   }
