@@ -4,7 +4,7 @@ export class Accommodation extends Component {
   render() {
     return (
       <div>
-        
+        <h3>Accommodation</h3>
       </div>
     )
   }
