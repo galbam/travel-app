@@ -39,11 +39,13 @@ export default class extends Component {
   render() {
     const {
       open,
-      form: { type, title, description, imgUrl }
+      //form: { type, title, description, imgUrl }
+      form: { title, description }
     } = this.state;
     return (
       <Fragment>
-        <Button variant="fab" color="primary" onClick={this.handleToggle}>
+        {/* variant="fab"   =>   is giving an error */}
+        <Button color="primary" onClick={this.handleToggle}>
           <AddIcon />
         </Button>
         <Dialog

@@ -78,3 +78,12 @@ color: white;
   background-color: rgb(73,72,71);
   padding-right: 10px;
 }
+
+.draggable {
+  width: 15vh;
+  height: 10vh;
+  background-color: yellow;
+  margin: 5px auto;
+  line-height: 5em;
+}
+
