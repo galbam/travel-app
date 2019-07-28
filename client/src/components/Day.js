@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Activity from './Activity';
 
 class Day extends Component {
 
@@ -18,17 +19,13 @@ class Day extends Component {
         onDrop={(e) => this.props.onDrop(e, this.props.day)}>
 
         <h6>{this.props.day.title.format("dddd MMMM Do").toString()}</h6>
-        
+
         {this.props.day.activities.map(activity => {
           return (
-              <div key={activity.id}
-                onDragStart={(e) => this.props.onDragStart(e, { from: "day", id: this.props.day.id }, activity)}
-                draggable
-                className="draggable"
-                style={{ backgroundColor: activity.bgcolor }}
-              >
-                {activity.title}
-              </div>
+            <Activity key={activity.id} activity={activity}
+              id={this.props.day.id}
+              onDragStart={this.props.onDragStart}
+              from={"day"} />
           );
         })}
 

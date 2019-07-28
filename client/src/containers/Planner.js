@@ -6,6 +6,7 @@ import moment from "moment";
 
 import Day from "../components/Day";
 import UserContainer from "../components/UserContainer";
+import Activity from '../components/Activity';
 
 class Planner extends Component {
   state = {
@@ -150,14 +151,11 @@ class Planner extends Component {
     var activitiesInContainer =
       this.state.container.activities.map(activity => {
         return (
-          <div key={activity.id}
-            onDragStart={(e) => this.onDragStart(e, { from: "container", id: this.state.container.id }, activity)}
-            draggable
-            className="draggable"
-            style={{ backgroundColor: activity.bgcolor }}
-          >
-            {activity.title}
-          </div>
+
+          <Activity key={activity.id} activity={activity}
+            id={this.state.container.id}
+            onDragStart={this.onDragStart}
+            from={"container"} />
         );
       });
 

@@ -17,6 +17,7 @@ class UserContainer extends Component {
         <br/>
         <br/>
         <br/>
+        <hr/>
         <div>
           <h6>Total Expenses</h6>
           <p>{this.props.totalExpenses}</p>
