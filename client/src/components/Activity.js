@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ActivityDetail from '../containers/Dialogs/ActivityDetail';
 
 class Activity extends Component {
 
@@ -11,7 +12,11 @@ class Activity extends Component {
         className="draggable"
         style={{ backgroundColor: this.props.activity.bgcolor }}
       >
-        {this.props.activity.title}
+        <div onClick={this.handleClick}>
+          <ActivityDetail activity={this.props.activity}>
+            {this.props.activity.title}
+          </ActivityDetail >
+        </div>
       </div>
     )
   }

@@ -26,7 +26,7 @@ export default class extends Component {
       expenses: 0,
       bgcolor: ""
     }
-  };
+  }; 
 
   handleToggle = () => {
 
@@ -77,7 +77,7 @@ export default class extends Component {
           onClose={this.handleToggle}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create a New Event</DialogTitle>
+          <DialogTitle id="form-dialog-title">Create Activity</DialogTitle>
 
           <form onSubmit={this.handleSubmit}>
           <DialogContent>
