@@ -8,7 +8,9 @@ const draftActivitySchema = new Schema({
      },
      description: String,
      type: String,
-     expenses: Number
+     expenses: Number,
+     color: String,
+     trip: { type: Schema.Types.ObjectId, ref: "Trip" },
 });
 
 const DraftActivity = mongoose.model("DraftActivity", draftActivitySchema);
