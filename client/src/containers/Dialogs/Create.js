@@ -7,8 +7,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
+import Select from '@material-ui/core/Select';
 // import Icon from "@material-ui/core/Icon";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+
 const uuidv1 = require('uuid/v1');
 
 export default class extends Component {
@@ -19,7 +23,8 @@ export default class extends Component {
       title: "",
       description: "",
       imgUrl: "",
-      expenses: 0
+      expenses: 0,
+      bgcolor: ""
     }
   };
 
@@ -44,14 +49,14 @@ export default class extends Component {
 
     const title = this.state.form.title;
     const description = this.state.form.description;
-    const expenses = this.state.form.expenses; 
+    const expenses = Number(this.state.form.expenses); 
     const imageUrl = this.state.form.imageUrl;
+    const bgcolor = this.state.form.bgcolor;
 
     const newActivityInContainer = {
-      id: uuidv1(), title, description, expenses, imageUrl
+      id: uuidv1(), title, description, expenses, imageUrl, bgcolor
     }
     
-    //console.log(newActivityInContainer);
     this.props.refreshContainer(newActivityInContainer);
   }
 
@@ -59,7 +64,7 @@ export default class extends Component {
     const {
       open,
       //form: { type, title, description, imgUrl }
-      form: { title, description, expenses }
+      form: { title, description, expenses, bgcolor }
     } = this.state;
     return (
       <Fragment>
@@ -100,6 +105,22 @@ export default class extends Component {
                 value={expenses}
                 onChange={this.handleChange("expenses")}
                 margin="normal"/>
+              <br/>
+              <InputLabel htmlFor="color-simple">Color</InputLabel>
+              <Select
+                value={bgcolor}
+                onChange={this.handleChange("bgcolor")}
+                inputProps={{
+                  name: 'bgcolor',
+                  id: 'color-simple',
+                }}
+              >
+                <MenuItem value="red">Red</MenuItem>
+                <MenuItem value="yellow">Yellow</MenuItem>
+                <MenuItem value="blue">Blue</MenuItem>
+                <MenuItem value="gray">Gray</MenuItem>
+                <MenuItem value="skyblue">Sky Blue</MenuItem>
+              </Select>
           </DialogContent>
 
           <DialogActions>

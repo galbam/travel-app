@@ -13,6 +13,14 @@ class UserContainer extends Component {
           {this.props.containerContent}
         </div>
         <Create refreshContainer={this.props.refreshContainer} />
+
+        <br/>
+        <br/>
+        <br/>
+        <div>
+          <h6>Total Expenses</h6>
+          <p>{this.props.totalExpenses}</p>
+        </div>
       </div>
     )
   }

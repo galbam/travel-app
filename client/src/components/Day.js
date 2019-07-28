@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class Day extends Component {
-  
+
   render() {
     let styles;
     if (this.props.day.title.format("d").toString() === "6" ||
@@ -21,18 +21,23 @@ class Day extends Component {
         
         {this.props.day.activities.map(activity => {
           return (
-            <div key={activity.id}
-              onDragStart={(e) => this.props.onDragStart(e, { from: "day", id: this.props.day.id }, activity)}
-              draggable
-              className="draggable"
-              style={{ backgroundColor: activity.bgcolor }}
-            >
-              {activity.title}
-            </div>
+              <div key={activity.id}
+                onDragStart={(e) => this.props.onDragStart(e, { from: "day", id: this.props.day.id }, activity)}
+                draggable
+                className="draggable"
+                style={{ backgroundColor: activity.bgcolor }}
+              >
+                {activity.title}
+              </div>
           );
         })}
 
+        <div>
+          <h6>Expenses</h6>
+          <p>{this.props.day.expenses || 0}</p>
+        </div>
       </div>
+      
     )
   }
 }
