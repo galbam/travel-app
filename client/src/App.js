@@ -7,7 +7,8 @@ import Login from "./containers/auth/Login";
 import Signup from "./containers/auth/Signup";
 
 import ThingsToDo from './containers/ThingsToDo'
-import Navbar from "./containers/Navbar"
+// import Navbar from "./containers/Navbar"
+import MiniDrawer from "./components/planner/MiniDrawer"
 
 import Planner from "./containers/Planner"
 import Transportation from "./containers/Transportation"
@@ -19,9 +20,11 @@ class App extends Component {
   render() {
 
     const DefaultMain = () => (
-      <div className="main">
+      <div >
            
-           <Navbar />
+           <MiniDrawer/>
+
+           <div className="main">
 
             <Route exact path="/planner" component={Planner} />
             <Route exact path="/thingstodo" component={ThingsToDo} />
@@ -29,7 +32,7 @@ class App extends Component {
             <Route exact path="/accommodation" component={Accommodation} />
             <Route exact path="/packinglist" component={PackingList} />
             <Route exact path="/budget" component={Budget} />
-  
+            </div>
           </div>
     )
 
