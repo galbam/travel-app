@@ -155,7 +155,9 @@ class Planner extends Component {
           <Activity key={activity.id} activity={activity}
             id={this.state.container.id}
             onDragStart={this.onDragStart}
-            from={"container"} />
+            from={"container"} 
+            updateActivity={(activity) => this.updateActivity(activity)}
+            />
         );
       });
 
@@ -198,6 +200,58 @@ class Planner extends Component {
     });
   }
 
+  updateActivity = (activity) => {
+
+    // const { id, title, description, expenses, bgcolor } = activity;
+    // //console.log(id, title, description, expenses, bgcolor);
+
+    // //day
+    // if (this.state.days.length > 0){
+    //   const newDays = this.state.days.slice();
+      
+    //   console.log(newDays);
+
+    //   let indexActDay;
+    //   let indexDay;
+    //   newDays.forEach(d => {
+
+    //     let indexFound = d.activities.findIndex(a => a.id === id);
+    //     if (indexFound >= 0){
+    //       indexDay = d.id;
+    //       indexActDay = indexFound;
+    //     }
+        
+    //   });
+      
+    //   if(indexActDay >= 0){
+    //     //console.log("Day", indexDay, "Activity in Day", indexActDay);
+
+    //     newDays[indexDay].activities[indexActDay].expenses = expenses;
+        
+    //     this.setState({
+    //       days: newDays
+    //     });
+    //   }
+
+    // }
+    // else if (this.state.container){
+    //   // //container
+    //   // const newContainer = JSON.parse(JSON.stringify(this.state.container));
+    //   // let indexActContainer = newContainer.activities.findIndex(a => a.id === id);
+      
+    //   // if (indexActContainer >= 0) {
+    //   //   console.log("Activity in Container", indexActContainer);
+
+    //   //   newContainer.activities[indexActContainer].expenses = expenses;
+
+    //   //   this.setState({
+    //   //     container: newContainer
+    //   //   });
+    //   // }
+    // }
+
+  }
+
   render() {
 
     return (
@@ -235,6 +289,8 @@ class Planner extends Component {
                       onDragStart={this.onDragStart}
                       onDragOver={this.onDragOver}
                       onDrop={this.onDrop}
+
+                      updateActivity={(activity) => this.updateActivity(activity)}
                     />
 
                   );

@@ -13,7 +13,7 @@ class Activity extends Component {
         style={{ backgroundColor: this.props.activity.bgcolor }}
       >
         <div onClick={this.handleClick}>
-          <ActivityDetail activity={this.props.activity}>
+          <ActivityDetail activity={this.props.activity} updateActivity={this.props.updateActivity}>
             {this.props.activity.title}
           </ActivityDetail >
         </div>
