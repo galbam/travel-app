@@ -1,0 +1,31 @@
+.home-intro {
+  height: 95vh;
+  background-image: url("/images/ian-dooley-3NCA3tbaE5I-unsplash.jpg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.home-button{
+  color: white;
+  text-decoration: none;
+}
+
+.home-planner{
+  height: 80vh;
+  display: flex;
+}
+
+.home-planner-img{
+  margin: auto 50px;
+}
+img{
+  height: 400px;
+  width: auto;
+}
+
+.home-planner-text {
+  margin: auto 50px; 
+}
