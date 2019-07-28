@@ -18,8 +18,8 @@ class Planner extends Component {
       id: 1, activities: [
         { id: 1, title: "Learn Angular", bgcolor: "yellow", description: "Desc1" },
         { id: 2, title: "Learn React", bgcolor: "blue", description: "Desc2" },
-        { id: 3, title: "Vue", day: "day", bgcolor: "skyblue", description: "Desc3" },
-        { id: 4, title: "Vue2", day: "container", bgcolor: "green", description: "Desc4" }
+        { id: 3, title: "Vue", bgcolor: "skyblue", description: "Desc3" },
+        { id: 4, title: "Vue2", bgcolor: "green", description: "Desc4" }
       ]
     },
     days: []
@@ -119,9 +119,9 @@ fillDates = (startDate, endDate) => {
   
 }
 
-populateContent = () => {
+populateContainer = () => {
 
-  //Populate content
+  //Populate content in container
   var activitiesInContainer =
     this.state.container.activities.map(activity => {
       return (
@@ -140,6 +140,24 @@ populateContent = () => {
 
 }
 
+  refreshContainer = (newContainerActivity) => {
+
+    //{ id: 1, title: "Learn Angular", bgcolor: "yellow", description: "Desc1" },
+    //title, description, expenses, imageUrl
+
+    const { id, title, description } = newContainerActivity;
+
+    const newContainer = JSON.parse(JSON.stringify(this.state.container));
+    newContainer.activities.push({
+      id, title, description, bgcolor: "gray"
+    });
+
+    this.setState({
+      container: newContainer
+    });
+
+  }
+
   render() {
 
     return (
@@ -147,7 +165,8 @@ populateContent = () => {
 
         <UserContainer onDragOver={(e) => this.onDragOver(e)} 
           onDrop={(e) => this.onDrop(e, "container")} 
-          containerContent={this.populateContent()} />
+          containerContent={this.populateContainer()} 
+          refreshContainer={(x) => this.refreshContainer(x)}/>
 
         <div className="calendar">
           <DateRangePicker

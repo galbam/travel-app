@@ -103,9 +103,6 @@ const activity = require("./routes/activities");
 app.use("/api/activities", activity);
 
 
-//Inspiration
-const inspiration = require("./routes/inspirations");
-app.use("/api/inspirations", inspiration);
 
 
 

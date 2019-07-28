@@ -9,6 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 // import Icon from "@material-ui/core/Icon";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+const uuidv1 = require('uuid/v1');
 
 export default class extends Component {
   state = {
@@ -17,11 +18,13 @@ export default class extends Component {
       type: "",
       title: "",
       description: "",
-      imgUrl: ""
+      imgUrl: "",
+      expenses: 0
     }
   };
 
   handleToggle = () => {
+
     this.setState({
       open: !this.state.open
     });
@@ -36,11 +39,27 @@ export default class extends Component {
     });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const title = this.state.form.title;
+    const description = this.state.form.description;
+    const expenses = this.state.form.expenses; 
+    const imageUrl = this.state.form.imageUrl;
+
+    const newActivityInContainer = {
+      id: uuidv1(), title, description, expenses, imageUrl
+    }
+    
+    //console.log(newActivityInContainer);
+    this.props.refreshContainer(newActivityInContainer);
+  }
+
   render() {
     const {
       open,
       //form: { type, title, description, imgUrl }
-      form: { title, description }
+      form: { title, description, expenses }
     } = this.state;
     return (
       <Fragment>
@@ -54,11 +73,12 @@ export default class extends Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Create a New Event</DialogTitle>
+
+          <form onSubmit={this.handleSubmit}>
           <DialogContent>
             <DialogContentText>
               Please Fill out the Form Below
             </DialogContentText>
-            <form>
               <TextField
                 label="Title"
                 value={title}
@@ -68,20 +88,27 @@ export default class extends Component {
               <br />
               <TextField
                 multiline
-                rows="4"
+                rows="2"
                 label="Description"
                 value={description}
                 onChange={this.handleChange("description")}
                 margin="normal"
               />
-            </form>
+              <br/>
+              <TextField 
+                label="Expenses"
+                value={expenses}
+                onChange={this.handleChange("expenses")}
+                margin="normal"/>
           </DialogContent>
+
           <DialogActions>
             <input
               accept="image/*"
               id="contained-button-file"
               multiple
               type="file"
+              onChange={this.handleChange("imageUrl")}
             />
             <label htmlFor="contained-button-file">
               <Button variant="contained" component="span">
@@ -89,10 +116,12 @@ export default class extends Component {
                 <CloudUploadIcon />
               </Button>
             </label>
-            <Button onClick={this.handleToggle} color="primary">
+            <Button onClick={this.handleToggle} type="submit" color="primary">
               Create
             </Button>
           </DialogActions>
+          </form>
+        
         </Dialog>
         
       </Fragment>

@@ -9,10 +9,10 @@ class UserContainer extends Component {
         <div
           onDragOver={(e) => this.props.onDragOver(e)}
           onDrop={(e) => { this.props.onDrop(e, "container") }}>
-          <span className="task-header">CONTAINER</span>
+          <span>CONTAINER</span>
           {this.props.containerContent}
         </div>
-        <Create/>
+        <Create refreshContainer={this.props.refreshContainer} />
       </div>
     )
   }
