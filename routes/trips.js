@@ -84,6 +84,3 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
-
-
-//Activity   post id:trip  date:name 

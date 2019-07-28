@@ -1,15 +1,30 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Create from '../containers/Dialogs/Create';
 
-export class UserContainer extends Component {
+class UserContainer extends Component {
+
   render() {
     return (
       <div className="user-container">
-        <p>Container</p>
-        <Create/>
+        <div
+          onDragOver={(e) => this.props.onDragOver(e)}
+          onDrop={(e) => { this.props.onDrop(e, "container") }}>
+          <span>CONTAINER</span>
+          {this.props.containerContent}
+        </div>
+        <Create refreshContainer={this.props.refreshContainer} />
+
+        <br/>
+        <br/>
+        <br/>
+        <hr/>
+        <div>
+          <h6>Total Expenses</h6>
+          <p>{this.props.totalExpenses}</p>
+        </div>
       </div>
     )
   }
 }
 
-export default UserContainer
+export default UserContainer;

@@ -7,8 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
+import Select from '@material-ui/core/Select';
 // import Icon from "@material-ui/core/Icon";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+
+const uuidv1 = require('uuid/v1');
 
 export default class extends Component {
   state = {
@@ -17,11 +22,14 @@ export default class extends Component {
       type: "",
       title: "",
       description: "",
-      imgUrl: ""
+      imgUrl: "",
+      expenses: 0,
+      bgcolor: ""
     }
   };
 
   handleToggle = () => {
+
     this.setState({
       open: !this.state.open
     });
@@ -36,14 +44,32 @@ export default class extends Component {
     });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const title = this.state.form.title;
+    const description = this.state.form.description;
+    const expenses = Number(this.state.form.expenses); 
+    const imageUrl = this.state.form.imageUrl;
+    const bgcolor = this.state.form.bgcolor;
+
+    const newActivityInContainer = {
+      id: uuidv1(), title, description, expenses, imageUrl, bgcolor
+    }
+    
+    this.props.refreshContainer(newActivityInContainer);
+  }
+
   render() {
     const {
       open,
-      form: { type, title, description, imgUrl }
+      //form: { type, title, description, imgUrl }
+      form: { title, description, expenses, bgcolor }
     } = this.state;
     return (
       <Fragment>
-        <Button variant="fab" color="primary" onClick={this.handleToggle}>
+        {/* variant="fab"   =>   is giving an error */}
+        <Button color="primary" onClick={this.handleToggle}>
           <AddIcon />
         </Button>
         <Dialog
@@ -52,11 +78,12 @@ export default class extends Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Create a New Event</DialogTitle>
+
+          <form onSubmit={this.handleSubmit}>
           <DialogContent>
             <DialogContentText>
               Please Fill out the Form Below
             </DialogContentText>
-            <form>
               <TextField
                 label="Title"
                 value={title}
@@ -66,20 +93,43 @@ export default class extends Component {
               <br />
               <TextField
                 multiline
-                rows="4"
+                rows="2"
                 label="Description"
                 value={description}
                 onChange={this.handleChange("description")}
                 margin="normal"
               />
-            </form>
+              <br/>
+              <TextField 
+                label="Expenses"
+                value={expenses}
+                onChange={this.handleChange("expenses")}
+                margin="normal"/>
+              <br/>
+              <InputLabel htmlFor="color-simple">Color</InputLabel>
+              <Select
+                value={bgcolor}
+                onChange={this.handleChange("bgcolor")}
+                inputProps={{
+                  name: 'bgcolor',
+                  id: 'color-simple',
+                }}
+              >
+                <MenuItem value="red">Red</MenuItem>
+                <MenuItem value="yellow">Yellow</MenuItem>
+                <MenuItem value="blue">Blue</MenuItem>
+                <MenuItem value="gray">Gray</MenuItem>
+                <MenuItem value="skyblue">Sky Blue</MenuItem>
+              </Select>
           </DialogContent>
+
           <DialogActions>
             <input
               accept="image/*"
               id="contained-button-file"
               multiple
               type="file"
+              onChange={this.handleChange("imageUrl")}
             />
             <label htmlFor="contained-button-file">
               <Button variant="contained" component="span">
@@ -87,10 +137,12 @@ export default class extends Component {
                 <CloudUploadIcon />
               </Button>
             </label>
-            <Button onClick={this.handleToggle} color="primary">
+            <Button onClick={this.handleToggle} type="submit" color="primary">
               Create
             </Button>
           </DialogActions>
+          </form>
+        
         </Dialog>
         
       </Fragment>
