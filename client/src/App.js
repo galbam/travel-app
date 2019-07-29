@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import Login from "./containers/auth/Login";
 import Signup from "./containers/auth/Signup";
+import Tripform from "./containers/Tripform";
 
 import ThingsToDo from './containers/ThingsToDo'
 import Navbar from "./containers/Navbar"
@@ -38,6 +39,7 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/tripform" component={Tripform} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route component={DefaultMain}/>
