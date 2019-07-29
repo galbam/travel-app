@@ -16,9 +16,9 @@ export class Sidebar extends Component {
           {
             this.props.filteredVenues && this.props.filteredVenues.length > 0 &&
             this.props.filteredVenues.map((venue, index) => (
-                <tr>
+              <tr key={index}>
                   <td>
-                    <div key={index} onClick={() => { this.props.listItemClick(venue) }} >
+                    <div onClick={() => { this.props.listItemClick(venue) }} >
                       <h6>
                       {venue.name}
                       </h6>

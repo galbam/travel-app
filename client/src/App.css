@@ -88,16 +88,16 @@ color: white;
 }
 
 #map {
-  width: 150vh;
-  height: 100vh;
+  width: 100vh;
+  /* height: 100vh; */
 }
 
 #sidebar {
-  position: fixed;
+  /* position: fixed;
   top: 0;
-  left: 200;
-  width: 50vh;
-  height: 100%;
-  z-index: 100;
-  background-color: aliceblue
+  left: 200; */
+  width: 40vh;
+  /* height: 100%; */
+  /*z-index: 100; */
+  background-color: white
 }

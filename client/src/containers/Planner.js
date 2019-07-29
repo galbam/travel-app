@@ -173,8 +173,6 @@ class Planner extends Component {
       id, title, description, bgcolor, expenses
     });
 
-    //console.log(id, title, description, expenses, bgcolor);
-
     this.setState({
       container: newContainer
     });
@@ -202,53 +200,80 @@ class Planner extends Component {
 
   updateActivity = (activity) => {
 
-    // const { id, title, description, expenses, bgcolor } = activity;
-    // //console.log(id, title, description, expenses, bgcolor);
+    const { id, title, description, expenses, bgcolor } = activity;
+    const updatedActivity = { 
+      id,
+      title, 
+      description, 
+      expenses, 
+      bgcolor
+    };
 
-    // //day
-    // if (this.state.days.length > 0){
-    //   const newDays = this.state.days.slice();
+    let flagUpdated = false;
+
+    //day
+    if (this.state.days.length > 0){
+      const newDays = this.state.days.slice();
       
-    //   console.log(newDays);
-
-    //   let indexActDay;
-    //   let indexDay;
-    //   newDays.forEach(d => {
-
-    //     let indexFound = d.activities.findIndex(a => a.id === id);
-    //     if (indexFound >= 0){
-    //       indexDay = d.id;
-    //       indexActDay = indexFound;
-    //     }
+      let indexActDay;
+      let indexDay;
+      for (let index = 0; index < newDays.length; index++) {
         
-    //   });
-      
-    //   if(indexActDay >= 0){
-    //     //console.log("Day", indexDay, "Activity in Day", indexActDay);
+        const day = newDays[index];
+        let indexFound = day.activities.findIndex(a => a.id === id);
 
-    //     newDays[indexDay].activities[indexActDay].expenses = expenses;
+        if (indexFound >= 0){
+          indexDay = index;
+          indexActDay = indexFound;
+          break;
+        }
         
-    //     this.setState({
-    //       days: newDays
-    //     });
-    //   }
-
-    // }
-    // else if (this.state.container){
-    //   // //container
-    //   // const newContainer = JSON.parse(JSON.stringify(this.state.container));
-    //   // let indexActContainer = newContainer.activities.findIndex(a => a.id === id);
+      }
       
-    //   // if (indexActContainer >= 0) {
-    //   //   console.log("Activity in Container", indexActContainer);
+      if(indexActDay >= 0){
+        const day = newDays[indexDay];
+        day.activities[indexActDay] = updatedActivity;
 
-    //   //   newContainer.activities[indexActContainer].expenses = expenses;
+        //Update expenses per day
+        day.expenses = day.activities.reduce((acc, val) => {
+          return acc + val.expenses;
+        }, 0);
+        
+        this.setState({
+          days: newDays
+        });
 
-    //   //   this.setState({
-    //   //     container: newContainer
-    //   //   });
-    //   // }
-    // }
+        //The activity was in day and was updated
+        flagUpdated = true;
+
+        //Update total expenses
+        this.updateTotalExpenses();
+      }
+    }
+
+    if (flagUpdated === false){
+    
+      //lets try to find teh activity in the container
+      const newContainer = JSON.parse(JSON.stringify(this.state.container));
+      let indexActContainer = newContainer.activities.findIndex(a => a.id === id);
+      
+      if (indexActContainer >= 0) {
+
+        newContainer.activities[indexActContainer] = updatedActivity;
+
+        this.setState({
+          container: newContainer
+        });
+
+        //The activity was in the container and was updated
+        flagUpdated = true;
+      }
+    }
+
+    //If the flagUpdated remains false that means that the activity was found in the day and in the container
+    if (flagUpdated === false){
+      console.log("The activity was not updated");
+    }
 
   }
 
