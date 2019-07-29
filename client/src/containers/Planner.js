@@ -162,7 +162,9 @@ class Planner extends Component {
           <Activity key={activity.id} activity={activity}
             id={this.state.container.id}
             onDragStart={this.onDragStart}
-            from={"container"} />
+            from={"container"} 
+            updateActivity={(activity) => this.updateActivity(activity)}
+            />
         );
       });
 
@@ -177,8 +179,6 @@ class Planner extends Component {
     newContainer.activities.push({
       id, title, description, bgcolor, expenses
     });
-
-    //console.log(id, title, description, expenses, bgcolor);
 
     this.setState({
       container: newContainer
@@ -203,6 +203,85 @@ class Planner extends Component {
     this.setState({
       totalExpenses: newTotalExpenses
     });
+  }
+
+  updateActivity = (activity) => {
+
+    const { id, title, description, expenses, bgcolor } = activity;
+    const updatedActivity = { 
+      id,
+      title, 
+      description, 
+      expenses, 
+      bgcolor
+    };
+
+    let flagUpdated = false;
+
+    //day
+    if (this.state.days.length > 0){
+      const newDays = this.state.days.slice();
+      
+      let indexActDay;
+      let indexDay;
+      for (let index = 0; index < newDays.length; index++) {
+        
+        const day = newDays[index];
+        let indexFound = day.activities.findIndex(a => a.id === id);
+
+        if (indexFound >= 0){
+          indexDay = index;
+          indexActDay = indexFound;
+          break;
+        }
+        
+      }
+      
+      if(indexActDay >= 0){
+        const day = newDays[indexDay];
+        day.activities[indexActDay] = updatedActivity;
+
+        //Update expenses per day
+        day.expenses = day.activities.reduce((acc, val) => {
+          return acc + val.expenses;
+        }, 0);
+        
+        this.setState({
+          days: newDays
+        });
+
+        //The activity was in day and was updated
+        flagUpdated = true;
+
+        //Update total expenses
+        this.updateTotalExpenses();
+      }
+    }
+
+    if (flagUpdated === false){
+    
+      //lets try to find teh activity in the container
+      const newContainer = JSON.parse(JSON.stringify(this.state.container));
+      let indexActContainer = newContainer.activities.findIndex(a => a.id === id);
+      
+      if (indexActContainer >= 0) {
+
+        newContainer.activities[indexActContainer] = updatedActivity;
+
+        this.setState({
+          container: newContainer
+        });
+
+        //The activity was in the container and was updated
+        flagUpdated = true;
+      }
+    }
+
+    //If the flagUpdated remains false that means that the activity was found in the day and in the container
+    if (flagUpdated === false){
+      console.log("The activity was not updated");
+    }
+
   }
 
   render() {
@@ -234,6 +313,8 @@ class Planner extends Component {
                       onDragStart={this.onDragStart}
                       onDragOver={this.onDragOver}
                       onDrop={this.onDrop}
+
+                      updateActivity={(activity) => this.updateActivity(activity)}
                     />
 
                   );

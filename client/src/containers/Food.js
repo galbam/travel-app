@@ -99,13 +99,16 @@ export class Food extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={{display: "flex"}}>
         <div id="map"></div>
-        <Sidebar
-          filterVenues={this.filterVenues}
-          filteredVenues={this.state.filteredVenues}
-          listItemClick={this.listItemClick}
-          selectVenue={this.selectVenue} />
+        <div>
+          <h3>Foods and Drinks</h3>
+          <Sidebar
+            filterVenues={this.filterVenues}
+            filteredVenues={this.state.filteredVenues}
+            listItemClick={this.listItemClick}
+            selectVenue={this.selectVenue} />
+        </div>
       </div>
     )
   }

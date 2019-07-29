@@ -25,7 +25,9 @@ class Day extends Component {
             <Activity key={activity.id} activity={activity}
               id={this.props.day.id}
               onDragStart={this.props.onDragStart}
-              from={"day"} />
+              from={"day"} 
+              updateActivity={this.props.updateActivity}
+            />
           );
         })}
 

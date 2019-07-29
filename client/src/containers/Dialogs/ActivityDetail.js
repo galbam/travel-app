@@ -18,11 +18,12 @@ class ActivityDetail extends Component {
     open: false,
     form: {
       type: "",
+      id: this.props.activity.id,
       title: this.props.activity.title,
       description: this.props.activity.description,
-      imgUrl: "",
-      expenses: 0,
-      bgcolor: ""
+      imgUrl: this.props.activity.imgUrl,
+      expenses: this.props.activity.expenses,
+      bgcolor: this.props.activity.bgcolor
     }
   };
 
@@ -42,6 +43,24 @@ class ActivityDetail extends Component {
     });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const id = this.state.form.id;
+    const title = this.state.form.title;
+    const description = this.state.form.description;
+    const expenses = Number(this.state.form.expenses);
+    //const imageUrl = this.state.form.imageUrl;
+    const bgcolor = this.state.form.bgcolor;
+
+    const updatedActivity = {
+      id, title, description, expenses, bgcolor
+    }
+
+    //console.log(id, title, description, expenses, bgcolor);
+    this.props.updateActivity(updatedActivity)
+  }
+
   render() {
     const {
       open,
@@ -60,7 +79,7 @@ class ActivityDetail extends Component {
         >
 
           <DialogTitle id="form-dialog-title">Update Activity</DialogTitle>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <DialogContent>
               <TextField
                 label="Title"
@@ -98,9 +117,12 @@ class ActivityDetail extends Component {
                 <MenuItem value="blue">Blue</MenuItem>
                 <MenuItem value="gray">Gray</MenuItem>
                 <MenuItem value="skyblue">Sky Blue</MenuItem>
+                <MenuItem value="green">Green</MenuItem>
               </Select>
             </DialogContent>
-  
+            <Button onClick={this.handleToggle} type="submit" color="primary">
+              Update
+            </Button>
           </form>
 
         </Dialog>
