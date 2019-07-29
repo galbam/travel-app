@@ -99,7 +99,7 @@ export class Food extends Component {
   }
   render() {
     return (
-      <div style={{display: "flex"}}>
+      <div style={{display: "flex", height: "100vh"}}>
         <div id="map"></div>
         <div>
           <h3>Foods and Drinks</h3>
