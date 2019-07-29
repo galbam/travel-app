@@ -11,17 +11,23 @@
   color: rgb(73,72,71);
   padding: 5px;
   text-align: center;
+  border-radius: 5%;
+
+  overflow-y: scroll;
  /*  flex-basis: 13.5%; */
 }
 
 .weekend-box {
   height: 50vh;
   width: 18vw;
-  background-color: rosybrown;
+  background-color: white;
  margin: 0.5vw;
   color: rgb(73,72,71);
+  border-radius: 5%;
+  border:  1px solid #9C26B0;
   padding: 5px;
   text-align: center;
+  overflow-y: scroll;
  /*  flex-basis: 13.5%; */
 }
 
@@ -69,11 +75,13 @@ text-decoration: none;
   /* width: 200px; */
   min-height: 100vh;
   height: 100%;
-  background-color: rgb(27,172, 191);
-  color: white;
+  background-color: white;
+  color:rgb(73,72,71);
   text-align: center;
   padding: 5px;
   min-width: 20%;
+  overflow-y: scroll;
+
 }
 
 .navbar-style {
@@ -81,13 +89,6 @@ text-decoration: none;
   padding-right: 10px;
 }
 
-.draggable {
-  width: 15vh;
-  height: 10vh;
-  background-color: yellow;
-  margin: 5px auto;
-  line-height: 5em;
-}
 
 #map {
   width: 100vh;
