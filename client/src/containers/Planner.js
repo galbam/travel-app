@@ -8,7 +8,10 @@ import Day from "../components/Day";
 import UserContainer from "../components/UserContainer";
 import Activity from '../components/Activity';
 
+
+
 class Planner extends Component {
+  
   state = {
     totalExpenses: 0,
     startDate: null,
@@ -27,6 +30,8 @@ class Planner extends Component {
     days: []
 
   };
+
+ 
 
   //DnD
   onDragStart = (ev, origin, activity) => {
@@ -200,7 +205,10 @@ class Planner extends Component {
 
   render() {
 
+    // console.log( this.props.location.data.data.startDate, this.props.location.data.data.endDate)
+      console.log(this.props.location.state)
     return (
+      
       <div className="planner">
 
         <UserContainer onDragOver={(e) => this.onDragOver(e)}
