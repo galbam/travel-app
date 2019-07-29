@@ -50,15 +50,16 @@ export default class Tripform extends Component {
       .then(data =>{
         this.props.history.push({
           pathname: "/planner",
-          state: {
-            startDate: this.state.startDate,
-            endDate: this.state.endDate
+          data: {
+            startDate: startDate,
+            endDate: endDate
           }
         });
-        console.log(startDate, endDate)
+       
       })
       .catch(err => {
-        // this.setState({err: err.response.data.message})
+        
+        this.setState({err: err.response.data.message})
       });
     };
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-import { DateRangePicker } from "react-dates";
 import moment from "moment";
 
 import Day from "../components/Day";
@@ -14,8 +13,8 @@ class Planner extends Component {
   
   state = {
     totalExpenses: 0,
-    startDate: null,
-    endDate: null,
+    startDate: this.props.location.data.startDate,
+    endDate: this.props.location.data.endDate,
     focusedInput: null,
     // moment().startOf('month')
 
@@ -32,6 +31,9 @@ class Planner extends Component {
   };
 
  
+  componentDidMount() {
+    this.fillDates(this.state.startDate, this.state.endDate)
+  }
 
   //DnD
   onDragStart = (ev, origin, activity) => {
@@ -137,7 +139,7 @@ class Planner extends Component {
         .asDays() + 1;
 
       //Create an array of day objects
-      for (let index = 1; index <= days; index++) {
+      for (let index = 0; index < days; index++) {
         daysArr.push({
           id: index,
           title: startDate.clone().add(index, "days"),
@@ -205,8 +207,7 @@ class Planner extends Component {
 
   render() {
 
-    // console.log( this.props.location.data.data.startDate, this.props.location.data.data.endDate)
-      console.log(this.props.location.state)
+    
     return (
       
       <div className="planner">
@@ -218,16 +219,6 @@ class Planner extends Component {
           totalExpenses={this.state.totalExpenses} />
 
         <div className="calendar">
-          <DateRangePicker
-            startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-            startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-            endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-            endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-            onDatesChange={({ startDate, endDate }) => this.fillDates(startDate, endDate)} // PropTypes.func.isRequired,
-            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-            firstDayOfWeek={1}
-          />
           <div className="scroll-container">
             <div className="box-container">
 
