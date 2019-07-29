@@ -33,14 +33,10 @@ router.get("/:id", (req, res) => {
 
 //Create Trip
 router.post("/", (req, res) => {
-  const { budget, title, description, startDate, endDate } = req.body;
+  const { title,  description, destination, startDate, endDate } = req.body;
 
   Trip.create({
-    budget,
-    title,
-    description,
-    startDate,
-    endDate
+    title,  description, destination, startDate, endDate
   })
     .then(trip => {
       res.json(trip);

@@ -19,7 +19,7 @@ export class Home extends Component {
             style={{ background: "#1bacbf" }}
             size="large"
           >
-            <Link to="/planner" className="home-button">
+            <Link to="/tripform" className="home-button">
               Start here
             </Link>
           </Button>
