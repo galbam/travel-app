@@ -104,7 +104,9 @@ app.use("/api/activities", activity);
 
 
 
-
+// Draft Activity
+const draftActivity = require("./routes/draftActivity");
+app.use("/api/draftActivities", draftActivity);
 
 //DOCUMENTATION
 const swaggerUi = require('swagger-ui-express');
