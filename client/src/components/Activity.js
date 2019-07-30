@@ -12,7 +12,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 
 class Activity extends Component {
   render() {
-console.log(this.props.activity.type)
+
     let bgColor = "grey";
     let ourIcon = <FavoriteIcon style={{ color: "white", marginRight: "5px" }}/>
 

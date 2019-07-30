@@ -21,7 +21,7 @@ class Day extends Component {
         <h6>{this.props.day.title.format("dddd MMMM Do").toString()}</h6>
 
         {this.props.day.activities.map(activity => {
-          console.log(activity)
+          
           return (
             <Activity key={activity._id} activity={activity}
               id={this.props.day.id}

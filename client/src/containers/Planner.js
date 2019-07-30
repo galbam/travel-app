@@ -231,7 +231,7 @@ deleteActivity= (activityId) => {
     //Populate content in container
     var activitiesInContainer =
       this.state.container.activities.map(activity => {
-        console.log(activity)
+      
         return (
 
           <Activity key={activity._id} activity={activity}
