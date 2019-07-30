@@ -25,7 +25,6 @@ class Activity extends Component {
         className="draggable"
         style= {{ backgroundColor: bgColor }}
       >
-<<<<<<< HEAD
         <div onClick={this.handleClick} className="card-details">
           <ListItemIcon>
             {<PhotoCameraIcon style={{ color: "white" }} />}
@@ -36,10 +35,6 @@ class Activity extends Component {
           >
             {this.props.activity.title}
           </ActivityDetail>
-=======
-        <div onClick={this.handleClick}>
-          <ActivityDetail activity={this.props.activity} updateActivity={this.props.updateActivity} />
->>>>>>> Development
         </div>
       </div>
     );

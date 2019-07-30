@@ -26,16 +26,12 @@ class Planner extends Component {
     //   ]
     // },
     container: {
-<<<<<<< HEAD
       id: 1, activities: [
         { id: 1, title: "Learn Angular", bgcolor: "#FC9712", color: "white", description: "Desc1", expenses: 10 },
         { id: 2, title: "Learn React", bgcolor: "#E53C38", description: "Desc2", expenses: 20 },
         { id: 3, title: "Vue", bgcolor: "#4DA651", description: "Desc3", expenses: 30 },
         { id: 4, title: "Vue2", bgcolor: "#00ACC0", description: "Desc4", expenses: 40 }
       ]
-=======
-      id: 1, activities: []
->>>>>>> Development
     },
     days: []
 

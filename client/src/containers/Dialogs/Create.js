@@ -55,11 +55,7 @@ export default class extends Component {
     const type = this.state.form.type;
 
     const newActivityInContainer = {
-<<<<<<< HEAD
       id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
-=======
-      _id: uuidv1(), title, description, expenses, imageUrl, bgcolor
->>>>>>> Development
     }
     
     this.props.refreshContainer(newActivityInContainer);
