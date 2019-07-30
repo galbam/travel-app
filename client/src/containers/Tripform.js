@@ -47,7 +47,14 @@ export default class Tripform extends Component {
       event.preventDefault();
       
       axios.post("/api/trips", {title,  description, destination, startDate, endDate})
-      .then(data =>{
+      .then(response =>{
+
+        //Save Trip ID and destination
+        localStorage.setItem('tripId', response.data._id);
+        localStorage.setItem('destination', destination);
+        localStorage.setItem('startDate', startDate);
+        localStorage.setItem('endDate', endDate);
+
         this.props.history.push({
           pathname: "/planner",
           data: {
@@ -57,9 +64,8 @@ export default class Tripform extends Component {
         });
        
       })
-      .catch(err => {
-        
-        this.setState({err: err.response.data.message})
+      .catch(error => {
+        this.setState({err: error})
       });
     };
 
