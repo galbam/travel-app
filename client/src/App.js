@@ -7,7 +7,8 @@ import Tripform from "./containers/Tripform";
 
 // import ThingsToDo from './containers/ThingsToDo'
 // import Navbar from "./containers/Navbar"
-import MiniDrawer from "./components/planner/MiniDrawer"
+import MiniDrawer from "./components/planner/MiniDrawer";
+import Boards from "./containers/Boards";
 
 // import Planner from "./containers/Planner"
 // import Transportation from "./containers/Transportation"
@@ -30,9 +31,7 @@ class App extends Component {
   }
 
   render() {
-
     return (
-     
       <div className="App">
         <Switch>
           <Route exact path="/"  render={(props)=><Home {...props} user={this.state.user} setUser ={this.setUser}/>} />
@@ -42,9 +41,7 @@ class App extends Component {
           <Route component={MiniDrawer}/>
         </Switch>
       </div>
-   
     );
-    
   }
 }
 

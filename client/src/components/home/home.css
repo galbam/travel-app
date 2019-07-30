@@ -5,15 +5,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .home-button {
-  color: white;
-  text-decoration: none;
-}
-
-.home-button:active {
   color: white;
   text-decoration: none;
 }
@@ -26,7 +20,6 @@
 .home-planner-img {
   margin: auto 50px;
 }
-
 img {
   height: 400px;
   width: auto;

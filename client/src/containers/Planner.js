@@ -17,14 +17,7 @@ class Planner extends Component {
     endDate: moment(localStorage.getItem('endDate'), arrFormats) || this.props.location.data.endDate,
     focusedInput: null,
 
-    // container: {
-    //   id: 1, activities: [
-    //     { _id: 1, title: "Learn Angular", bgcolor: "yellow", description: "Desc1", expenses: 10 },
-    //     { _id: 2, title: "Learn React", bgcolor: "blue", description: "Desc2", expenses: 20 },
-    //     { _id: 3, title: "Vue", bgcolor: "skyblue", description: "Desc3", expenses: 30 },
-    //     { _id: 4, title: "Vue2", bgcolor: "green", description: "Desc4", expenses: 40 }
-    //   ]
-    // },
+   
     container: {
       id: 1, activities: []
     },
@@ -39,6 +32,32 @@ class Planner extends Component {
   } catch (error) {
     console.error(error);
   }
+}
+
+
+found(activityId) {
+[...this.state.days].forEach(el => {
+const act = el.activities.find(activity => activity.id === activityId)
+if (act) console.log(act)
+})}
+
+
+deleteActivity= (activityId) => {
+  this.found(activityId)
+
+  axios
+  .delete(`/api/draftActivities/${activityId}`)
+  .then(async() => {
+    const newContainer = JSON.parse(JSON.stringify(this.state.container));
+    let dAct = await this.getDraftActivities();
+        newContainer.activities = dAct;
+    this.setState({
+      container: newContainer
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
 }
 
   // getDraftActivities() {
@@ -212,6 +231,7 @@ class Planner extends Component {
     //Populate content in container
     var activitiesInContainer =
       this.state.container.activities.map(activity => {
+      
         return (
 
           <Activity key={activity._id} activity={activity}
@@ -219,6 +239,9 @@ class Planner extends Component {
             onDragStart={this.onDragStart}
             from={"container"} 
             updateActivity={(activity) => this.updateActivity(activity)}
+            deleteActivity={(activityId) => this.deleteActivity(activityId)}
+
+            
             />
         );
       });
@@ -228,11 +251,13 @@ class Planner extends Component {
 
   refreshContainer = (newContainerActivity) => {
 
-    const { _id, title, description, expenses, bgcolor } = newContainerActivity;
+    // const { _id, title, description, expenses, bgcolor } = newContainerActivity;
+    const { _id, title, description, expenses, type } = newContainerActivity;
 
     const newContainer = JSON.parse(JSON.stringify(this.state.container));
     newContainer.activities.push({
-      _id, title, description, bgcolor, expenses
+      // _id, title, description, bgcolor, expenses
+      _id, title, description, type, expenses
     });
 
     this.setState({
@@ -296,13 +321,13 @@ class Planner extends Component {
 
   updateActivity = (activity) => {
 
-    const { _id, title, description, expenses, bgcolor } = activity;
+    const { _id, title, description, expenses, type } = activity;
     const updatedActivity = { 
       _id,
       title, 
       description, 
       expenses, 
-      bgcolor
+      type
     };
 
     let flagUpdated = false;
@@ -399,6 +424,7 @@ class Planner extends Component {
               {this.state.startDate &&
                 this.state.endDate &&
                 this.state.days.map((day) => {
+                  console.log(day)
                   return (
 
                     <Day
@@ -410,6 +436,7 @@ class Planner extends Component {
                       onDrop={this.onDrop}
 
                       updateActivity={(activity) => this.updateActivity(activity)}
+                      deleteActivity={(activityId) => this.deleteActivity(activityId)}
                     />
 
                   );
