@@ -5,19 +5,92 @@ const passport = require("passport");
 
 const User = require("../models/User");
 
-router.post("/signup", (req, res) => {
 
+
+ ///////////social login
+router.post("/facebooksignup",(req,res)=>{
+  console.log(req.body)
+  const {userId} = req.body;
+  User.find({userId}).then(user =>{
+    if(user.length === 0){
+      User.create({
+        userId
+      })
+      .then(newUser =>{
+        res.json(newUser);
+    })
+  }
+  })
+  .catch(err =>{
+res.json(err);
+  });
+});
+
+
+router.get("/facebooklogin",(req,res)=>{
+  console.log(req.body)
+  const {userId} = req.body;
+  User.findOne({ 
+   userId
+  })
+  .then((user) => {
+    res.json(user);
+  })
+  .catch(err => {
+    res.json(err);
+  });
+});
+
+router.post("/googlesignup",(req,res)=>{
+  console.log(req.body)
+  const {googleId} = req.body;
+  User.find({googleId}).then(user=>{
+    console.log("test",user)
+    if(user.length === 0){
+      User.create({
+        googleId
+      })
+      .then(newUser =>{
+        res.json(newUser);
+      })
+      
+    }
+  })
+          .catch(err =>{
+        res.json(err);
+          });
+});
+
+
+router.post("/googlelogin",(req,res)=>{
+  console.log(req.body)
+  const {googleId} = req.body;
+  User.findOne({ 
+    googleId
+   })
+   .then((user) => {
+     res.json(user);
+   })
+   .catch(err => {
+     res.json(err);
+   });
+ });
+
+ ///////////local login
+
+router.post("/signup", (req, res) => {
+  console.log(req.body)
   const { username, password } = req.body;
 
   if (!password || !username) {
     //both fields need to be filled
-    return res.status(400).json({
-      errorMessage: "Both fields need to be filled"
+    return res.json({
+      errorMessage: "All field needs to be filled"
     });
     
   } else if (password.length < 8) {
     //password length is too short
-    return res.status(400).json({
+    return res.json({
       errorMessage: "Password needs to be 8 characters min"
     });
     
@@ -26,33 +99,30 @@ router.post("/signup", (req, res) => {
   User.findOne({ username: username })
     .then(user => {
       if (user) {
-        return res.status(409).json({ errorMessage: "User name already taken" });
+        return res.json({ errorMessage: "User name already taken" });
 
       } else {
         const salt = bcrypt.genSaltSync();
         const hash = bcrypt.hashSync(password, salt);
 
-        return User.create({
+        User.create({
           username,
           password: hash
         }).then(newUser => {
-          
-          req.login(newUser, (error) => {
-            if(error){
-              return res.status(409).json({ errorMessage: "User name already taken" });
-            }
-
-            res.status(200).json({ message: "everything went well"}); //everything went well
+          console.log(newUser)
+          req.login(newUser, () => {
+            
+            res.status(200).json(newUser); //everything went well
           })
+        }).catch(err => {
+          res.json({ errorMessage: err._message });
         });
       }
     })
-
-    .catch(err => {
-      res.json({ errorMessage: err._message });
-    });
+    
 
 })
+
 
 router.post("/login", (req, res) => {
   passport.authenticate("local", (error, user) => {
