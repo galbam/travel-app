@@ -50,11 +50,13 @@ export default class extends Component {
     const title = this.state.form.title;
     const description = this.state.form.description;
     const expenses = Number(this.state.form.expenses); 
-    const imageUrl = this.state.form.imageUrl;
-    const bgcolor = this.state.form.bgcolor;
+    // const imageUrl = this.state.form.imageUrl;
+    
+    const type = this.state.form.type;
 
     const newActivityInContainer = {
-      _id: uuidv1(), title, description, expenses, imageUrl, bgcolor
+      // id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
+      id: uuidv1(), title, description, expenses, type
     }
     
     this.props.refreshContainer(newActivityInContainer);
@@ -64,7 +66,7 @@ export default class extends Component {
     const {
       open,
       //form: { type, title, description, imgUrl }
-      form: { title, description, expenses, bgcolor }
+      form: { title, description, expenses, type }
     } = this.state;
     return (
       <Fragment>
@@ -81,9 +83,6 @@ export default class extends Component {
 
           <form onSubmit={this.handleSubmit}>
           <DialogContent>
-            <DialogContentText>
-              Please Fill out the Form Below
-            </DialogContentText>
               <TextField
                 label="Title"
                 value={title}
@@ -100,14 +99,9 @@ export default class extends Component {
                 margin="normal"
               />
               <br/>
-              <TextField 
-                label="Expenses"
-                value={expenses}
-                onChange={this.handleChange("expenses")}
-                margin="normal"/>
-              <br/>
-              <InputLabel htmlFor="color-simple">Color</InputLabel>
-              <Select
+             
+              {/* <InputLabel htmlFor="color-simple">Color</InputLabel> */}
+              {/* <Select
                 value={bgcolor}
                 onChange={this.handleChange("bgcolor")}
                 inputProps={{
@@ -120,11 +114,36 @@ export default class extends Component {
                 <MenuItem value="blue">Blue</MenuItem>
                 <MenuItem value="gray">Gray</MenuItem>
                 <MenuItem value="skyblue">Sky Blue</MenuItem>
+              </Select> */}
+              <br/>
+              <InputLabel htmlFor="type">Activity type</InputLabel>
+              <Select
+                value={type}
+                onChange={this.handleChange("type")}
+                inputProps={{
+                  name: 'type',
+                  id: 'type',
+                }}
+              >
+                <MenuItem value="transportation">Transportation</MenuItem>
+                <MenuItem value="flight">Flight</MenuItem>
+                <MenuItem value="accommodation">Accommodation</MenuItem>
+                <MenuItem value="food">Food & Drinks</MenuItem>
+                <MenuItem value="sightseeing">Sightseeing</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
               </Select>
+              <br/>
+              <TextField 
+                label="Expenses"
+                rows="2"
+                value={expenses}
+                onChange={this.handleChange("expenses")}
+                margin="normal"/>
+              
           </DialogContent>
 
-          <DialogActions>
-            <input
+           <DialogActions>
+            {/* <input
               accept="image/*"
               id="contained-button-file"
               multiple
@@ -136,11 +155,12 @@ export default class extends Component {
                 Upload
                 <CloudUploadIcon />
               </Button>
-            </label>
+            </label> */}
+            
             <Button onClick={this.handleToggle} type="submit" color="primary">
               Create
             </Button>
-          </DialogActions>
+          </DialogActions> 
           </form>
         
         </Dialog>
