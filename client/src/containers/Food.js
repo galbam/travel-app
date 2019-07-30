@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import Sidebar from '../components/Food/Sidebar';
 import { loadGoogleMaps, loadPlaces } from '../utils';
-import { category } from '../constants';
+import { category, activityType } from '../constants';
 
 export class Food extends Component {
   constructor(props) {
@@ -15,16 +15,21 @@ export class Food extends Component {
 
   componentDidMount() {
     let mapPromise = loadGoogleMaps();
-    let placesPromise = loadPlaces('Berlin', category.FOOD);
+    let foodPromise = loadPlaces('Berlin', category.FOOD);
+    let excursionPromise = loadPlaces('Berlin', category.OUTDOORS);
+    let accommodationPromise = loadPlaces('Berlin', category.HOTEL);
 
     Promise.all([
       mapPromise,
-      placesPromise
+      foodPromise,
+      excursionPromise,
+      accommodationPromise
     ])
     .then(values => {
-      // console.log(values);
       let maps = values[0];
-      this.venues = values[1].response.venues;
+      this.restaurants = values[1].response.venues;
+      this.excursions = values[2].response.venues;
+      this.accommodations = values[3].response.venues;
 
       this.google = maps;
       this.markers = [];
@@ -33,35 +38,44 @@ export class Food extends Component {
       this.map = new maps.maps.Map(document.getElementById('map'), {
         zoom: 12,
         scrollwheel: true,
-        center: { lat: this.venues[0].location.lat, lng: this.venues[0].location.lng }
+        center: { lat: this.restaurants[0].location.lat, lng: this.restaurants[0].location.lng }
       });
 
-      this.venues.forEach(place => {
-        let marker = new maps.maps.Marker({
-          position: { lat: place.location.lat, lng: place.location.lng },
-          map: this.map,
-          venue: place,
-          id: place.id,
-          name: place.name,
-          animation: maps.maps.Animation.DROP
-        });
-
-        marker.addListener('click', () => {
-          if (marker.getAnimation() !== null) { marker.setAnimation(null); }
-				  else { marker.setAnimation(maps.maps.Animation.BOUNCE); }
-				  setTimeout(() => { marker.setAnimation(null) }, 1500);
-			  });
-        maps.maps.event.addListener(marker, 'click', () => {
-  			   this.infowindow.setContent(marker.name);
-				   this.map.setCenter(marker.position);
-				   this.infowindow.open(this.map, marker);
-				   this.map.panBy(0, -125);
-			  });
-        this.markers.push(marker);
-      });
-
-      this.setState({ filteredVenues: this.venues });
+      this.loadMarkers(this.restaurants, activityType.FOOD);
+      this.loadMarkers(this.excursions, activityType.EXCURSION);
+      this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
     })
+  }
+
+  loadMarkers = (venues, type) => {
+    venues.forEach(venue => {
+      venue.type = type;
+      let marker = new this.google.maps.Marker({
+        position: { lat: venue.location.lat, lng: venue.location.lng },
+        map: this.map,
+        venue: venue,
+        id: venue.id,
+        name: venue.name,
+        type: type,
+        animation: this.google.maps.Animation.DROP
+      });
+
+      marker.addListener('click', () => {
+        if (marker.getAnimation() !== null) { marker.setAnimation(null); }
+        else { marker.setAnimation(this.google.maps.Animation.BOUNCE); }
+        setTimeout(() => { marker.setAnimation(null) }, 1500);
+      });
+      this.google.maps.event.addListener(marker, 'click', () => {
+         this.infowindow.setContent(marker.name);
+         this.map.setCenter(marker.position);
+         this.infowindow.open(this.map, marker);
+         this.map.panBy(0, -125);
+      });
+      this.markers.push(marker);
+    });
+
+    this.setState({ filteredVenues: this.restaurants });
+
   }
 
   listItemClick = (venue) => {
@@ -76,12 +90,11 @@ export class Food extends Component {
   }
 
   selectVenue = (venue) => {
-    console.log("Selected: ", venue.name);
     axios
     .post("/api/draftActivities", {
       title: venue.name,
       description: '',
-      type: 'Food',
+      type: venue.type,
       expenses: 0,
       color: 'grey',
       tripId: '5d3e015b38661b48bc314cc2' //TODO: get trip id for the current trip
@@ -89,14 +102,28 @@ export class Food extends Component {
     .then(response => response.data);
   }
 
-  filterVenues = (query) => {
-    let f = this.venues.filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()));
+  filter = (query, venues, type) => {
+    let f = venues.filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()));
     this.markers.forEach(marker => {
-      marker.name.toLowerCase().includes(query.toLowerCase()) === true ?
+      marker.type === type && marker.name.toLowerCase().includes(query.toLowerCase()) === true ?
         marker.setVisible(true) : marker.setVisible(false);
     });
     this.setState({ filteredVenues: f, query: query });
+    return f;
   }
+
+  filterRestaurants = (query) => {
+    this.filter(query, this.restaurants, activityType.FOOD);
+  }
+
+  filterExcursions = (query) => {
+    this.filter(query, this.excursions, activityType.EXCURSION);
+  }
+
+  filterAccommodations = (query) => {
+    this.filter(query, this.accommodations, activityType.ACCOMMODATION);
+  }
+
   render() {
     return (
       <div style={{display: "flex", height: "100vh"}}>
@@ -104,7 +131,9 @@ export class Food extends Component {
         <div>
           <h3>Foods and Drinks</h3>
           <Sidebar
-            filterVenues={this.filterVenues}
+            filterRestaurants={this.filterRestaurants}
+            filterExcursions={this.filterExcursions}
+            filterAccommodations={this.filterAccommodations}
             filteredVenues={this.state.filteredVenues}
             listItemClick={this.listItemClick}
             selectVenue={this.selectVenue} />
