@@ -29,12 +29,12 @@ import { Link } from "react-router-dom";
 
 //Routes
 import { Route } from "react-router-dom";
-import ThingsToDo from '../../containers/ThingsToDo';
-import Planner from "../../containers/Planner"
-import Transportation from "../../containers/Transportation"
-import Accommodation from "../../containers/Accommodation"
-import PackingList from "../../containers/PackingList"
-import Budget from "../../containers/Budget"
+import ThingsToDo from "../../containers/ThingsToDo";
+import Planner from "../../containers/Planner";
+import Transportation from "../../containers/Transportation";
+import Accommodation from "../../containers/Accommodation";
+import PackingList from "../../containers/PackingList";
+import Budget from "../../containers/Budget";
 
 const drawerWidth = 240;
 
@@ -123,7 +123,8 @@ export default function MiniDrawer() {
           [classes.appBarShift]: open
         })}
       >
-        <Toolbar> 
+        <Toolbar>
+          <img class="logo" src="/images/logo.png" />
           <IconButton
             style={{ color: "#494847" }}
             aria-label="open drawer"
@@ -135,7 +136,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-     </Toolbar>
+        </Toolbar>
       </AppBar>
       <Drawer
         variant="permanent"
@@ -160,7 +161,7 @@ export default function MiniDrawer() {
             )}
           </IconButton>
         </div>
-      
+
         <List
           style={{
             background: "#494847",
@@ -240,14 +241,14 @@ export default function MiniDrawer() {
         </List>
       </Drawer>
       <main className={classes.content}>
-      <div className={classes.toolbar} />
-      
+        <div className={classes.toolbar} />
+
         <Route exact path="/planner" component={Planner} />
-            <Route exact path="/thingstodo" component={ThingsToDo} />
-            <Route exact path="/transportation" component={Transportation} />
-            <Route exact path="/accommodation" component={Accommodation} />
-            <Route exact path="/packinglist" component={PackingList} />
-            <Route exact path="/budget" component={Budget} />
+        <Route exact path="/thingstodo" component={ThingsToDo} />
+        <Route exact path="/transportation" component={Transportation} />
+        <Route exact path="/accommodation" component={Accommodation} />
+        <Route exact path="/packinglist" component={PackingList} />
+        <Route exact path="/budget" component={Budget} />
       </main>
     </div>
   );

@@ -1,0 +1,13 @@
+.board-intro {
+  height: 95vh;
+  background-image: url("/images/croatia.jpg");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 55px;
+  width: 198px;
+}

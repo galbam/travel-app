@@ -5,27 +5,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.home-button{
+.home-button {
   color: white;
   text-decoration: none;
 }
 
-.home-planner{
+.home-planner {
   height: 80vh;
   display: flex;
 }
 
-.home-planner-img{
+.home-planner-img {
   margin: auto 50px;
 }
-img{
+img {
   height: 400px;
   width: auto;
 }
 
 .home-planner-text {
-  margin: auto 50px; 
+  margin: auto 50px;
 }
