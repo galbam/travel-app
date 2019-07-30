@@ -12,7 +12,7 @@ router.post("/signup", (req, res) => {
   if (!password || !username) {
     //both fields need to be filled
     return res.status(400).json({
-      errorMessage: "Both fields need to be filled"
+      errorMessage: "All field needs to be filled"
     });
     
   } else if (password.length < 8) {
@@ -32,27 +32,24 @@ router.post("/signup", (req, res) => {
         const salt = bcrypt.genSaltSync();
         const hash = bcrypt.hashSync(password, salt);
 
-        return User.create({
+        User.create({
           username,
           password: hash
         }).then(newUser => {
-          
-          req.login(newUser, (error) => {
-            if(error){
-              return res.status(409).json({ errorMessage: "User name already taken" });
-            }
-
-            res.status(200).json({ message: "everything went well"}); //everything went well
+          console.log(newUser)
+          req.login(newUser, () => {
+            
+            res.status(200).json(newUser); //everything went well
           })
+        }).catch(err => {
+          res.json({ errorMessage: err._message });
         });
       }
     })
-
-    .catch(err => {
-      res.json({ errorMessage: err._message });
-    });
+    
 
 })
+
 
 router.post("/login", (req, res) => {
   passport.authenticate("local", (error, user) => {

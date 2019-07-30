@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import { logout } from "./services/auth-service"
+
 
 export class Navbar extends Component {
+  
+  handleLogout = props => {
+    console.log(props)
+    logout().then(() => {
+      props.setUser(null);
+    });
+  };
+
+
   render() {
     return (
       <div className="navbar-style">
@@ -14,6 +25,7 @@ export class Navbar extends Component {
         <li><Link className="mylink" to="/accommodation">Accommodation</Link></li>
         <li><Link className="mylink" to="/packinglist">PackingList</Link></li>
         <li><Link className="mylink" to="/budget">Budget</Link></li>
+        <li><Link className="mylink" onClick={() => this.handleLogout(this.props)} to="/">Logout</Link></li>
         </ul>
       </div>
     )

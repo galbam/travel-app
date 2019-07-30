@@ -91,8 +91,8 @@ const index = require("./routes/index");
 app.use("/", index);
 
 
-// const auth = require("./routes/auth");
-// app.use("/api/auth", auth);
+const auth = require("./routes/auth");
+app.use("/api/auth", auth);
 
 
 const trip = require("./routes/trips");
