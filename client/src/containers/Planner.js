@@ -19,12 +19,7 @@ class Planner extends Component {
 
    
     container: {
-      id: 1, activities: [
-        { id: 1, title: "Learn Angular", bgcolor: "#FC9712", color: "white", description: "Desc1", expenses: 10 },
-        { id: 2, title: "Learn React", bgcolor: "#E53C38", description: "Desc2", expenses: 20 },
-        { id: 3, title: "Vue", bgcolor: "#4DA651", description: "Desc3", expenses: 30 },
-        { id: 4, title: "Vue2", bgcolor: "#00ACC0", description: "Desc4", expenses: 40 }
-      ]
+      id: 1, activities: []
     },
     days: []
 
@@ -37,6 +32,27 @@ class Planner extends Component {
   } catch (error) {
     console.error(error);
   }
+}
+
+
+
+
+deleteActivity= (activityId) => {
+ 
+
+  axios
+  .delete(`/api/draftActivities/${activityId}`)
+  .then(async() => {
+    const newContainer = JSON.parse(JSON.stringify(this.state.container));
+    let dAct = await this.getDraftActivities();
+        newContainer.activities = dAct;
+    this.setState({
+      container: newContainer
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
 }
 
   // getDraftActivities() {
@@ -217,6 +233,9 @@ class Planner extends Component {
             onDragStart={this.onDragStart}
             from={"container"} 
             updateActivity={(activity) => this.updateActivity(activity)}
+            deleteActivity={(activityId) => this.deleteActivity(activityId)}
+
+            
             />
         );
       });

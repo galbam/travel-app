@@ -15,31 +15,31 @@ class Activity extends Component {
   render() {
 console.log(this.props.activity.type)
     let bgColor = "grey";
-    let ourIcon = <FavoriteIcon style={{ color: "white" }}/>
+    let ourIcon = <FavoriteIcon style={{ color: "white", marginRight: "5px" }}/>
 
     if (this.props.activity.type === "transportation"){
       bgColor = "#4DA651";
-      ourIcon = <CommuteIcon style={{ color: "white" }}/>
+      ourIcon = <CommuteIcon style={{ color: "white", marginRight: "5px"  }}/>
     }
 
     if (this.props.activity.type === "flight"){
       bgColor = "#4DA651";
-      ourIcon = <FlightIcon style={{ color: "white" }}/>
+      ourIcon = <FlightIcon style={{ color: "white", marginRight: "5px"  }}/>
     }
 
     if (this.props.activity.type === "food"){
       bgColor = "#E53C38";
-      ourIcon = <FoodIcon style={{ color: "white" }}/>
+      ourIcon = <FoodIcon style={{ color: "white", marginRight: "5px"  }}/>
     }
 
     if (this.props.activity.type === "sightseeing"){
       bgColor = "#9C26B0";
-      ourIcon = <PhotoCameraIcon style={{ color: "white" }}/>
+      ourIcon = <PhotoCameraIcon style={{ color: "white", marginRight: "5px"  }}/>
     }
 
     if (this.props.activity.type === "accommodation"){
       bgColor = "#FC9712";
-      ourIcon = <HotelIcon style={{ color: "white" }}/>
+      ourIcon = <HotelIcon style={{ color: "white", marginRight: "5px"  }}/>
     }
 
     return (
@@ -56,12 +56,12 @@ console.log(this.props.activity.type)
         style= {{ backgroundColor: bgColor }}
       >
         <div onClick={this.handleClick} className="card-details">
-          <ListItemIcon>
+         
             {ourIcon}
-          </ListItemIcon>
           <ActivityDetail 
             activity={this.props.activity}
             updateActivity={this.props.updateActivity}
+            deleteActivity={this.props.deleteActivity}
           >
             {this.props.activity.title}
           </ActivityDetail>

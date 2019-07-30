@@ -4,12 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 import Select from '@material-ui/core/Select';
 // import Icon from "@material-ui/core/Icon";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
@@ -100,22 +99,7 @@ export default class extends Component {
               />
               <br/>
              
-              {/* <InputLabel htmlFor="color-simple">Color</InputLabel> */}
-              {/* <Select
-                value={bgcolor}
-                onChange={this.handleChange("bgcolor")}
-                inputProps={{
-                  name: 'bgcolor',
-                  id: 'color-simple',
-                }}
-              >
-                <MenuItem value="red">Red</MenuItem>
-                <MenuItem value="yellow">Yellow</MenuItem>
-                <MenuItem value="blue">Blue</MenuItem>
-                <MenuItem value="gray">Gray</MenuItem>
-                <MenuItem value="skyblue">Sky Blue</MenuItem>
-              </Select> */}
-              <br/>
+          
               <InputLabel htmlFor="type">Activity type</InputLabel>
               <Select
                 value={type}
