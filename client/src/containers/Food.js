@@ -84,7 +84,7 @@ export class Food extends Component {
       type: 'Food',
       expenses: 0,
       color: 'grey',
-      tripId: '5d3e015b38661b48bc314cc2' //TODO: get trip id for the current trip
+      tripId: `${localStorage.getItem('tripId')}` //TODO: get trip id for the current trip
      })
     .then(response => response.data);
   }

@@ -22,7 +22,7 @@ class Day extends Component {
 
         {this.props.day.activities.map(activity => {
           return (
-            <Activity key={activity.id} activity={activity}
+            <Activity key={activity._id} activity={activity}
               id={this.props.day.id}
               onDragStart={this.props.onDragStart}
               from={"day"} 

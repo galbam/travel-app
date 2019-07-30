@@ -54,7 +54,7 @@ export default class extends Component {
     const bgcolor = this.state.form.bgcolor;
 
     const newActivityInContainer = {
-      id: uuidv1(), title, description, expenses, imageUrl, bgcolor
+      _id: uuidv1(), title, description, expenses, imageUrl, bgcolor
     }
     
     this.props.refreshContainer(newActivityInContainer);

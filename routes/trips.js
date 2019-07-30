@@ -31,6 +31,21 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//Get all draft activities from one trip
+router.get("/:id/draftActivities", (req, res) => {
+  const id = req.params.id;
+
+  Trip.findById(id)
+    .populate("draftActivity")
+    .populate("owner")
+    .then(trip => {
+      res.json(trip.draftActivity);
+    })
+    .catch(error => {
+      res.json(error);
+    });
+});
+
 //Create Trip
 router.post("/", (req, res) => {
   const { title,  description, destination, startDate, endDate } = req.body;
