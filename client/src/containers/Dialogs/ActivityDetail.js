@@ -18,7 +18,7 @@ class ActivityDetail extends Component {
     open: false,
     form: {
       type: "",
-      id: this.props.activity.id,
+      id: this.props.activity._id,
       title: this.props.activity.title,
       description: this.props.activity.description,
       imgUrl: this.props.activity.imgUrl,
@@ -46,7 +46,7 @@ class ActivityDetail extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const id = this.state.form.id;
+    const _id = this.state.form.id;
     const title = this.state.form.title;
     const description = this.state.form.description;
     const expenses = Number(this.state.form.expenses);
@@ -54,10 +54,10 @@ class ActivityDetail extends Component {
     const bgcolor = this.state.form.bgcolor;
 
     const updatedActivity = {
-      id, title, description, expenses, bgcolor
+      _id, title, description, expenses, bgcolor
     }
 
-    //console.log(id, title, description, expenses, bgcolor);
+    //console.log(_id, title, description, expenses, bgcolor);
     this.props.updateActivity(updatedActivity)
   }
 
@@ -70,7 +70,7 @@ class ActivityDetail extends Component {
     return (
       <Fragment>
         <Link onClick={this.handleToggle}>
-          {this.props.children}
+          {this.state.form.title}
         </Link>
         <Dialog
           open={open}

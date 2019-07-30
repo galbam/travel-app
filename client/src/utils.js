@@ -23,3 +23,10 @@ export function loadPlaces(city, categoryId){
   var apiURL = `https://api.foursquare.com/v2/venues/search?client_id=${clientId}&client_secret=${clientSecret}&v=20130815%20&intent=${intent}&limit=${maxResults}&categoryId=${categoryId}&near=${city}&query=${query}`;
   return fetch(apiURL).then(resp => resp.json())
 }
+
+export var groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
