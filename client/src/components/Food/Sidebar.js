@@ -35,6 +35,7 @@ export class Sidebar extends Component {
   };
 
   handleChange = (event, value) => {
+    this.setState({value});
     if(value === 0){
       this.props.filterRestaurants('');
       this.setState({filterVenues:this.props.filterRestaurants})
@@ -61,7 +62,7 @@ export class Sidebar extends Component {
             onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary"
-            scrollable
+            // scrollable
             scrollButtons="auto"
           >
             <Tab label="Foods and Drinks" />

@@ -33,6 +33,7 @@ router.get("/:id", (req, res) => {
 
 //Get all draft activities from one trip
 router.get("/:id/draftActivities", (req, res) => {
+  //trip id
   const id = req.params.id;
 
   Trip.findById(id)
@@ -93,5 +94,29 @@ router.delete("/:id", (req, res) => {
       res.json(err);
     });
 });
+
+
+//Delete one draft activity from a trip (from the container)
+router.delete("/:id", (req, res) => {
+  //trip id
+  const id = req.params.id;
+
+  Trip.findByIdAndUpdate(id)
+    .then(response => {
+
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+
+ .then(tripObj => {
+   return Trip.findByIdAndUpdate(tripObj.trip, {
+     $pull: { draftActivity: id }
+   }).then(() => {
+     res.json({ message: `Draft Activity with id ${id} was successfully deleted` });
+   });
+ })
 
 module.exports = router;

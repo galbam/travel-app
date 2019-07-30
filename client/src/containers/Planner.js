@@ -32,14 +32,53 @@ class Planner extends Component {
 
   };
 
+  //API CALL
+  //Get all draft activities from a trip
   async getDraftActivities() {
-  try {
-    const response = await axios.get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
-    return response.data;
-  } catch (error) {
-    console.error(error);
+    try {
+      const response = await axios.get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
+      return response.data;
+    } 
+    catch (error) {
+      console.error(error);
+    }
   }
-}
+
+  // //Delete one draft activity from a trip (from the container)
+  // async deleteDraftActivity(draftActivityId) {
+  //   try {
+  //     const response = await axios.delete(`/api/trips/${localStorage.getItem('tripId')}/draftActivity/${draftActivityId}`)
+  //     return response.data;
+  //   }
+  //   catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+  // => This is done by using 'Delete Draft Activity'
+
+  //Add activity / draft activity to container 
+  //=> Add activity to draft activity a trip
+  // async addActivityToDraftActivity(activityId){
+  //   try {
+  //     const response = await axios.post(`/api/trips/${localStorage.getItem('tripId')}/draftActivities/${activityId}`)
+  //     return response.data;
+  //   }
+  //   catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+  // => I think this is done by using 'Create a Draft Activity'
+
+  //Add an activity to a specific day (name) in a trip
+  async addActivityToDay(dayName, activityId) {
+    try {
+      const response = await axios.post(`/api/trips/${localStorage.getItem('tripId')}/day/${dayName}/activity/${activityId}`)
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
 
   // getDraftActivities() {
 

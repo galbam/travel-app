@@ -21,7 +21,7 @@ const activitySchema = new Schema({
      },
      expenses: Number,
 
-     trip: { type: Schema.Types.ObjectId, ref: "Trip" },
+     trip: { type: Schema.Types.ObjectId, ref: "Trip" }
 });
 
 const Activity = mongoose.model("Activity", activitySchema);
