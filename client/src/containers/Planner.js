@@ -35,10 +35,15 @@ class Planner extends Component {
 }
 
 
+found(activityId) {
+[...this.state.days].forEach(el => {
+const act = el.activities.find(activity => activity.id === activityId)
+if (act) console.log(act)
+})}
 
 
 deleteActivity= (activityId) => {
- 
+  this.found(activityId)
 
   axios
   .delete(`/api/draftActivities/${activityId}`)
@@ -226,6 +231,7 @@ deleteActivity= (activityId) => {
     //Populate content in container
     var activitiesInContainer =
       this.state.container.activities.map(activity => {
+      
         return (
 
           <Activity key={activity._id} activity={activity}
@@ -418,6 +424,7 @@ deleteActivity= (activityId) => {
               {this.state.startDate &&
                 this.state.endDate &&
                 this.state.days.map((day) => {
+                  console.log(day)
                   return (
 
                     <Day
@@ -429,6 +436,7 @@ deleteActivity= (activityId) => {
                       onDrop={this.onDrop}
 
                       updateActivity={(activity) => this.updateActivity(activity)}
+                      deleteActivity={(activityId) => this.deleteActivity(activityId)}
                     />
 
                   );

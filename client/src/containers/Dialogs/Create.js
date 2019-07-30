@@ -55,7 +55,7 @@ export default class extends Component {
 
     const newActivityInContainer = {
       // id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
-      id: uuidv1(), title, description, expenses, type
+      _id: uuidv1(), title, description, expenses, type
     }
     
     this.props.refreshContainer(newActivityInContainer);
