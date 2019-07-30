@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import InspirationBar from '../Food/InspirationBar'
+import InspirationBar from '../InspirationBar'
 
 function TabContainer(props) {
   return (
@@ -25,9 +25,8 @@ const styles = theme => ({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
-  },
+  }
 });
-
 
 export class Sidebar extends Component {
   state = {
@@ -35,6 +34,7 @@ export class Sidebar extends Component {
   };
 
   handleChange = (event, value) => {
+    this.setState({value});
     if(value === 0){
       this.props.filterRestaurants('');
       this.setState({filterVenues:this.props.filterRestaurants})
@@ -42,10 +42,6 @@ export class Sidebar extends Component {
     else if(value === 1){
       this.props.filterExcursions('');
       this.setState({filterVenues:this.props.filterExcursions})
-    }
-    else if(value === 2){
-      this.props.filterAccommodations('');
-      this.setState({filterVenues:this.props.filterAccommodations})
     }
   };
 
@@ -66,7 +62,6 @@ export class Sidebar extends Component {
           >
             <Tab label="Foods and Drinks" />
             <Tab label="Excursion/Sightseeing" />
-            <Tab label="Accommodation" />
           </Tabs>
         </AppBar>
         {value === 0 &&
@@ -84,20 +79,13 @@ export class Sidebar extends Component {
             listItemClick={this.props.listItemClick}
             selectVenue={this.props.selectVenue} />
         </TabContainer>}
-        {value === 2 &&
-        <TabContainer>
-          <InspirationBar filterVenues={this.state.filterVenues}
-            filteredVenues={this.props.filteredVenues}
-            listItemClick={this.props.listItemClick}
-            selectVenue={this.props.selectVenue} />
-        </TabContainer>}
       </div>
     );
   }
 }
 
 Sidebar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Sidebar);
