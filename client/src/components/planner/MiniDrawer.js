@@ -124,7 +124,7 @@ export default function MiniDrawer() {
         })}
       >
         <Toolbar>
-          <img class="logo" src="/images/logo.png" />
+          
           <IconButton
             style={{ color: "#494847" }}
             aria-label="open drawer"
@@ -136,6 +136,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
+          <img className="logo" src="/images/logo.png" />
         </Toolbar>
       </AppBar>
       <Drawer
