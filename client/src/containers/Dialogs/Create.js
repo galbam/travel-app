@@ -50,12 +50,13 @@ export default class extends Component {
     const title = this.state.form.title;
     const description = this.state.form.description;
     const expenses = Number(this.state.form.expenses); 
-    const imageUrl = this.state.form.imageUrl;
-    const bgcolor = this.state.form.bgcolor;
+    // const imageUrl = this.state.form.imageUrl;
+    
     const type = this.state.form.type;
 
     const newActivityInContainer = {
-      id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
+      // id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
+      id: uuidv1(), title, description, expenses, type
     }
     
     this.props.refreshContainer(newActivityInContainer);
@@ -65,7 +66,7 @@ export default class extends Component {
     const {
       open,
       //form: { type, title, description, imgUrl }
-      form: { title, description, expenses, bgcolor, type }
+      form: { title, description, expenses, type }
     } = this.state;
     return (
       <Fragment>
@@ -125,6 +126,7 @@ export default class extends Component {
                 }}
               >
                 <MenuItem value="transportation">Transportation</MenuItem>
+                <MenuItem value="flight">Flight</MenuItem>
                 <MenuItem value="accommodation">Accommodation</MenuItem>
                 <MenuItem value="food">Food & Drinks</MenuItem>
                 <MenuItem value="sightseeing">Sightseeing</MenuItem>

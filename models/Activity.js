@@ -13,7 +13,7 @@ const activitySchema = new Schema({
      description: String,
      card_type: {
           type: String,
-          enum: ["Transportation", "Accommodation", "Sightseeing", "Food", "Other"]
+          enum: ["Transportation", "Flight", "Accommodation", "Sightseeing", "Food", "Other"]
      },
      details: {
           imageUrl: String,

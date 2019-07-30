@@ -17,13 +17,13 @@ class ActivityDetail extends Component {
   state = {
     open: false,
     form: {
-      type: "",
+      type: this.props.activity.type,
       id: this.props.activity._id,
       title: this.props.activity.title,
       description: this.props.activity.description,
-      imgUrl: this.props.activity.imgUrl,
+      // imgUrl: this.props.activity.imgUrl,
       expenses: this.props.activity.expenses,
-      bgcolor: this.props.activity.bgcolor
+      // bgcolor: this.props.activity.bgcolor
     }
   };
 
@@ -51,10 +51,12 @@ class ActivityDetail extends Component {
     const description = this.state.form.description;
     const expenses = Number(this.state.form.expenses);
     //const imageUrl = this.state.form.imageUrl;
-    const bgcolor = this.state.form.bgcolor;
+    // const bgcolor = this.state.form.bgcolor;
+    const type = this.state.form.type
 
     const updatedActivity = {
-      _id, title, description, expenses, bgcolor
+      // _id, title, description, expenses, bgcolor
+      _id, title, description, expenses, type
     }
 
     //console.log(_id, title, description, expenses, bgcolor);
@@ -64,12 +66,13 @@ class ActivityDetail extends Component {
   render() {
     const {
       open,
-      form: { title, description, expenses, bgcolor }
+      form: { title, description, expenses, type}
+      // form: { title, description, expenses, bgcolor }
     } = this.state;
 
     return (
       <Fragment>
-        <Link onClick={this.handleToggle}>
+        <Link onClick={this.handleToggle} style={{ color: "white" }}>
           {this.state.form.title}
         </Link>
         <Dialog
@@ -103,7 +106,7 @@ class ActivityDetail extends Component {
                 onChange={this.handleChange("expenses")}
                 margin="normal" />
               <br />
-              <InputLabel htmlFor="color-simple">Color</InputLabel>
+              {/* <InputLabel htmlFor="color-simple">Color</InputLabel>
               <Select
                 value={bgcolor}
                 onChange={this.handleChange("bgcolor")}
@@ -118,6 +121,21 @@ class ActivityDetail extends Component {
                 <MenuItem value="gray">Gray</MenuItem>
                 <MenuItem value="skyblue">Sky Blue</MenuItem>
                 <MenuItem value="green">Green</MenuItem>
+              </Select> */}
+               <InputLabel htmlFor="type">Activity type</InputLabel>
+              <Select
+                value={type}
+                onChange={this.handleChange("type")}
+                inputProps={{
+                  name: 'type',
+                  id: 'type',
+                }}
+              >
+                <MenuItem value="transportation">Transportation</MenuItem>
+                <MenuItem value="accommodation">Accommodation</MenuItem>
+                <MenuItem value="food">Food & Drinks</MenuItem>
+                <MenuItem value="sightseeing">Sightseeing</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
               </Select>
             </DialogContent>
             <Button onClick={this.handleToggle} type="submit" color="primary">

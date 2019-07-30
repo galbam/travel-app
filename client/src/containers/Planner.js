@@ -17,14 +17,7 @@ class Planner extends Component {
     endDate: moment(localStorage.getItem('endDate'), arrFormats) || this.props.location.data.endDate,
     focusedInput: null,
 
-    // container: {
-    //   id: 1, activities: [
-    //     { _id: 1, title: "Learn Angular", bgcolor: "yellow", description: "Desc1", expenses: 10 },
-    //     { _id: 2, title: "Learn React", bgcolor: "blue", description: "Desc2", expenses: 20 },
-    //     { _id: 3, title: "Vue", bgcolor: "skyblue", description: "Desc3", expenses: 30 },
-    //     { _id: 4, title: "Vue2", bgcolor: "green", description: "Desc4", expenses: 40 }
-    //   ]
-    // },
+   
     container: {
       id: 1, activities: [
         { id: 1, title: "Learn Angular", bgcolor: "#FC9712", color: "white", description: "Desc1", expenses: 10 },
@@ -233,11 +226,13 @@ class Planner extends Component {
 
   refreshContainer = (newContainerActivity) => {
 
-    const { _id, title, description, expenses, bgcolor } = newContainerActivity;
+    // const { _id, title, description, expenses, bgcolor } = newContainerActivity;
+    const { _id, title, description, expenses, type } = newContainerActivity;
 
     const newContainer = JSON.parse(JSON.stringify(this.state.container));
     newContainer.activities.push({
-      _id, title, description, bgcolor, expenses
+      // _id, title, description, bgcolor, expenses
+      _id, title, description, type, expenses
     });
 
     this.setState({
@@ -301,13 +296,13 @@ class Planner extends Component {
 
   updateActivity = (activity) => {
 
-    const { _id, title, description, expenses, bgcolor } = activity;
+    const { _id, title, description, expenses, type } = activity;
     const updatedActivity = { 
       _id,
       title, 
       description, 
       expenses, 
-      bgcolor
+      type
     };
 
     let flagUpdated = false;
