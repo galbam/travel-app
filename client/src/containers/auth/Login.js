@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { login } from "../services/auth-service";
-import { google } from "../services/auth-service";
-import { facebook } from "../services/auth-service";
+import { googleLogin } from "../services/auth-service";
+import { facebookLogin } from "../services/auth-service";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
 
@@ -56,24 +56,40 @@ export default class Login extends Component {
       }
     })
     .catch(err => {
-      this.setState({err: err.response.data.message})
+      this.setState({err: err})
     });
   };
 
 
   responseFacebook = response =>{
-    
+    console.log(response);
     console.log("here",response);
-    const {username, facebookId} = response;
-    facebook(username, facebookId);
-    
+    const {userId} = response;
+    facebookLogin(userId).then(response=>{
+      console.log("here",response.data)
+      this.props.setUser(response.data);
+      this.props.history.push("/")
+    }) 
+    .catch(err => {
+      this.setState({err: err})
+    });
+   
   };
+    
+
 
 
   responseGoogle = response =>{
-    console.log(response);
-    const {username, googleId} = response;
-    google(username, googleId);
+    console.log(response.googleId);
+    const {googleId} = response;
+    googleLogin(googleId).then(response=>{
+      console.log("here",response.data)
+      this.props.setUser(response.data);
+      this.props.history.push("/")
+    }) 
+    .catch(err => {
+      this.setState({err: err})
+    });
    
   };
 
@@ -138,7 +154,6 @@ export default class Login extends Component {
      <FacebookLogin
  appId="2511839425504211"
  fields="name,email,picture"
- autoLoad
  callback={this.responseFacebook}
  render={renderProps => (
    <Button 

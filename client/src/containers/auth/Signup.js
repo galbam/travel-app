@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { signup } from "../services/auth-service";
-import { google } from "../services/auth-service";
-import { facebook } from "../services/auth-service";
+import { googleSignup } from "../services/auth-service";
+import { facebookSignup } from "../services/auth-service";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { GoogleLogin } from 'react-google-login';
 //style
@@ -41,10 +41,16 @@ export default class Signup extends Component {
     signup(username, password)
     .then(response =>{ 
       console.log(response.data)
-      this.props.setUser(response.data);
-      this.props.history.push("/");
+      if(response.data.errorMessage){
+        this.setState({error:response.data.errorMessage})
+      }else{
+        this.props.setUser(response.data);
+        this.props.history.push("/");
+
+      }
     })
     .catch(err => {
+      console.log(err)
       this.setState({err: err})
     });
   };
@@ -57,35 +63,24 @@ export default class Signup extends Component {
     });
   };
 
-  // comoponentClicked = event => {
-  //   const {name,id} = this.response;
-
-  //   console.log(name, id)
-  //   event.preventDefault();
-
-  //   facebook(name, id)
-  //   .then(response =>{ 
-  //     this.props.setUser(response.data);
-  //     this.props.history.push("/");
-  //   })
-  //   .catch(err => {
-  //     this.setState({err: err.response.data.message})
-  //   });
-  // };
 
   responseFacebook = response =>{
     
-    console.log(response);
-    const {username, facebookId} = response;
-    facebook(username, facebookId);
+    const {userId} = response;
+    facebookSignup(userId).then(response=>{
+      this.props.setUser(response.data);
+      this.props.history.push("/")
+    })
     
   };
 
 
   responseGoogle = response =>{
-    console.log(response);
-    const {username, googleId} = response;
-    google(username, googleId);
+    const { googleId} = response;
+    googleSignup(googleId).then(response=>{
+      this.props.setUser(response.data);
+      this.props.history.push("/")
+    })
     
   };
 
@@ -153,11 +148,10 @@ export default class Signup extends Component {
       <FacebookLogin
   appId="2511839425504211"
   fields="name,email,picture"
-  autoLoad
   callback={this.responseFacebook}
   render={renderProps => (
     <Button 
-    onClick={this.comoponentClicked}
+    onClick={renderProps.onClick}
     type="submit"
     fullWidth
     variant="outlined"
@@ -172,7 +166,7 @@ export default class Signup extends Component {
      clientId = "617606078054-dtd6r3bkt33mbsb436f2fip2g5b62h62.apps.googleusercontent.com"
     render={renderProps => ( 
     <Button 
-      onClick={this.comoponentClicked} 
+    onClick={renderProps.onClick} 
       disabled={renderProps.disabled}
        type="submit"
        fullWidth

@@ -22,7 +22,7 @@ import Protected from "./components/Protected"
 
 class App extends Component {
   state={
-    user:this.props.user
+    user:this.props.user,
   }
 
   setUser = (user)=>{
@@ -35,7 +35,7 @@ class App extends Component {
      
       <div className="App">
         <Switch>
-          <Route exact path="/"  component={Home} />
+          <Route exact path="/"  render={(props)=><Home {...props} user={this.state.user} setUser ={this.setUser}/>} />
           <Protected exact path="/tripform" redirectPath = "/signup" user={this.state.user} setUser ={this.setUser} component={Tripform} />
           <Protected exact path="/login" user={!this.state.user} setUser ={this.setUser} component={Login} />
           <Protected exact path="/signup" user={!this.state.user} setUser ={this.setUser} component={Signup} />
