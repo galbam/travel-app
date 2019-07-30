@@ -11,7 +11,9 @@ export class Home extends Component {
     return (
       <div>
         <AppBar position="static" style={{ background: "#494847" }}>
-          <Toolbar />
+          <Toolbar>
+            <img class="logo" src="/images/logo.png" />
+          </Toolbar>
         </AppBar>
         <div className="home-intro">
           <Button

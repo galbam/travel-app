@@ -9,7 +9,8 @@ import Tripform from "./containers/Tripform";
 
 // import ThingsToDo from './containers/ThingsToDo'
 // import Navbar from "./containers/Navbar"
-import MiniDrawer from "./components/planner/MiniDrawer"
+import MiniDrawer from "./components/planner/MiniDrawer";
+import Boards from "./containers/Boards";
 
 // import Planner from "./containers/Planner"
 // import Transportation from "./containers/Transportation"
@@ -19,21 +20,18 @@ import MiniDrawer from "./components/planner/MiniDrawer"
 
 class App extends Component {
   render() {
-
     return (
-     
       <div className="App">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/tripform" component={Tripform} />
+          <Route exact path="/boards" component={Boards} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route component={MiniDrawer}/>
+          <Route component={MiniDrawer} />
         </Switch>
       </div>
-   
     );
-    
   }
 }
 
