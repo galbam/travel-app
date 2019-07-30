@@ -2,37 +2,97 @@ import React, { Component } from "react";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import moment from "moment";
-
+import axios from "axios";
 import Day from "../components/Day";
 import UserContainer from "../components/UserContainer";
 import Activity from '../components/Activity';
 
+const arrFormats = null;
 
+class Planner extends Component {  
 
-class Planner extends Component {
-  
   state = {
     totalExpenses: 0,
-    startDate: this.props.location.data.startDate,
-    endDate: this.props.location.data.endDate,
+    startDate: moment(localStorage.getItem('startDate'), arrFormats) || this.props.location.data.startDate,
+    endDate: moment(localStorage.getItem('endDate'), arrFormats) || this.props.location.data.endDate,
     focusedInput: null,
-    // moment().startOf('month')
 
+    // container: {
+    //   id: 1, activities: [
+    //     { _id: 1, title: "Learn Angular", bgcolor: "yellow", description: "Desc1", expenses: 10 },
+    //     { _id: 2, title: "Learn React", bgcolor: "blue", description: "Desc2", expenses: 20 },
+    //     { _id: 3, title: "Vue", bgcolor: "skyblue", description: "Desc3", expenses: 30 },
+    //     { _id: 4, title: "Vue2", bgcolor: "green", description: "Desc4", expenses: 40 }
+    //   ]
+    // },
     container: {
+<<<<<<< HEAD
       id: 1, activities: [
         { id: 1, title: "Learn Angular", bgcolor: "#FC9712", color: "white", description: "Desc1", expenses: 10 },
         { id: 2, title: "Learn React", bgcolor: "#E53C38", description: "Desc2", expenses: 20 },
         { id: 3, title: "Vue", bgcolor: "#4DA651", description: "Desc3", expenses: 30 },
         { id: 4, title: "Vue2", bgcolor: "#00ACC0", description: "Desc4", expenses: 40 }
       ]
+=======
+      id: 1, activities: []
+>>>>>>> Development
     },
     days: []
 
   };
 
- 
+  async getDraftActivities() {
+  try {
+    const response = await axios.get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+  // getDraftActivities() {
+
+  //   let drafts = [];
+  //   axios
+  //     .get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
+  //     .then(response => {
+  //       drafts = response.data;        
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+      
+  //   console.log(drafts)
+  //   return drafts;
+  // }
+
   componentDidMount() {
-    this.fillDates(this.state.startDate, this.state.endDate)
+    //this.fillDates(this.state.startDate, this.state.endDate);
+
+    //-----------------------------
+    //Get container content from DB
+    //localStorage.getItem('tripId')
+    axios
+      .get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
+      .then(response => {
+
+        const newContainer = JSON.parse(JSON.stringify(this.state.container));
+        newContainer.activities = response.data;
+
+        this.setState({
+          container: newContainer
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    
+    //Days should be created first
+    this.fillDates(moment(localStorage.getItem('startDate'), arrFormats) || this.state.startDate,
+    moment(localStorage.getItem('endDate'), arrFormats) || this.state.endDate);
+    
+    //Assign each activity in each day based on name
+    //-----------------------------
   }
 
   //DnD
@@ -61,7 +121,7 @@ class Planner extends Component {
     if (origin.from === "container") {
       //Get activity from container
       const newContainer = JSON.parse(JSON.stringify(this.state.container));
-      let index = newContainer.activities.findIndex(a => a.id === activityData.id);
+      let index = newContainer.activities.findIndex(a => a._id === activityData._id);
       const activity = newContainer.activities[index];
       newContainer.activities.splice(index, 1);
 
@@ -88,7 +148,7 @@ class Planner extends Component {
       const newDays = this.state.days.slice();
 
       const originDay = newDays.find(d => d.id === origin.id);
-      let index = originDay.activities.findIndex(a => a.id === activityData.id);
+      let index = originDay.activities.findIndex(a => a._id === activityData._id);
       const originActivity = originDay.activities[index];
       originDay.activities.splice(index, 1);
 
@@ -98,7 +158,8 @@ class Planner extends Component {
       }, 0);
 
       if (target === "container") {
-        const newContainer = JSON.parse(JSON.stringify(this.state.container));
+        //const newContainer = JSON.parse(JSON.stringify(this.state.container));
+        const newContainer = {...this.state.container, activities: [...this.state.container.activities] }
         newContainer.activities.push(originActivity);
 
         this.setState({
@@ -126,6 +187,9 @@ class Planner extends Component {
         this.updateTotalExpenses();
       }
     }
+
+    //Update DB ?
+
   }
   //---
 
@@ -159,7 +223,7 @@ class Planner extends Component {
       this.state.container.activities.map(activity => {
         return (
 
-          <Activity key={activity.id} activity={activity}
+          <Activity key={activity._id} activity={activity}
             id={this.state.container.id}
             onDragStart={this.onDragStart}
             from={"container"} 
@@ -173,16 +237,47 @@ class Planner extends Component {
 
   refreshContainer = (newContainerActivity) => {
 
-    const { id, title, description, expenses, bgcolor } = newContainerActivity;
+    const { _id, title, description, expenses, bgcolor } = newContainerActivity;
 
     const newContainer = JSON.parse(JSON.stringify(this.state.container));
     newContainer.activities.push({
-      id, title, description, bgcolor, expenses
+      _id, title, description, bgcolor, expenses
     });
 
     this.setState({
       container: newContainer
     });
+
+    //Refresh DB container
+    //localStorage.getItem('tripId')
+
+
+  }
+
+  searchActivity = async search => {
+    let dAct = await this.getDraftActivities();
+    const newContainer = { ...this.state.container, activities: dAct }
+    
+    if (search && dAct.length > 0) {
+
+      let activitiesFiltered = newContainer.activities.filter(activity => {
+        return activity.title.toLowerCase().match(search.toLowerCase())
+      });
+
+      if (activitiesFiltered.length > 0){
+        newContainer.activities = activitiesFiltered;
+
+        this.setState({
+          container: newContainer
+        });
+      }
+
+    }
+    else {
+     this.setState({
+       container: newContainer
+     });
+    }
   }
 
   updateTotalExpenses = () => {
@@ -203,13 +298,16 @@ class Planner extends Component {
     this.setState({
       totalExpenses: newTotalExpenses
     });
+
+    //Update total expenses in DB
+
   }
 
   updateActivity = (activity) => {
 
-    const { id, title, description, expenses, bgcolor } = activity;
+    const { _id, title, description, expenses, bgcolor } = activity;
     const updatedActivity = { 
-      id,
+      _id,
       title, 
       description, 
       expenses, 
@@ -227,7 +325,7 @@ class Planner extends Component {
       for (let index = 0; index < newDays.length; index++) {
         
         const day = newDays[index];
-        let indexFound = day.activities.findIndex(a => a.id === id);
+        let indexFound = day.activities.findIndex(a => a._id === _id);
 
         if (indexFound >= 0){
           indexDay = index;
@@ -262,7 +360,7 @@ class Planner extends Component {
     
       //lets try to find teh activity in the container
       const newContainer = JSON.parse(JSON.stringify(this.state.container));
-      let indexActContainer = newContainer.activities.findIndex(a => a.id === id);
+      let indexActContainer = newContainer.activities.findIndex(a => a._id === _id);
       
       if (indexActContainer >= 0) {
 
@@ -277,15 +375,20 @@ class Planner extends Component {
       }
     }
 
-    //If the flagUpdated remains false that means that the activity was found in the day and in the container
+    //If the flagUpdated remains false that means that the activity was not found in the day or in the container
     if (flagUpdated === false){
       console.log("The activity was not updated");
+    }
+
+    //DB
+    if (flagUpdated){
+      //Update activity in DB
+
     }
 
   }
 
   render() {
-
     
     return (
       
@@ -295,7 +398,8 @@ class Planner extends Component {
           onDrop={(e) => this.onDrop(e, "container")}
           containerContent={this.populateContainer()}
           refreshContainer={(x) => this.refreshContainer(x)}
-          totalExpenses={this.state.totalExpenses} />
+          totalExpenses={this.state.totalExpenses} 
+          searchActivity={this.searchActivity}/>
 
         <div className="calendar">
           <div className="scroll-container">

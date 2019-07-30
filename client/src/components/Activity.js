@@ -6,6 +6,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 class Activity extends Component {
   render() {
+
+    let bgColor = "gray";
+    if (this.props.activity.bgcolor){
+      bgColor = this.props.activity.bgcolor;
+    }
+
     return (
       <div
         onDragStart={e =>
@@ -17,8 +23,9 @@ class Activity extends Component {
         }
         draggable
         className="draggable"
-        style={{ backgroundColor: this.props.activity.bgcolor }}
+        style= {{ backgroundColor: bgColor }}
       >
+<<<<<<< HEAD
         <div onClick={this.handleClick} className="card-details">
           <ListItemIcon>
             {<PhotoCameraIcon style={{ color: "white" }} />}
@@ -29,6 +36,10 @@ class Activity extends Component {
           >
             {this.props.activity.title}
           </ActivityDetail>
+=======
+        <div onClick={this.handleClick}>
+          <ActivityDetail activity={this.props.activity} updateActivity={this.props.updateActivity} />
+>>>>>>> Development
         </div>
       </div>
     );
