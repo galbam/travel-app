@@ -9,7 +9,6 @@ import FlightIcon from "@material-ui/icons/Flight";
 import FoodIcon from "@material-ui/icons/Restaurant";
 import HotelIcon from "@material-ui/icons/Hotel";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 class Activity extends Component {
   render() {
