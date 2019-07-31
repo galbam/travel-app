@@ -1,42 +1,49 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from "react";
+import axios from "axios";
 
-import { loadGoogleMaps, loadPlaces } from '../utils';
-import { category, activityType } from '../constants';
-import { InspirationBar } from '../components/InspirationBar';
+import { loadGoogleMaps, loadPlaces } from "../utils";
+import { category, activityType } from "../constants";
+import { InspirationBar } from "../components/InspirationBar";
 
 export class Accommodation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
-    }
+      query: "",
+      location: "Berlin"
+    };
   }
 
   componentDidMount() {
-    let mapPromise = loadGoogleMaps();
-    let accommodationPromise = loadPlaces('Berlin', category.HOTEL);
+    let location = localStorage.getItem("destination");
 
-    Promise.all([
-      mapPromise,
-      accommodationPromise
-    ])
-    .then(values => {
-      let maps = values[0];
-      this.accommodations = values[1].response.venues;
+    this.setState({ location: location }, () => {
+      let mapPromise = loadGoogleMaps();
+      let accommodationPromise = loadPlaces(
+        this.state.location,
+        category.HOTEL
+      );
 
-      this.google = maps;
-      this.markers = [];
+      Promise.all([mapPromise, accommodationPromise]).then(values => {
+        let maps = values[0];
+        this.accommodations = values[1].response.venues;
 
-      this.infowindow = new maps.maps.InfoWindow();
-      this.map = new maps.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        scrollwheel: true,
-        center: { lat: this.accommodations[0].location.lat, lng: this.accommodations[0].location.lng }
+        this.google = maps;
+        this.markers = [];
+
+        this.infowindow = new maps.maps.InfoWindow();
+        this.map = new maps.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          scrollwheel: true,
+          center: {
+            lat: this.accommodations[0].location.lat,
+            lng: this.accommodations[0].location.lng
+          }
+        });
+
+        this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
       });
-
-      this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
-    })
+    });
   }
 
   loadMarkers = (venues, type) => {
@@ -52,77 +59,93 @@ export class Accommodation extends Component {
         animation: this.google.maps.Animation.DROP
       });
 
-      marker.addListener('click', () => {
-        if (marker.getAnimation() !== null) { marker.setAnimation(null); }
-        else { marker.setAnimation(this.google.maps.Animation.BOUNCE); }
-        setTimeout(() => { marker.setAnimation(null) }, 1500);
+      marker.addListener("click", () => {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(this.google.maps.Animation.BOUNCE);
+        }
+        setTimeout(() => {
+          marker.setAnimation(null);
+        }, 1500);
       });
-      this.google.maps.event.addListener(marker, 'click', () => {
-         this.infowindow.setContent(marker.name);
-         this.map.setCenter(marker.position);
-         this.infowindow.open(this.map, marker);
-         this.map.panBy(0, -125);
+      this.google.maps.event.addListener(marker, "click", () => {
+        this.infowindow.setContent(marker.name);
+        this.map.setCenter(marker.position);
+        this.infowindow.open(this.map, marker);
+        this.map.panBy(0, -125);
       });
       this.markers.push(marker);
     });
 
     this.setState({ filteredVenues: this.accommodations });
-  }
+  };
 
-  listItemClick = (venue) => {
+  listItemClick = venue => {
     let marker = this.markers.filter(m => m.id === venue.id)[0];
     this.infowindow.setContent(marker.name);
     this.map.setCenter(marker.position);
     this.infowindow.open(this.map, marker);
     this.map.panBy(0, -125);
-    if (marker.getAnimation() !== null) { marker.setAnimation(null); }
-    else { marker.setAnimation(this.google.maps.Animation.BOUNCE); }
-    setTimeout(() => { marker.setAnimation(null) }, 1500);
-  }
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(this.google.maps.Animation.BOUNCE);
+    }
+    setTimeout(() => {
+      marker.setAnimation(null);
+    }, 1500);
+  };
 
-  selectVenue = (venue) => {
+  selectVenue = venue => {
     axios
-    .post("/api/draftActivities", {
-      title: venue.name,
-      description: '',
-      type: venue.type,
-      expenses: 0,
-      date: new Date(),
-      tripId: `${localStorage.getItem('tripId')}`
-     })
-    .then(response => response.data);
-  }
+      .post("/api/draftActivities", {
+        title: venue.name,
+        description: "",
+        type: venue.type,
+        expenses: 0,
+        date: new Date(),
+        tripId: `${localStorage.getItem("tripId")}`
+      })
+      .then(response => response.data);
+  };
 
   filter = (query, venues, type) => {
-    let f = venues.filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()));
+    let f = venues.filter(venue =>
+      venue.name.toLowerCase().includes(query.toLowerCase())
+    );
     this.markers.forEach(marker => {
-      marker.type === type && marker.name.toLowerCase().includes(query.toLowerCase()) === true ?
-        marker.setVisible(true) : marker.setVisible(false);
+      marker.type === type &&
+      marker.name.toLowerCase().includes(query.toLowerCase()) === true
+        ? marker.setVisible(true)
+        : marker.setVisible(false);
     });
     this.setState({ filteredVenues: f, query: query });
     return f;
-  }
+  };
 
-  filterAccommodations = (query) => {
+  filterAccommodations = query => {
     this.filter(query, this.accommodations, activityType.ACCOMMODATION);
-  }
+  };
 
   render() {
     return (
       <div>
-        <h3>Accommodation</h3>
-      <div style={{display: "flex", height: "100vh"}}>
-        <div id="map"></div>
-        <div>
-            <InspirationBar filterVenues={this.filterAccommodations}
+        <h3>Accommodation in {this.state.location}</h3>
+        <div style={{ display: "flex", height: "100vh" }}>
+          <div id="map" />
+          <div>
+            <InspirationBar
+              filterVenues={this.filterAccommodations}
               filteredVenues={this.state.filteredVenues}
               listItemClick={this.listItemClick}
-              selectVenue={this.selectVenue} />
+              selectVenue={this.selectVenue}
+            />
+          </div>
         </div>
       </div>
-      </div>
-    )
+    );
   }
 }
 
-export default Accommodation
+export default Accommodation;
