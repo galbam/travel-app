@@ -21,9 +21,7 @@ export default class extends Component {
       type: "",
       title: "",
       description: "",
-      imgUrl: "",
-      expenses: 0,
-      bgcolor: ""
+      expenses: 0
     }
   }; 
 
@@ -48,14 +46,12 @@ export default class extends Component {
 
     const title = this.state.form.title;
     const description = this.state.form.description;
-    const expenses = Number(this.state.form.expenses); 
-    // const imageUrl = this.state.form.imageUrl;
-    
+    const expenses = Number(this.state.form.expenses);    
     const type = this.state.form.type;
+    const date = new Date();
 
     const newActivityInContainer = {
-      // id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
-      _id: uuidv1(), title, description, expenses, type
+      _id: uuidv1(), title, date, description, expenses, type
     }
     
     this.props.refreshContainer(newActivityInContainer);
@@ -64,7 +60,6 @@ export default class extends Component {
   render() {
     const {
       open,
-      //form: { type, title, description, imgUrl }
       form: { title, description, expenses, type }
     } = this.state;
     return (
@@ -98,8 +93,6 @@ export default class extends Component {
                 margin="normal"
               />
               <br/>
-             
-          
               <InputLabel htmlFor="type">Activity type</InputLabel>
               <Select
                 value={type}
