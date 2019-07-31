@@ -22,9 +22,7 @@ class ActivityDetail extends Component {
       id: this.props.activity._id,
       title: this.props.activity.title,
       description: this.props.activity.description,
-      // imgUrl: this.props.activity.imgUrl,
       expenses: this.props.activity.expenses
-      // bgcolor: this.props.activity.bgcolor
     }
   };
 
@@ -53,8 +51,6 @@ class ActivityDetail extends Component {
     });
   }
 
-
-
   handleSubmit = event => {
     event.preventDefault();
 
@@ -62,12 +58,9 @@ class ActivityDetail extends Component {
     const title = this.state.form.title;
     const description = this.state.form.description;
     const expenses = Number(this.state.form.expenses);
-    //const imageUrl = this.state.form.imageUrl;
-    // const bgcolor = this.state.form.bgcolor;
     const type = this.state.form.type;
 
     const updatedActivity = {
-      // _id, title, description, expenses, bgcolor
       _id,
       title,
       description,
@@ -92,9 +85,7 @@ class ActivityDetail extends Component {
         >
       {this.state.form.title} 
       </Link> 
-
-       
-        
+      
         <Dialog
           open={open}
           onClose={this.handleToggle}

@@ -28,15 +28,19 @@ export class Food extends Component {
       
       console.log(this.state)
     let mapPromise = loadGoogleMaps();
+<<<<<<< HEAD
     let foodPromise = loadPlaces(this.state.location, category.FOOD);
     let excursionPromise = loadPlaces(this.state.location, category.OUTDOORS);
     let accommodationPromise = loadPlaces(this.state.location, category.HOTEL);
+=======
+    let foodPromise = loadPlaces('Berlin', category.FOOD);
+    let excursionPromise = loadPlaces('Berlin', category.OUTDOORS);
+>>>>>>> Development
 
     Promise.all([
       mapPromise,
       foodPromise,
-      excursionPromise,
-      accommodationPromise
+      excursionPromise
     ])
     
   
@@ -45,7 +49,6 @@ export class Food extends Component {
       let maps = values[0];
       this.restaurants = values[1].response.venues;
       this.excursions = values[2].response.venues;
-      this.accommodations = values[3].response.venues;
 
       this.google = maps;
       this.markers = [];
@@ -59,7 +62,6 @@ export class Food extends Component {
 
       this.loadMarkers(this.restaurants, activityType.FOOD);
       this.loadMarkers(this.excursions, activityType.EXCURSION);
-      this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
     })
    })
   }
@@ -113,8 +115,8 @@ export class Food extends Component {
       description: '',
       type: venue.type,
       expenses: 0,
-      color: 'grey',
-      tripId: `${localStorage.getItem('tripId')}` //TODO: get trip id for the current trip
+      date: new Date(),
+      tripId: `${localStorage.getItem('tripId')}`
      })
     .then(response => response.data);
   }
@@ -137,10 +139,6 @@ export class Food extends Component {
     this.filter(query, this.excursions, activityType.EXCURSION);
   }
 
-  filterAccommodations = (query) => {
-    this.filter(query, this.accommodations, activityType.ACCOMMODATION);
-  }
-
   render() {
     return (
       <div>
@@ -148,11 +146,14 @@ export class Food extends Component {
       <div style={{display: "flex", height: "100vh"}}>
         <div id="map"></div>
         <div>
+<<<<<<< HEAD
           <h3>Foods and Drinks</h3>
           <Sidebar 
+=======
+          <Sidebar
+>>>>>>> Development
             filterRestaurants={this.filterRestaurants}
             filterExcursions={this.filterExcursions}
-            filterAccommodations={this.filterAccommodations}
             filteredVenues={this.state.filteredVenues}
             listItemClick={this.listItemClick}
             selectVenue={this.selectVenue} />

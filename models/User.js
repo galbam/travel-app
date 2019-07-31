@@ -4,17 +4,13 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
      username: {
           type: String,
-          required: true
      },
+
      password: {
           type: String,
-          minlength: 8,
-          maxlength: 24,
-          required: true
-     }
-},
-{
-     timestamps: true
+     },
+     googleId:String,
+     userId: String
 });
 
 const User = mongoose.model('User', userSchema);

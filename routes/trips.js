@@ -21,7 +21,7 @@ router.get("/:id", (req, res) => {
   const id = req.params.id;
 
   Trip.findById(id)
-    .populate("activity")    
+    .populate("activity")
     .populate("owner")
     .then(trip => {
       res.json(trip);
@@ -33,6 +33,7 @@ router.get("/:id", (req, res) => {
 
 //Get all draft activities from one trip
 router.get("/:id/draftActivities", (req, res) => {
+  //trip id
   const id = req.params.id;
 
   Trip.findById(id)
@@ -48,10 +49,20 @@ router.get("/:id/draftActivities", (req, res) => {
 
 //Create Trip
 router.post("/", (req, res) => {
-  const { title,  description, destination, startDate, endDate } = req.body;
+  const {
+    title,
+    description,
+    destination,
+    startDate,
+    endDate
+  } = req.body;
 
   Trip.create({
-    title,  description, destination, startDate, endDate
+    title,
+    description,
+    destination,
+    startDate,
+    endDate
   })
     .then(trip => {
       res.json(trip);
@@ -64,15 +75,18 @@ router.post("/", (req, res) => {
 //Update Trip
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  const { budget, title, description, startDate, endDate } = req.body;
+  const {
+    title,
+    description,
+    startDate,
+    endDate } = req.body;
 
-  Trip.findByIdAndUpdate(id, { 
-      budget,
-      title,
-      description,
-      startDate,
-      endDate 
-    })
+  Trip.findByIdAndUpdate(id, {
+    title,
+    description,
+    startDate,
+    endDate
+  })
     .then(() => {
       res.json({ message: `Trip with id ${id} was successfully updated` });
     })
@@ -91,6 +105,22 @@ router.delete("/:id", (req, res) => {
     })
     .catch(err => {
       res.json(err);
+    });
+});
+
+//Patch
+//Delete one draft activity from a trip (from the container)
+router.patch("/:id/draftActivity/:draftId", (req, res) => {
+
+  //trip id and draft activity id
+  const id = req.params.id;
+  const draftId = req.params.draftId;
+
+  Trip.findByIdAndUpdate(id, {
+    $pull: { draftActivity: draftId }
+  })
+    .then(() => {
+      res.json({ message: `Draft Activity with id ${id} was successfully deleted from trip ${draftId}` });
     });
 });
 
