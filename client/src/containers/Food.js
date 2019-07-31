@@ -96,7 +96,7 @@ export class Food extends Component {
       description: '',
       type: venue.type,
       expenses: 0,
-      color: 'grey',
+      date: new Date(),
       tripId: `${localStorage.getItem('tripId')}` //TODO: get trip id for the current trip
      })
     .then(response => response.data);

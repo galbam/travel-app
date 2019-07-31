@@ -7,18 +7,10 @@ const activitySchema = new Schema({
           required: true
      },
      date: {
-          type: Date,
-          required: true
+          type: Date
      },
      description: String,
-     card_type: {
-          type: String,
-          enum: ["Transportation", "Flight", "Accommodation", "Sightseeing", "Food", "Other"]
-     },
-     details: {
-          imageUrl: String,
-          links: []
-     },
+     type: String,
      expenses: Number,
 
      trip: { type: Schema.Types.ObjectId, ref: "Trip" }

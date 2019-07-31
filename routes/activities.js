@@ -30,12 +30,18 @@ router.get("/:id", (req, res) => {
 
 //Create an Activity; we need the id of a Trip
 router.post("/", (req, res) => {
-  const { date, title, description, tripId } = req.body;
+  const { 
+    title, 
+    description, 
+    type,
+    expenses,
+    tripId } = req.body;
 
   Activity.create({
-    date,
     title,
-    description
+    description,
+    type,
+    expenses
   })
     .then(activityObj => {
       return Trip.findByIdAndUpdate(tripId, {
@@ -56,18 +62,16 @@ router.post("/", (req, res) => {
 //Update Activity
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  const { date, title, description, card_type, details, expenses } = req.body;
-  const { imageUrl, links } = details;
-
-  Activity.findByIdAndUpdate(id, {
-    date,
+  const { 
     title,
     description,
-    card_type,
-    details: {
-      imageUrl,
-      links
-    },
+    type, 
+    expenses } = req.body;
+
+  Activity.findByIdAndUpdate(id, {
+    title,
+    description,
+    type,
     expenses
   })
     .then(() => {
