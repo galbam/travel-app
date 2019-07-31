@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
-import Create from '../containers/Dialogs/Create';
+import React, { Component } from "react";
+import Create from "../containers/Dialogs/Create";
+import SearchBar from "./SearchBar";
 
 class UserContainer extends Component {
-
-  handleChange = (event) => {
-
-    const value = event.target.value;
-    this.props.searchActivity(value);
-  }
-
   render() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div className="user-container">
           <div
-            onDragOver={(e) => this.props.onDragOver(e)}
-            onDrop={(e) => { this.props.onDrop(e, "container") }}>
-            <span>CONTAINER</span>
-            <br />
-            <input type="search" name="search" onChange={this.handleChange} />
+            onDragOver={e => this.props.onDragOver(e)}
+            onDrop={e => {
+              this.props.onDrop(e, "container");
+            }}
+          >
+            <SearchBar searchActivity={this.props.searchActivity} />
             {this.props.containerContent}
           </div>
           <Create refreshContainer={this.props.refreshContainer} />
@@ -28,7 +23,7 @@ class UserContainer extends Component {
           <p>{this.props.totalExpenses}</p>
         </div>
       </div>
-    )
+    );
   }
 }
 

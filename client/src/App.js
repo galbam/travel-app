@@ -57,8 +57,14 @@ class App extends Component {
             component={Signup}
           />
 
-          <Route
-            render={props => <MiniDrawer {...props} setUser={this.setUser} />}
+          <Protected
+            // exact
+            path="/"
+            redirectPath="/signup"
+            user={this.state.user}
+            setUser={this.setUser}
+            // render={props => <MiniDrawer {...props} setUser={this.setUser} />}
+            component={MiniDrawer}
           />
 
           <Protected
