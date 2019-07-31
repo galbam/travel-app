@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DateRangePicker } from "react-dates";
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
 import axios from "axios";
 // import moment from "moment";
 
@@ -31,7 +31,7 @@ export default class Tripform extends Component {
     startDate: null,
     endDate: null,
     focusedInput: null,
-    
+    userId: this.props.user._id
   };
 
   handleChange = event => {
@@ -42,18 +42,27 @@ export default class Tripform extends Component {
     });
   };
 
-    handleSubmit = event => {
-      const {title,  description, destination, startDate, endDate} = this.state;
-      event.preventDefault();
-      
-      axios.post("/api/trips", {title,  description, destination, startDate, endDate})
-      .then(response =>{
+  handleSubmit = event => {
+    event.preventDefault();
+    
+    const { title, description, destination, startDate, endDate } = this.state;
+    const userId = this.state.userId;
 
+    axios
+      .post("/api/trips", {
+        title,
+        description,
+        destination,
+        startDate,
+        endDate,
+        userId
+       })
+      .then(response => {
         //Save Trip ID and destination
-        localStorage.setItem('tripId', response.data._id);
-        localStorage.setItem('destination', destination);
-        localStorage.setItem('startDate', startDate);
-        localStorage.setItem('endDate', endDate);
+        localStorage.setItem("tripId", response.data._id);
+        localStorage.setItem("destination", destination);
+        localStorage.setItem("startDate", startDate);
+        localStorage.setItem("endDate", endDate);
 
         this.props.history.push({
           pathname: "/planner",
@@ -62,15 +71,13 @@ export default class Tripform extends Component {
             endDate: endDate
           }
         });
-       
       })
       .catch(error => {
-        this.setState({err: error})
+        this.setState({ err: error });
       });
-    };
+  };
 
   render() {
-    
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -98,11 +105,9 @@ export default class Tripform extends Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
                   fullWidth
                   type="textarea"
                   name="description"
@@ -135,13 +140,13 @@ export default class Tripform extends Component {
                   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
                   endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
                   onDatesChange={({ startDate, endDate }) =>
-                  this.setState({ startDate, endDate })}// PropTypes.func.isRequired,
-                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  onFocusChange={focusedInput =>
+                 this.setState({ startDate, endDate })
+                  } // PropTypes.func.isRequired,
+                    focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput =>
                     this.setState({ focusedInput })
                   } // PropTypes.func.isRequired,
                   firstDayOfWeek={1}
-
                 />
               </Grid>
               ​

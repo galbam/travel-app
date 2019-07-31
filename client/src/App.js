@@ -5,16 +5,8 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import Tripform from "./containers/Tripform";
 
-// import ThingsToDo from './containers/ThingsToDo'
-// import Navbar from "./containers/Navbar"
 import MiniDrawer from "./components/planner/MiniDrawer";
 import Boards from "./containers/Boards";
-
-// import Planner from "./containers/Planner"
-// import Transportation from "./containers/Transportation"
-// import Accommodation from "./containers/Accommodation"
-// import PackingList from "./containers/PackingList"
-// import Budget from "./containers/Budget"
 
 import Login from "./containers/auth/Login";
 import Signup from "./containers/auth/Signup";
@@ -40,7 +32,6 @@ class App extends Component {
               <Home {...props} user={this.state.user} setUser={this.setUser} />
             )}
           />
-          <Route exact path="/boards" component={Boards} />
           <Protected
             exact
             path="/tripform"
@@ -49,6 +40,8 @@ class App extends Component {
             setUser={this.setUser}
             component={Tripform}
           />
+
+          <Route exact path="/boards" component={Boards} />
           <Protected
             exact
             path="/login"
@@ -63,7 +56,34 @@ class App extends Component {
             setUser={this.setUser}
             component={Signup}
           />
-          <Route component={MiniDrawer} />
+
+          <Protected
+            // exact
+            path="/"
+            redirectPath="/signup"
+            user={this.state.user}
+            setUser={this.setUser}
+            // render={props => <MiniDrawer {...props} setUser={this.setUser} />}
+            component={MiniDrawer}
+          />
+
+          <Protected
+            exact
+            path="/tripform"
+            redirectPath="/signup"
+            user={this.state.user}
+            setUser={this.setUser}
+            component={Tripform}
+          />
+
+          {/* <Protected
+            exact
+            path="/boards"
+            redirectPath="/signup"
+            user={this.state.user}
+            setUser={this.setUser}
+            component={Boards}
+          /> */}
         </Switch>
       </div>
     );

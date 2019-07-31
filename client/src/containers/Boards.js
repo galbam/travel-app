@@ -15,13 +15,12 @@ const BootstrapButton = withStyles({
     border: "5px solid",
     lineHeight: 1.5,
     backgroundColor: "#00ACC0",
-    maxWidth: '442px', maxHeight: '214px', minWidth: '442px', minHeight: '214px',
+    maxWidth: "442px",
+    maxHeight: "214px",
+    minWidth: "442px",
+    minHeight: "214px",
     borderColor: "#00ACC0",
-    fontFamily: [
-     
-      "Roboto"
-  
-    ].join(","),
+    fontFamily: ["Roboto"].join(","),
     "&:hover": {
       backgroundColor: "#0069d9",
       borderColor: "#0062cc"
@@ -43,14 +42,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CustomizedButtons() {
+export default function Boards() {
   const classes = useStyles();
 
   return (
     <div>
       <AppBar position="static" style={{ background: "#494847" }}>
         <Toolbar>
-          <img class="logo" src="/images/logo.png" alt="example" />
+          <img className="logo" src="/images/logo.png" alt="example" />
         </Toolbar>
       </AppBar>
       <div className="board-intro">
@@ -60,9 +59,7 @@ export default function CustomizedButtons() {
           disableRipple
           className={classes.margin}
         >
-        <Typography variant="h4">
-          Bootstrap
-          </Typography>
+          <Typography variant="h4">Bootstrap</Typography>
         </BootstrapButton>
 
         <BootstrapButton
@@ -75,10 +72,9 @@ export default function CustomizedButtons() {
             color: "black"
           }}
           className={classes.margin}
-        > <Typography variant="h4">
-         Create a New Trip
-          </Typography>
-        
+        >
+          {" "}
+          <Typography variant="h4">Create a New Trip</Typography>
         </BootstrapButton>
       </div>
     </div>

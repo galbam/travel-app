@@ -86,8 +86,6 @@ class Planner extends Component {
 
   async updateActivityInDb(updatedActivity) {
 
-    console.log("++++", updatedActivity);
-
     try {
       const response = await axios.patch(`/api/draftActivities/${updatedActivity._id}`, updatedActivity);
       return response.data;
@@ -155,11 +153,9 @@ class Planner extends Component {
 
       const dayDate = daysFilled.find(f => f.title.isSame(a.date, 'day'));
 
-      console.log(dayDate);
       if (dayDate) {
         dayDate.activities.push(a);
         dayDate.expenses += a.expenses;
-        console.log(dayDate.expenses);
       }
       else {
         newContainer.activities.push(a);
@@ -212,7 +208,6 @@ class Planner extends Component {
       const day = newDays.find(d => d.id === target.id);
       day.activities.push(activity);
 
-      console.log(day);
       //DB -> Add activity to a day
       this.addActivityToDay(day.title.toDate(), activity._id);
 
