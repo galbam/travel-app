@@ -50,6 +50,7 @@ export default class Login extends Component {
       if(response.data.message){
           this.setState({error:response.data.message})
       }else{
+        
         this.props.setUser(response.data);
         this.props.history.push("/")
 
@@ -63,7 +64,6 @@ export default class Login extends Component {
 
   responseFacebook = response =>{
     console.log(response);
-    console.log("here",response);
     const {userId} = response;
     facebookLogin(userId).then(response=>{
       console.log("here",response.data)
@@ -75,9 +75,7 @@ export default class Login extends Component {
     });
    
   };
-    
-
-
+  
 
   responseGoogle = response =>{
     console.log(response.googleId);
@@ -152,10 +150,10 @@ export default class Login extends Component {
       <div style={{display:'flex', flexDirection:'row'}}>
      
      <FacebookLogin
- appId="2511839425504211"
- fields="name,email,picture"
- callback={this.responseFacebook}
- render={renderProps => (
+  appId="2511839425504211"
+  fields="name,email,picture"
+  callback={this.responseFacebook}
+  render={renderProps => (
    <Button 
    onClick={renderProps.onClick}
    type="submit"
