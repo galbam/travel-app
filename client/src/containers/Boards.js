@@ -18,6 +18,30 @@ const images = [
   {
     title: "Create a New Board",
     width: "30%"
+  },
+  {
+    title: "Create a New Board",
+    width: "40%"
+  },
+  {
+    title: "Create a New Board",
+    width: "30%"
+  },
+  {
+    title: "Create a New Board",
+    width: "30%"
+  },
+  {
+    title: "Create a New Board",
+    width: "40%"
+  },
+  {
+    title: "Create a New Board",
+    width: "30%"
+  },
+  {
+    title: "Create a New Board",
+    width: "30%"
   }
 ];
 
