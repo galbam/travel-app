@@ -6,7 +6,7 @@ import { loadGoogleMaps, loadPlaces } from "../utils";
 import { category, activityType } from "../constants";
 import { Typography } from "@material-ui/core";
 
-export class Food extends Component {
+export default class Food extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,8 +98,7 @@ export class Food extends Component {
     }, 1500);
   };
 
-  selectVenue = (venue) => {
-
+  selectVenue = venue => {
     axios
       .post("/api/draftActivities", {
         title: venue.name,
@@ -147,18 +146,18 @@ export class Food extends Component {
             height: "100vh"
           }}
         >
-          <div id="map" />
+          <div id="map"> </div>
           <div>
             <Sidebar
               filterRestaurants={this.filterRestaurants}
               filterExcursions={this.filterExcursions}
               filteredVenues={this.state.filteredVenues}
               listItemClick={this.listItemClick}
-            selectVenue={(act) => this.selectVenue(act)} />
+              selectVenue={act => this.selectVenue(act)}
+            />
+          </div>
         </div>
       </div>
     );
   }
 }
-
-export default Food;
