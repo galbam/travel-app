@@ -203,6 +203,17 @@ deleteActivity= (activityId) => {
   }
   //---
 
+
+  // async addActivityToDay(dayName, activityId) {
+  //   try {
+  //     const response = await axios.post(`/api/trips/${localStorage.getItem('tripId')}/day/${dayName}/activity/${activityId}`)
+  //     return response.data;
+  //   }
+  //   catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
   fillDates = (startDate, endDate) => {
 
     let daysArr = [];

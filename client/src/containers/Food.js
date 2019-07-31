@@ -9,15 +9,28 @@ export class Food extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: '',
+      location:'Berlin'
     }
   }
 
+ 
   componentDidMount() {
+
+  new Promise (() => {
+      let location = localStorage.getItem('destination')
+      
+      this.setState({location: location})
+      
+    })
+    .then(() => {
+
+      
+      console.log(this.state)
     let mapPromise = loadGoogleMaps();
-    let foodPromise = loadPlaces('Berlin', category.FOOD);
-    let excursionPromise = loadPlaces('Berlin', category.OUTDOORS);
-    let accommodationPromise = loadPlaces('Berlin', category.HOTEL);
+    let foodPromise = loadPlaces(this.state.location, category.FOOD);
+    let excursionPromise = loadPlaces(this.state.location, category.OUTDOORS);
+    let accommodationPromise = loadPlaces(this.state.location, category.HOTEL);
 
     Promise.all([
       mapPromise,
@@ -25,7 +38,10 @@ export class Food extends Component {
       excursionPromise,
       accommodationPromise
     ])
+    
+  
     .then(values => {
+      
       let maps = values[0];
       this.restaurants = values[1].response.venues;
       this.excursions = values[2].response.venues;
@@ -45,6 +61,7 @@ export class Food extends Component {
       this.loadMarkers(this.excursions, activityType.EXCURSION);
       this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
     })
+   })
   }
 
   loadMarkers = (venues, type) => {
@@ -126,11 +143,13 @@ export class Food extends Component {
 
   render() {
     return (
+      <div>
+         <h3>Things to do in {this.state.location}</h3>
       <div style={{display: "flex", height: "100vh"}}>
         <div id="map"></div>
         <div>
           <h3>Foods and Drinks</h3>
-          <Sidebar
+          <Sidebar 
             filterRestaurants={this.filterRestaurants}
             filterExcursions={this.filterExcursions}
             filterAccommodations={this.filterAccommodations}
@@ -138,6 +157,7 @@ export class Food extends Component {
             listItemClick={this.listItemClick}
             selectVenue={this.selectVenue} />
         </div>
+      </div>
       </div>
     )
   }
