@@ -86,6 +86,7 @@ export class Food extends Component {
   }
 
   selectVenue = (venue) => {
+
     axios
     .post("/api/draftActivities", {
       title: venue.name,
@@ -126,7 +127,7 @@ export class Food extends Component {
             filterExcursions={this.filterExcursions}
             filteredVenues={this.state.filteredVenues}
             listItemClick={this.listItemClick}
-            selectVenue={this.selectVenue} />
+            selectVenue={(act) => this.selectVenue(act)} />
         </div>
       </div>
     )
