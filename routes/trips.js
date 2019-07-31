@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Trip = require("../models/Trip");
+const User = require("../models/User");
 
 //Get Trips
 router.get("/", (req, res) => {
@@ -54,7 +55,8 @@ router.post("/", (req, res) => {
     description,
     destination,
     startDate,
-    endDate
+    endDate,
+    userId
   } = req.body;
 
   Trip.create({
@@ -65,7 +67,14 @@ router.post("/", (req, res) => {
     endDate
   })
     .then(trip => {
-      res.json(trip);
+
+      return Trip.findByIdAndUpdate(trip._id, {
+        $push: { owner: userId }
+      })
+        .then(response => {
+          res.json(response)
+        })
+
     })
     .catch(err => {
       res.json(err);
@@ -122,6 +131,27 @@ router.patch("/:id/draftActivity/:draftId", (req, res) => {
     .then(() => {
       res.json({ message: `Draft Activity with id ${id} was successfully deleted from trip ${draftId}` });
     });
+});
+
+//Get all trips by user
+router.get("/:id/all", (req, res) => {
+
+  //user id
+  const id = req.params.id;
+
+  Trip
+    .find({
+      "owner": id
+    })
+    .populate("draftActivity")
+    .populate("owner")
+    .then(trips => {
+      res.json(trips);
+    })
+    .catch(err => {
+      res.json(err);
+    })
+
 });
 
 module.exports = router;
