@@ -4,6 +4,7 @@ import axios from "axios";
 import Sidebar from "../components/Food/Sidebar";
 import { loadGoogleMaps, loadPlaces } from "../utils";
 import { category, activityType } from "../constants";
+import { Typography } from "@material-ui/core";
 
 export class Food extends Component {
   constructor(props) {
@@ -135,8 +136,16 @@ export class Food extends Component {
   render() {
     return (
       <div>
-        <h3>Things to do in {this.state.location}</h3>
-        <div style={{ display: "flex", height: "100vh" }}>
+        <Typography variant="h4">
+          Things to do in {this.state.location}
+        </Typography>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh"
+          }}
+        >
           <div id="map" />
           <div>
             <Sidebar
