@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DateRangePicker } from "react-dates";
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+import "react-dates/initialize";
+import "react-dates/lib/css/_datepicker.css";
 import axios from "axios";
 // import moment from "moment";
 
@@ -58,6 +58,15 @@ export default class Tripform extends Component {
       })
       .then(response =>{
 
+    axios
+      .post("/api/trips", {
+        title,
+        description,
+        destination,
+        startDate,
+        endDate
+      })
+      .then(response => {
         //Save Trip ID and destination
         localStorage.setItem('tripId', response.data._id);
         localStorage.setItem('destination', destination);
@@ -71,15 +80,13 @@ export default class Tripform extends Component {
             endDate: endDate
           }
         });
-       
       })
       .catch(error => {
-        this.setState({err: error})
+        this.setState({ err: error });
       });
-    };
+  };
 
   render() {
-    
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -107,11 +114,9 @@ export default class Tripform extends Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
                   fullWidth
                   type="textarea"
                   name="description"
@@ -144,13 +149,13 @@ export default class Tripform extends Component {
                   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
                   endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
                   onDatesChange={({ startDate, endDate }) =>
-                  this.setState({ startDate, endDate })}// PropTypes.func.isRequired,
+                    this.setState({ startDate, endDate })
+                  } // PropTypes.func.isRequired,
                   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                   onFocusChange={focusedInput =>
                     this.setState({ focusedInput })
                   } // PropTypes.func.isRequired,
                   firstDayOfWeek={1}
-
                 />
               </Grid>
               ​
