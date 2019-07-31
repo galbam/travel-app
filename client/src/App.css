@@ -31,6 +31,13 @@
   /*  flex-basis: 13.5%; */
 }
 
+.inside-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 43vh;
+}
+
 .scroll-container {
   width: 80vw;
   height: 100vh;
@@ -71,12 +78,14 @@ li {
 
 .user-container {
   min-height: 100vh;
-  height: 70vh;
   background-color: rgb(27, 172, 191);
   color: white;
   text-align: center;
   padding: 20px;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .navbar-style {

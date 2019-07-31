@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Create from "../containers/Dialogs/Create";
 import SearchBar from "./SearchBar";
+import Typography from "@material-ui/core/Typography";
 
 class UserContainer extends Component {
   render() {
@@ -15,12 +16,12 @@ class UserContainer extends Component {
           >
             <SearchBar searchActivity={this.props.searchActivity} />
             {this.props.containerContent}
+            <Create refreshContainer={this.props.refreshContainer} />
           </div>
-          <Create refreshContainer={this.props.refreshContainer} />
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <h6>Total Expenses</h6>
-          <p>{this.props.totalExpenses}</p>
+          <Typography style={{ textAlign: "center" }} variant="button">
+            Total Expenses <br />
+            {this.props.totalExpenses}
+          </Typography>
         </div>
       </div>
     );
