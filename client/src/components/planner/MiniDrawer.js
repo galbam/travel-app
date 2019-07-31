@@ -185,7 +185,10 @@ export default function MiniDrawer(props) {
         >
           {/* {['Home', 'Planner', 'Things to do', 'Transportation', 'Accommodation', 'Packing List', 'Budget'].map((text, index) => ( */}
           <div>
-            <Link className="mylink" to="/planner">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/planner"
+            >
               <ListItem button key="Planner">
                 <ListItemIcon>
                   {<CalendarIcon style={{ color: "white" }} />}
@@ -194,7 +197,10 @@ export default function MiniDrawer(props) {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/thingstodo">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/thingstodo"
+            >
               <ListItem button key="Things to do">
                 <ListItemIcon>
                   {<PhotoCameraIcon style={{ color: "white" }} />}
@@ -203,7 +209,10 @@ export default function MiniDrawer(props) {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/transportation">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/transportation"
+            >
               <ListItem button key="Transportation">
                 <ListItemIcon>
                   {<CommuteIcon style={{ color: "white" }} />}
@@ -212,7 +221,10 @@ export default function MiniDrawer(props) {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/accommodation">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/accommodation"
+            >
               <ListItem button key="Accommodation">
                 <ListItemIcon>
                   {<HotelIcon style={{ color: "white" }} />}
@@ -223,7 +235,10 @@ export default function MiniDrawer(props) {
           </div>
 
           <div>
-            <Link className="mylink" to="/packinglist">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/packinglist"
+            >
               <ListItem button key="Packing List">
                 <ListItemIcon>
                   {<WorkIcon style={{ color: "white" }} />}
@@ -232,7 +247,10 @@ export default function MiniDrawer(props) {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/budget">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/budget"
+            >
               <ListItem button key="Budget">
                 <ListItemIcon>
                   {<MoneyIcon style={{ color: "white" }} />}
@@ -241,7 +259,7 @@ export default function MiniDrawer(props) {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/">
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
               <ListItem button key="Home">
                 <ListItemIcon>
                   {<HomeIcon style={{ color: "white" }} />}

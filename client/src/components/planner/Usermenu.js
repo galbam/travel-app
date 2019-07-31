@@ -68,6 +68,7 @@ export default function Usermenu(props) {
         onClick={handleClick}
       >
         {<AccountIcon style={{ color: "white" }} />}
+        {/* <p>Username</p> */}
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -80,13 +81,22 @@ export default function Usermenu(props) {
           <ListItemIcon>
             <BeachIcon />
           </ListItemIcon>
-          <ListItemText primary="My trips" />
+          <Link
+            style={{ textDecoration: "none", color: "rgb(30, 30, 30)" }}
+            to="/boards"
+          >
+            <ListItemText primary="My trips" />
+          </Link>
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
-          <Link onClick={() => handleLogout(props)} to="/">
+          <Link
+            style={{ textDecoration: "none", color: "rgb(30, 30, 30)" }}
+            onClick={() => handleLogout(props)}
+            to="/"
+          >
             <ListItemText primary="Log out" />
           </Link>
         </StyledMenuItem>

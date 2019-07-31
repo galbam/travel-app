@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ButtonBases() {
+export default function Boards() {
   const classes = useStyles();
 
   return (
