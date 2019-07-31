@@ -31,7 +31,7 @@ export default class Tripform extends Component {
     startDate: null,
     endDate: null,
     focusedInput: null,
-    
+    userId: this.props.user._id
   };
 
   handleChange = event => {
@@ -43,10 +43,19 @@ export default class Tripform extends Component {
   };
 
     handleSubmit = event => {
-      const {title,  description, destination, startDate, endDate} = this.state;
       event.preventDefault();
-      
-      axios.post("/api/trips", {title,  description, destination, startDate, endDate})
+
+      const {title, description, destination, startDate, endDate} = this.state;
+      const userId = this.state.userId;
+
+      axios.post("/api/trips", {
+        title, 
+        description, 
+        destination, 
+        startDate, 
+        endDate,
+        userId
+      })
       .then(response =>{
 
         //Save Trip ID and destination
@@ -54,7 +63,7 @@ export default class Tripform extends Component {
         localStorage.setItem('destination', destination);
         localStorage.setItem('startDate', startDate);
         localStorage.setItem('endDate', endDate);
-
+        
         this.props.history.push({
           pathname: "/planner",
           data: {
