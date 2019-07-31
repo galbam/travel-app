@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Sidebar from '../components/food/Sidebar';
+import Sidebar from '../components/Food/Sidebar';
 import { loadGoogleMaps, loadPlaces } from '../utils';
 import { category, activityType } from '../constants';
 
@@ -93,7 +93,7 @@ export class Food extends Component {
       type: venue.type,
       expenses: 0,
       date: new Date(),
-      tripId: `${localStorage.getItem('tripId')}` //TODO: get trip id for the current trip
+      tripId: `${localStorage.getItem('tripId')}`
      })
     .then(response => response.data);
   }

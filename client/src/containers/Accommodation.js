@@ -87,7 +87,7 @@ export class Accommodation extends Component {
       description: '',
       type: venue.type,
       expenses: 0,
-      color: 'grey',
+      date: new Date(),
       tripId: `${localStorage.getItem('tripId')}`
      })
     .then(response => response.data);
