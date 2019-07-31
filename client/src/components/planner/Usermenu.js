@@ -66,9 +66,18 @@ export default function Usermenu(props) {
         aria-controls="customized-menu"
         aria-haspopup="true"
         onClick={handleClick}
+        style={{
+          color: "white"
+        }}
       >
-        {<AccountIcon style={{ color: "white" }} />}
-        {/* <p>Username</p> */}
+        <div>{<AccountIcon />} </div>
+        <div
+          style={{
+            marginLeft: "10px"
+          }}
+        >
+          Hello {localStorage.getItem("username")}
+        </div>
       </Button>
       <StyledMenu
         id="customized-menu"
