@@ -8,6 +8,7 @@ import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import Usermenu from "./Usermenu";
 
 //Icons
 import HomeIcon from "@material-ui/icons/Home";
@@ -100,7 +101,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -124,7 +125,6 @@ export default function MiniDrawer() {
         })}
       >
         <Toolbar>
-          
           <IconButton
             style={{ color: "#494847" }}
             aria-label="open drawer"
@@ -136,7 +136,18 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <img className="logo" src="/images/logo.png" />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "90vw"
+            }}
+          >
+            <img className="logo" src="/images/logo.png" alt="logo" />
+
+            <Usermenu setUser={props.setUser} />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
