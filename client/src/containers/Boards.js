@@ -102,7 +102,7 @@ export default function Boards() {
     <div>
       <AppBar position="static" style={{ background: "#494847" }}>
         <Toolbar>
-          <img class="logo" src="/images/logo.png" alt="example" />
+          <img className="logo" src="/images/logo.png" alt="example" />
         </Toolbar>
       </AppBar>
       <div className="board-intro">
