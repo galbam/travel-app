@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Sidebar from '../components/Food/Sidebar';
+import Sidebar from '../components/food/Sidebar';
 import { loadGoogleMaps, loadPlaces } from '../utils';
 import { category, activityType } from '../constants';
 
@@ -17,19 +17,16 @@ export class Food extends Component {
     let mapPromise = loadGoogleMaps();
     let foodPromise = loadPlaces('Berlin', category.FOOD);
     let excursionPromise = loadPlaces('Berlin', category.OUTDOORS);
-    let accommodationPromise = loadPlaces('Berlin', category.HOTEL);
 
     Promise.all([
       mapPromise,
       foodPromise,
-      excursionPromise,
-      accommodationPromise
+      excursionPromise
     ])
     .then(values => {
       let maps = values[0];
       this.restaurants = values[1].response.venues;
       this.excursions = values[2].response.venues;
-      this.accommodations = values[3].response.venues;
 
       this.google = maps;
       this.markers = [];
@@ -43,7 +40,6 @@ export class Food extends Component {
 
       this.loadMarkers(this.restaurants, activityType.FOOD);
       this.loadMarkers(this.excursions, activityType.EXCURSION);
-      this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
     })
   }
 
@@ -120,20 +116,14 @@ export class Food extends Component {
     this.filter(query, this.excursions, activityType.EXCURSION);
   }
 
-  filterAccommodations = (query) => {
-    this.filter(query, this.accommodations, activityType.ACCOMMODATION);
-  }
-
   render() {
     return (
       <div style={{display: "flex", height: "100vh"}}>
         <div id="map"></div>
         <div>
-          <h3>Foods and Drinks</h3>
           <Sidebar
             filterRestaurants={this.filterRestaurants}
             filterExcursions={this.filterExcursions}
-            filterAccommodations={this.filterAccommodations}
             filteredVenues={this.state.filteredVenues}
             listItemClick={this.listItemClick}
             selectVenue={this.selectVenue} />
