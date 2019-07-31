@@ -97,7 +97,8 @@ export class Accommodation extends Component {
     }, 1500);
   };
 
-  selectVenue = venue => {
+  selectVenue = (venue) => {
+
     axios
       .post("/api/draftActivities", {
         title: venue.name,

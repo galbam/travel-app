@@ -97,7 +97,8 @@ export class Food extends Component {
     }, 1500);
   };
 
-  selectVenue = venue => {
+  selectVenue = (venue) => {
+
     axios
       .post("/api/draftActivities", {
         title: venue.name,
@@ -134,19 +135,15 @@ export class Food extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Things to do in {this.state.location}</h3>
-        <div style={{ display: "flex", height: "100vh" }}>
-          <div id="map" />
-          <div>
-            <Sidebar
-              filterRestaurants={this.filterRestaurants}
-              filterExcursions={this.filterExcursions}
-              filteredVenues={this.state.filteredVenues}
-              listItemClick={this.listItemClick}
-              selectVenue={this.selectVenue}
-            />
-          </div>
+      <div style={{display: "flex", height: "100vh"}}>
+        <div id="map"></div>
+        <div>
+          <Sidebar
+            filterRestaurants={this.filterRestaurants}
+            filterExcursions={this.filterExcursions}
+            filteredVenues={this.state.filteredVenues}
+            listItemClick={this.listItemClick}
+            selectVenue={(act) => this.selectVenue(act)} />
         </div>
       </div>
     );
