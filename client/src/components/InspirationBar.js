@@ -30,7 +30,7 @@ export class InspirationBar extends Component {
               this.props.filteredVenues.length > 0 &&
               this.props.filteredVenues.map((venue, index) => (
                 <TableRow key={index}>
-                  <TableCell>
+                  <TableCell style={{ width: "500px" }}>
                     <div
                       onClick={() => {
                         this.props.listItemClick(venue);
