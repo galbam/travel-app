@@ -4,6 +4,7 @@ import axios from "axios";
 import { loadGoogleMaps, loadPlaces } from "../utils";
 import { category, activityType } from "../constants";
 import { InspirationBar } from "../components/InspirationBar";
+import { Typography } from "@material-ui/core";
 
 export class Accommodation extends Component {
   constructor(props) {
@@ -97,8 +98,7 @@ export class Accommodation extends Component {
     }, 1500);
   };
 
-  selectVenue = (venue) => {
-
+  selectVenue = venue => {
     axios
       .post("/api/draftActivities", {
         title: venue.name,
@@ -132,10 +132,18 @@ export class Accommodation extends Component {
   render() {
     return (
       <div>
-        <h3>Accommodation in {this.state.location}</h3>
         <div style={{ display: "flex", height: "100vh" }}>
           <div id="map" />
           <div>
+            <Typography
+              variant="h4"
+              style={{
+                textAlign: "center",
+                margin: "20px"
+              }}
+            >
+              Accommodation in {this.state.location}
+            </Typography>
             <InspirationBar
               filterVenues={this.filterAccommodations}
               filteredVenues={this.state.filteredVenues}

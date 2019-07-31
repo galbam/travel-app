@@ -96,8 +96,9 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    height: "100vh"
+    padding: 0,
+    height: "100vh",
+    backgroundColor: "rgb(241, 241, 241)"
   }
 }));
 
