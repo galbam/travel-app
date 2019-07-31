@@ -8,7 +8,7 @@ export class ThingsToDo extends Component {
   render() {
     return (
       <div>
-        <h3>Things to do</h3>
+       
         <Map />
         <Excursions />
         <Food />

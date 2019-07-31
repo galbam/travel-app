@@ -1,50 +1,49 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from "react";
+import axios from "axios";
 
-import Sidebar from '../components/Food/Sidebar';
-import { loadGoogleMaps, loadPlaces } from '../utils';
-import { category, activityType } from '../constants';
+import Sidebar from "../components/Food/Sidebar";
+import { loadGoogleMaps, loadPlaces } from "../utils";
+import { category, activityType } from "../constants";
 
 export class Food extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
-    }
+      query: "",
+      location: "Berlin"
+    };
   }
 
   componentDidMount() {
-    let mapPromise = loadGoogleMaps();
-    let foodPromise = loadPlaces('Berlin', category.FOOD);
-    let excursionPromise = loadPlaces('Berlin', category.OUTDOORS);
-    let accommodationPromise = loadPlaces('Berlin', category.HOTEL);
+    let location = localStorage.getItem("destination");
 
-    Promise.all([
-      mapPromise,
-      foodPromise,
-      excursionPromise,
-      accommodationPromise
-    ])
-    .then(values => {
-      let maps = values[0];
-      this.restaurants = values[1].response.venues;
-      this.excursions = values[2].response.venues;
-      this.accommodations = values[3].response.venues;
+    this.setState({ location: location }, () => {
+      let mapPromise = loadGoogleMaps();
+      let foodPromise = loadPlaces(this.state.location, category.FOOD);
+      let excursionPromise = loadPlaces(this.state.location, category.OUTDOORS);
 
-      this.google = maps;
-      this.markers = [];
+      Promise.all([mapPromise, foodPromise, excursionPromise]).then(values => {
+        let maps = values[0];
+        this.restaurants = values[1].response.venues;
+        this.excursions = values[2].response.venues;
 
-      this.infowindow = new maps.maps.InfoWindow();
-      this.map = new maps.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        scrollwheel: true,
-        center: { lat: this.restaurants[0].location.lat, lng: this.restaurants[0].location.lng }
+        this.google = maps;
+        this.markers = [];
+
+        this.infowindow = new maps.maps.InfoWindow();
+        this.map = new maps.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          scrollwheel: true,
+          center: {
+            lat: this.restaurants[0].location.lat,
+            lng: this.restaurants[0].location.lng
+          }
+        });
+
+        this.loadMarkers(this.restaurants, activityType.FOOD);
+        this.loadMarkers(this.excursions, activityType.EXCURSION);
       });
-
-      this.loadMarkers(this.restaurants, activityType.FOOD);
-      this.loadMarkers(this.excursions, activityType.EXCURSION);
-      this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
-    })
+    });
   }
 
   loadMarkers = (venues, type) => {
@@ -60,87 +59,98 @@ export class Food extends Component {
         animation: this.google.maps.Animation.DROP
       });
 
-      marker.addListener('click', () => {
-        if (marker.getAnimation() !== null) { marker.setAnimation(null); }
-        else { marker.setAnimation(this.google.maps.Animation.BOUNCE); }
-        setTimeout(() => { marker.setAnimation(null) }, 1500);
+      marker.addListener("click", () => {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(this.google.maps.Animation.BOUNCE);
+        }
+        setTimeout(() => {
+          marker.setAnimation(null);
+        }, 1500);
       });
-      this.google.maps.event.addListener(marker, 'click', () => {
-         this.infowindow.setContent(marker.name);
-         this.map.setCenter(marker.position);
-         this.infowindow.open(this.map, marker);
-         this.map.panBy(0, -125);
+      this.google.maps.event.addListener(marker, "click", () => {
+        this.infowindow.setContent(marker.name);
+        this.map.setCenter(marker.position);
+        this.infowindow.open(this.map, marker);
+        this.map.panBy(0, -125);
       });
       this.markers.push(marker);
     });
 
     this.setState({ filteredVenues: this.restaurants });
+  };
 
-  }
-
-  listItemClick = (venue) => {
+  listItemClick = venue => {
     let marker = this.markers.filter(m => m.id === venue.id)[0];
     this.infowindow.setContent(marker.name);
     this.map.setCenter(marker.position);
     this.infowindow.open(this.map, marker);
     this.map.panBy(0, -125);
-    if (marker.getAnimation() !== null) { marker.setAnimation(null); }
-    else { marker.setAnimation(this.google.maps.Animation.BOUNCE); }
-    setTimeout(() => { marker.setAnimation(null) }, 1500);
-  }
+    if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(this.google.maps.Animation.BOUNCE);
+    }
+    setTimeout(() => {
+      marker.setAnimation(null);
+    }, 1500);
+  };
 
-  selectVenue = (venue) => {
+  selectVenue = venue => {
     axios
-    .post("/api/draftActivities", {
-      title: venue.name,
-      description: '',
-      type: venue.type,
-      expenses: 0,
-      color: 'grey',
-      tripId: `${localStorage.getItem('tripId')}` //TODO: get trip id for the current trip
-     })
-    .then(response => response.data);
-  }
+      .post("/api/draftActivities", {
+        title: venue.name,
+        description: "",
+        type: venue.type,
+        expenses: 0,
+        date: new Date(),
+        tripId: `${localStorage.getItem("tripId")}`
+      })
+      .then(response => response.data);
+  };
 
   filter = (query, venues, type) => {
-    let f = venues.filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()));
+    let f = venues.filter(venue =>
+      venue.name.toLowerCase().includes(query.toLowerCase())
+    );
     this.markers.forEach(marker => {
-      marker.type === type && marker.name.toLowerCase().includes(query.toLowerCase()) === true ?
-        marker.setVisible(true) : marker.setVisible(false);
+      marker.type === type &&
+      marker.name.toLowerCase().includes(query.toLowerCase()) === true
+        ? marker.setVisible(true)
+        : marker.setVisible(false);
     });
     this.setState({ filteredVenues: f, query: query });
     return f;
-  }
+  };
 
-  filterRestaurants = (query) => {
+  filterRestaurants = query => {
     this.filter(query, this.restaurants, activityType.FOOD);
-  }
+  };
 
-  filterExcursions = (query) => {
+  filterExcursions = query => {
     this.filter(query, this.excursions, activityType.EXCURSION);
-  }
-
-  filterAccommodations = (query) => {
-    this.filter(query, this.accommodations, activityType.ACCOMMODATION);
-  }
+  };
 
   render() {
     return (
-      <div style={{display: "flex", height: "100vh"}}>
-        <div id="map"></div>
-        <div>
-          <h3>Foods and Drinks</h3>
-          <Sidebar
-            filterRestaurants={this.filterRestaurants}
-            filterExcursions={this.filterExcursions}
-            filterAccommodations={this.filterAccommodations}
-            filteredVenues={this.state.filteredVenues}
-            listItemClick={this.listItemClick}
-            selectVenue={this.selectVenue} />
+      <div>
+        <h3>Things to do in {this.state.location}</h3>
+        <div style={{ display: "flex", height: "100vh" }}>
+          <div id="map" />
+          <div>
+            <Sidebar
+              filterRestaurants={this.filterRestaurants}
+              filterExcursions={this.filterExcursions}
+              filteredVenues={this.state.filteredVenues}
+              listItemClick={this.listItemClick}
+              selectVenue={this.selectVenue}
+            />
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Food
+export default Food;

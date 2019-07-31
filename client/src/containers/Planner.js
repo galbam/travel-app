@@ -9,7 +9,7 @@ import Activity from '../components/Activity';
 
 const arrFormats = null;
 
-class Planner extends Component {  
+class Planner extends Component {
 
   state = {
     totalExpenses: 0,
@@ -17,71 +17,164 @@ class Planner extends Component {
     endDate: moment(localStorage.getItem('endDate'), arrFormats) || this.props.location.data.endDate,
     focusedInput: null,
 
-   
     container: {
-      id: 1, activities: [
-        { id: 1, title: "Learn Angular", bgcolor: "#FC9712", color: "white", description: "Desc1", expenses: 10 },
-        { id: 2, title: "Learn React", bgcolor: "#E53C38", description: "Desc2", expenses: 20 },
-        { id: 3, title: "Vue", bgcolor: "#4DA651", description: "Desc3", expenses: 30 },
-        { id: 4, title: "Vue2", bgcolor: "#00ACC0", description: "Desc4", expenses: 40 }
-      ]
+      id: 1, activities: []
     },
     days: []
 
   };
 
+  //API CALLS
+  //Get all draft activities from a trip
   async getDraftActivities() {
-  try {
-    const response = await axios.get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
-    return response.data;
-  } catch (error) {
-    console.error(error);
+    try {
+      const response = await axios.get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
-}
 
-  // getDraftActivities() {
+  //Create a new draft activity
+  async createDraftActivity(newActivity) {
 
-  //   let drafts = [];
-  //   axios
-  //     .get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
-  //     .then(response => {
-  //       drafts = response.data;        
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-      
-  //   console.log(drafts)
-  //   return drafts;
-  // }
+    const { title, date, description, type, expenses } = newActivity;
 
-  componentDidMount() {
-    //this.fillDates(this.state.startDate, this.state.endDate);
-
-    //-----------------------------
-    //Get container content from DB
-    //localStorage.getItem('tripId')
-    axios
-      .get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`)
-      .then(response => {
-
-        const newContainer = JSON.parse(JSON.stringify(this.state.container));
-        newContainer.activities = response.data;
-
-        this.setState({
-          container: newContainer
+    try {
+      const response = await axios
+        .post("/api/draftActivities", {
+          title,
+          description,
+          type,
+          expenses,
+          date,
+          tripId: `${localStorage.getItem('tripId')}`
         });
-      })
-      .catch(error => {
-        console.log(error);
+
+      return response.data;
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //Delete a draft activity
+  async deleteDraftActivity(activityId) {
+    try {
+      const response = await axios.delete(`/api/draftActivities/${activityId}`)
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  //Update draft activity date
+  async addActivityToDay(dayName, activityId) {
+    try {
+      const response = await axios.patch(`/api/draftActivities/${activityId}`, {
+        date: dayName
       });
-    
+
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  async updateActivityInDb(updatedActivity) {
+
+    console.log("++++", updatedActivity);
+
+    try {
+      const response = await axios.patch(`/api/draftActivities/${updatedActivity._id}`, updatedActivity);
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  deleteActivity = (activityId) => {
+
+    axios
+      .delete(`/api/draftActivities/${activityId}`)
+      .then(async () => {        
+        
+        //Container
+        const newContainer = JSON.parse(JSON.stringify(this.state.container));
+        const contIndex = newContainer.activities.findIndex(f => f._id === activityId);
+
+        if (contIndex >= 0) {
+          newContainer.activities.splice(contIndex, 1);
+
+          this.setState({
+            container: newContainer
+          });
+        }
+        else{
+
+          //Days
+          const newDays = this.state.days.slice();
+
+          for (let i = 0; i < newDays.length; i++) {
+            let index = newDays[i].activities.findIndex(a => a._id === activityId);
+            if (index >= 0) {
+              newDays[i].activities.splice(index, 1);
+
+              this.setState({
+                days: newDays
+              });
+
+              break;
+            }
+          }
+        }        
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  componentDidMount = async () => {
+
     //Days should be created first
-    this.fillDates(moment(localStorage.getItem('startDate'), arrFormats) || this.state.startDate,
-    moment(localStorage.getItem('endDate'), arrFormats) || this.state.endDate);
+    const daysFilled = this.fillDates(moment(localStorage.getItem('startDate'), arrFormats) || this.state.startDate,
+      moment(localStorage.getItem('endDate'), arrFormats) || this.state.endDate);
+
+    //Get container content from DB
+    const response = await axios
+      .get(`/api/trips/${localStorage.getItem('tripId')}/draftActivities`);
+
+    const newContainer = JSON.parse(JSON.stringify(this.state.container));
+
+    response.data.forEach(a => {
+
+      const dayDate = daysFilled.find(f => f.title.isSame(a.date, 'day'));
+
+      console.log(dayDate);
+      if (dayDate) {
+        dayDate.activities.push(a);
+        dayDate.expenses += a.expenses;
+        console.log(dayDate.expenses);
+      }
+      else {
+        newContainer.activities.push(a);
+      }
+
+    });    
     
-    //Assign each activity in each day based on name
-    //-----------------------------
+    this.setState({
+      container: newContainer,
+      days: daysFilled
+    });
+
+    //Update total expenses
+    this.updateTotalExpenses();
+
   }
 
   //DnD
@@ -119,6 +212,10 @@ class Planner extends Component {
       const day = newDays.find(d => d.id === target.id);
       day.activities.push(activity);
 
+      console.log(day);
+      //DB -> Add activity to a day
+      this.addActivityToDay(day.title.toDate(), activity._id);
+
       //Update expenses
       day.expenses = day.activities.reduce((acc, val) => {
         return acc + val.expenses;
@@ -148,8 +245,11 @@ class Planner extends Component {
 
       if (target === "container") {
         //const newContainer = JSON.parse(JSON.stringify(this.state.container));
-        const newContainer = {...this.state.container, activities: [...this.state.container.activities] }
+        const newContainer = { ...this.state.container, activities: [...this.state.container.activities] }
         newContainer.activities.push(originActivity);
+
+        //DB -> Add activity to container
+        this.addActivityToDay(new Date(), originActivity._id);
 
         this.setState({
           container: newContainer,
@@ -162,6 +262,9 @@ class Planner extends Component {
       else {
         const targetDay = newDays.find(d => d.id === target.id);
         targetDay.activities.push(originActivity);
+
+        //DB -> Add activity to day
+        this.addActivityToDay(targetDay.title.toDate(), originActivity._id);
 
         //Update expenses
         targetDay.expenses = targetDay.activities.reduce((acc, val) => {
@@ -177,10 +280,19 @@ class Planner extends Component {
       }
     }
 
-    //Update DB ?
-
   }
   //---
+
+
+  // async addActivityToDay(dayName, activityId) {
+  //   try {
+  //     const response = await axios.post(`/api/trips/${localStorage.getItem('tripId')}/day/${dayName}/activity/${activityId}`)
+  //     return response.data;
+  //   }
+  //   catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   fillDates = (startDate, endDate) => {
 
@@ -196,13 +308,15 @@ class Planner extends Component {
         daysArr.push({
           id: index,
           title: startDate.clone().add(index, "days"),
-          activities: []
+          activities: [],
+          expenses: 0
         });
       }
     }
 
     this.setState({ startDate, endDate, days: daysArr });
 
+    return daysArr;
   }
 
   populateContainer = () => {
@@ -210,14 +324,16 @@ class Planner extends Component {
     //Populate content in container
     var activitiesInContainer =
       this.state.container.activities.map(activity => {
+
         return (
 
           <Activity key={activity._id} activity={activity}
             id={this.state.container.id}
             onDragStart={this.onDragStart}
-            from={"container"} 
+            from={"container"}
             updateActivity={(activity) => this.updateActivity(activity)}
-            />
+            deleteActivity={(activityId) => this.deleteActivity(activityId)}
+          />
         );
       });
 
@@ -226,36 +342,41 @@ class Planner extends Component {
 
   refreshContainer = (newContainerActivity) => {
 
-    // const { _id, title, description, expenses, bgcolor } = newContainerActivity;
-    const { _id, title, description, expenses, type } = newContainerActivity;
-
-    const newContainer = JSON.parse(JSON.stringify(this.state.container));
-    newContainer.activities.push({
-      // _id, title, description, bgcolor, expenses
-      _id, title, description, type, expenses
-    });
-
-    this.setState({
-      container: newContainer
-    });
-
+    const { title, date, description, expenses, type } = newContainerActivity;
+    
     //Refresh DB container
-    //localStorage.getItem('tripId')
+    //Add activity to container
+    const response = this.createDraftActivity(newContainerActivity);
+    
+    Promise.all([
+      response
+    ])
+      .then(data => {
 
+        const newContainer = JSON.parse(JSON.stringify(this.state.container));
+        newContainer.activities.push({
+          _id: data[0]._id, title, date, description, type, expenses
+        });
 
+        this.setState({
+          container: newContainer
+        });
+
+      });
   }
 
+  //Search draft activity in container
   searchActivity = async search => {
     let dAct = await this.getDraftActivities();
     const newContainer = { ...this.state.container, activities: dAct }
-    
+
     if (search && dAct.length > 0) {
 
       let activitiesFiltered = newContainer.activities.filter(activity => {
         return activity.title.toLowerCase().match(search.toLowerCase())
       });
 
-      if (activitiesFiltered.length > 0){
+      if (activitiesFiltered.length > 0) {
         newContainer.activities = activitiesFiltered;
 
         this.setState({
@@ -265,21 +386,22 @@ class Planner extends Component {
 
     }
     else {
-     this.setState({
-       container: newContainer
-     });
+      this.setState({
+        container: newContainer
+      });
     }
   }
 
+  //Total expenses
   updateTotalExpenses = () => {
 
     const days = this.state.days.slice();
 
     let newTotalExpenses = 0;
     days.forEach(d => {
-      if(d.activities.length > 0){
+      if (d.activities.length > 0) {
         d.activities.forEach(a => {
-          if(a.expenses){
+          if (a.expenses) {
             newTotalExpenses += a.expenses;
           }
         })
@@ -290,43 +412,44 @@ class Planner extends Component {
       totalExpenses: newTotalExpenses
     });
 
-    //Update total expenses in DB
+    //Update total expenses in DB?
 
   }
 
+  //Update activity
   updateActivity = (activity) => {
 
-    const { _id, title, description, expenses, type } = activity;
-    const updatedActivity = { 
+    const { _id, title, date, description, expenses, type } = activity;
+    const updatedActivity = {
       _id,
-      title, 
-      description, 
-      expenses, 
+      title,
+      date,
+      description,
+      expenses,
       type
     };
 
     let flagUpdated = false;
 
     //day
-    if (this.state.days.length > 0){
+    if (this.state.days.length > 0) {
       const newDays = this.state.days.slice();
-      
+
       let indexActDay;
       let indexDay;
       for (let index = 0; index < newDays.length; index++) {
-        
+
         const day = newDays[index];
         let indexFound = day.activities.findIndex(a => a._id === _id);
 
-        if (indexFound >= 0){
+        if (indexFound >= 0) {
           indexDay = index;
           indexActDay = indexFound;
           break;
         }
-        
       }
-      
-      if(indexActDay >= 0){
+
+      if (indexActDay >= 0) {
         const day = newDays[indexDay];
         day.activities[indexActDay] = updatedActivity;
 
@@ -334,10 +457,13 @@ class Planner extends Component {
         day.expenses = day.activities.reduce((acc, val) => {
           return acc + val.expenses;
         }, 0);
-        
+
         this.setState({
           days: newDays
         });
+
+        //DB -> update activity in day
+        this.updateActivityInDb(updatedActivity);
 
         //The activity was in day and was updated
         flagUpdated = true;
@@ -347,12 +473,12 @@ class Planner extends Component {
       }
     }
 
-    if (flagUpdated === false){
-    
-      //lets try to find teh activity in the container
+    if (flagUpdated === false) {
+
+      //lets try to find the activity in the container
       const newContainer = JSON.parse(JSON.stringify(this.state.container));
       let indexActContainer = newContainer.activities.findIndex(a => a._id === _id);
-      
+
       if (indexActContainer >= 0) {
 
         newContainer.activities[indexActContainer] = updatedActivity;
@@ -361,36 +487,32 @@ class Planner extends Component {
           container: newContainer
         });
 
+        //DB -> update activity in container
+        this.updateActivityInDb(updatedActivity);
+
         //The activity was in the container and was updated
         flagUpdated = true;
       }
     }
 
     //If the flagUpdated remains false that means that the activity was not found in the day or in the container
-    if (flagUpdated === false){
+    if (flagUpdated === false) {
       console.log("The activity was not updated");
     }
-
-    //DB
-    if (flagUpdated){
-      //Update activity in DB
-
-    }
-
   }
 
   render() {
-    
+
     return (
-      
+
       <div className="planner">
 
         <UserContainer onDragOver={(e) => this.onDragOver(e)}
           onDrop={(e) => this.onDrop(e, "container")}
           containerContent={this.populateContainer()}
           refreshContainer={(x) => this.refreshContainer(x)}
-          totalExpenses={this.state.totalExpenses} 
-          searchActivity={this.searchActivity}/>
+          totalExpenses={this.state.totalExpenses}
+          searchActivity={this.searchActivity} />
 
         <div className="calendar">
           <div className="scroll-container">
@@ -399,6 +521,7 @@ class Planner extends Component {
               {this.state.startDate &&
                 this.state.endDate &&
                 this.state.days.map((day) => {
+
                   return (
 
                     <Day
@@ -410,6 +533,7 @@ class Planner extends Component {
                       onDrop={this.onDrop}
 
                       updateActivity={(activity) => this.updateActivity(activity)}
+                      deleteActivity={(activityId) => this.deleteActivity(activityId)}
                     />
 
                   );

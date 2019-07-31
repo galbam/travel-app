@@ -4,12 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 import Select from '@material-ui/core/Select';
 // import Icon from "@material-ui/core/Icon";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
@@ -22,9 +21,7 @@ export default class extends Component {
       type: "",
       title: "",
       description: "",
-      imgUrl: "",
-      expenses: 0,
-      bgcolor: ""
+      expenses: 0
     }
   }; 
 
@@ -49,14 +46,12 @@ export default class extends Component {
 
     const title = this.state.form.title;
     const description = this.state.form.description;
-    const expenses = Number(this.state.form.expenses); 
-    // const imageUrl = this.state.form.imageUrl;
-    
+    const expenses = Number(this.state.form.expenses);    
     const type = this.state.form.type;
+    const date = new Date();
 
     const newActivityInContainer = {
-      // id: uuidv1(), title, description, expenses, imageUrl, bgcolor, type
-      id: uuidv1(), title, description, expenses, type
+      _id: uuidv1(), title, date, description, expenses, type
     }
     
     this.props.refreshContainer(newActivityInContainer);
@@ -65,7 +60,6 @@ export default class extends Component {
   render() {
     const {
       open,
-      //form: { type, title, description, imgUrl }
       form: { title, description, expenses, type }
     } = this.state;
     return (
@@ -98,23 +92,6 @@ export default class extends Component {
                 onChange={this.handleChange("description")}
                 margin="normal"
               />
-              <br/>
-             
-              {/* <InputLabel htmlFor="color-simple">Color</InputLabel> */}
-              {/* <Select
-                value={bgcolor}
-                onChange={this.handleChange("bgcolor")}
-                inputProps={{
-                  name: 'bgcolor',
-                  id: 'color-simple',
-                }}
-              >
-                <MenuItem value="red">Red</MenuItem>
-                <MenuItem value="yellow">Yellow</MenuItem>
-                <MenuItem value="blue">Blue</MenuItem>
-                <MenuItem value="gray">Gray</MenuItem>
-                <MenuItem value="skyblue">Sky Blue</MenuItem>
-              </Select> */}
               <br/>
               <InputLabel htmlFor="type">Activity type</InputLabel>
               <Select

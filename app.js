@@ -91,18 +91,19 @@ const index = require("./routes/index");
 app.use("/", index);
 
 
-// const auth = require("./routes/auth");
-// app.use("/api/auth", auth);
+const auth = require("./routes/auth");
+app.use("/api/auth", auth);
 
 
 const trip = require("./routes/trips");
 app.use("/api/trips", trip);
 
 
-const activity = require("./routes/activities");
-app.use("/api/activities", activity);
+// const activity = require("./routes/activities");
+// app.use("/api/activities", activity);
 
-
+const packingList = require("./routes/packingList");
+app.use("/api/packingList", packingList);
 
 // Draft Activity
 const draftActivity = require("./routes/draftActivity");

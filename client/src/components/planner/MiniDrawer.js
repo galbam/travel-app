@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
 //Icons
@@ -124,7 +124,7 @@ export default function MiniDrawer() {
         })}
       >
         <Toolbar>
-          <img class="logo" src="/images/logo.png" />
+          
           <IconButton
             style={{ color: "#494847" }}
             aria-label="open drawer"
@@ -136,6 +136,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
+          <img className="logo" src="/images/logo.png" />
         </Toolbar>
       </AppBar>
       <Drawer
