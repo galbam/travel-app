@@ -136,9 +136,6 @@ export default class Food extends Component {
   render() {
     return (
       <div>
-        <Typography variant="h4">
-          Things to do in {this.state.location}
-        </Typography>
         <div
           style={{
             display: "flex",
@@ -148,6 +145,12 @@ export default class Food extends Component {
         >
           <div id="map"> </div>
           <div>
+            <Typography
+              variant="h4"
+              style={{ textAlign: "center", margin: "20px" }}
+            >
+              Things to do in {this.state.location}
+            </Typography>
             <Sidebar
               filterRestaurants={this.filterRestaurants}
               filterExcursions={this.filterExcursions}

@@ -147,6 +147,7 @@ export default class Tripform extends Component {
                     this.setState({ focusedInput })
                   } // PropTypes.func.isRequired,
                   firstDayOfWeek={1}
+                  block={true}
                 />
               </Grid>
               ​

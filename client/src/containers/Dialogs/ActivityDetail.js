@@ -77,7 +77,7 @@ class ActivityDetail extends Component {
     } = this.state;
 
     return (
-      <div>
+      <div style={{ textAlign: "start" }}>
         <Link onClick={this.handleToggle} style={{ color: "white" }}>
           {this.state.form.title}
         </Link>
