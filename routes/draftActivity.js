@@ -88,21 +88,14 @@ router.put("/:id", (req, res) => {
 router.patch("/:id", (req, res) => {
 
   const id = req.params.id;
-
-  DraftActivity.findById(id, (err, activity) => {
-
-    // if(req.body._id){
-    //   delete req.body._id;
-    // }
-
-    for (let t in req.body) {
-      if (activity[t]){
-        activity[t] = req.body[t];
-      }
-    }
-    activity.save();
-    res.json(activity);
-  })
+  
+  DraftActivity.findByIdAndUpdate(id, req.body, { new: true })
+    .then(activity => {
+      res.json(activity)
+    })
+    .catch(err => {
+      res.json(err);
+    });
     
 });
 
