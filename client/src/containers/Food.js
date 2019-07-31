@@ -4,8 +4,9 @@ import axios from "axios";
 import Sidebar from "../components/Food/Sidebar";
 import { loadGoogleMaps, loadPlaces } from "../utils";
 import { category, activityType } from "../constants";
+import { Typography } from "@material-ui/core";
 
-export class Food extends Component {
+export default class Food extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -97,8 +98,7 @@ export class Food extends Component {
     }, 1500);
   };
 
-  selectVenue = (venue) => {
-
+  selectVenue = venue => {
     axios
       .post("/api/draftActivities", {
         title: venue.name,
@@ -135,19 +135,29 @@ export class Food extends Component {
 
   render() {
     return (
-      <div style={{display: "flex", height: "100vh"}}>
-        <div id="map"></div>
-        <div>
-          <Sidebar
-            filterRestaurants={this.filterRestaurants}
-            filterExcursions={this.filterExcursions}
-            filteredVenues={this.state.filteredVenues}
-            listItemClick={this.listItemClick}
-            selectVenue={(act) => this.selectVenue(act)} />
+      <div>
+        <Typography variant="h4">
+          Things to do in {this.state.location}
+        </Typography>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh"
+          }}
+        >
+          <div id="map"> </div>
+          <div>
+            <Sidebar
+              filterRestaurants={this.filterRestaurants}
+              filterExcursions={this.filterExcursions}
+              filteredVenues={this.state.filteredVenues}
+              listItemClick={this.listItemClick}
+              selectVenue={act => this.selectVenue(act)}
+            />
+          </div>
         </div>
       </div>
     );
   }
 }
-
-export default Food;
