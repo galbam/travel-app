@@ -17,6 +17,7 @@ const tripSchema = new Schema({
           type: Date,
           required: true
      },
+     packingList: { type: Schema.Types.ObjectId, ref: "PackingList" },
 
      draftActivity: [{ type: Schema.Types.ObjectId, ref: "DraftActivity" }],
      owner: { type: Schema.Types.ObjectId, ref: "User" }
