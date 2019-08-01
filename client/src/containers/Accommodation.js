@@ -5,6 +5,7 @@ import { loadGoogleMaps, loadPlaces } from "../utils";
 import { category, activityType } from "../constants";
 import { InspirationBar } from "../components/InspirationBar";
 import { Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 export class Accommodation extends Component {
   constructor(props) {
@@ -17,33 +18,8 @@ export class Accommodation extends Component {
 
   componentDidMount() {
     let location = localStorage.getItem("destination");
-
     this.setState({ location: location }, () => {
-      let mapPromise = loadGoogleMaps();
-      let accommodationPromise = loadPlaces(
-        this.state.location,
-        category.HOTEL
-      );
-
-      Promise.all([mapPromise, accommodationPromise]).then(values => {
-        let maps = values[0];
-        this.accommodations = values[1].response.venues;
-
-        this.google = maps;
-        this.markers = [];
-
-        this.infowindow = new maps.maps.InfoWindow();
-        this.map = new maps.maps.Map(document.getElementById("map"), {
-          zoom: 12,
-          scrollwheel: true,
-          center: {
-            lat: this.accommodations[0].location.lat,
-            lng: this.accommodations[0].location.lng
-          }
-        });
-
-        this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
-      });
+      this.fillingMap();
     });
   }
 
@@ -129,6 +105,37 @@ export class Accommodation extends Component {
     this.filter(query, this.accommodations, activityType.ACCOMMODATION);
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.fillingMap();
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  fillingMap() {
+    let mapPromise = loadGoogleMaps();
+    let accommodationPromise = loadPlaces(this.state.location, category.HOTEL);
+    Promise.all([mapPromise, accommodationPromise]).then(values => {
+      let maps = values[0];
+      this.accommodations = values[1].response.venues;
+      this.google = maps;
+      this.markers = [];
+      this.infowindow = new maps.maps.InfoWindow();
+      this.map = new maps.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        scrollwheel: true,
+        center: {
+          lat: this.accommodations[0].location.lat,
+          lng: this.accommodations[0].location.lng
+        }
+      });
+      this.loadMarkers(this.accommodations, activityType.ACCOMMODATION);
+    });
+  }
+
   render() {
     return (
       <div>
@@ -144,6 +151,30 @@ export class Accommodation extends Component {
             >
               Accommodation in {this.state.location}
             </Typography>
+
+            <form onSubmit={this.handleSubmit}>
+              <Typography variant="h6" style={{ textAlign: "center" }}>
+                Change location to
+                <input
+                  type="text"
+                  name="location"
+                  onChange={this.handleChange}
+                  value={this.state.location}
+                />
+                <Button
+                  variant="contained"
+                  style={{
+                    background: "#1bacbf",
+                    textDecoration: "none",
+                    color: "white"
+                  }}
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Typography>
+            </form>
+
             <InspirationBar
               filterVenues={this.filterAccommodations}
               filteredVenues={this.state.filteredVenues}
