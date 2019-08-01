@@ -8,6 +8,7 @@ import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 // import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import Usermenu from "./Usermenu";
 
 //Icons
 import HomeIcon from "@material-ui/icons/Home";
@@ -95,12 +96,13 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    height: "100vh"
+    padding: 0,
+    height: "100vh",
+    backgroundColor: "rgb(241, 241, 241)"
   }
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -124,7 +126,6 @@ export default function MiniDrawer() {
         })}
       >
         <Toolbar>
-          
           <IconButton
             style={{ color: "#494847" }}
             aria-label="open drawer"
@@ -136,7 +137,18 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <img className="logo" src="/images/logo.png" />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "90vw"
+            }}
+          >
+            <img className="logo" src="/images/logo.png" alt="logo" />
+
+            <Usermenu setUser={props.setUser} />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -174,8 +186,11 @@ export default function MiniDrawer() {
         >
           {/* {['Home', '', 'Things to do', 'Transportation', 'Accommodation', 'Packing List', 'Budget'].map((text, index) => ( */}
           <div>
-            <Link className="mylink" to="/">
-              <ListItem button key="">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/planner"
+            >
+              <ListItem button key="Planner">
                 <ListItemIcon>
                   {<CalendarIcon style={{ color: "white" }} />}
                 </ListItemIcon>
@@ -183,7 +198,10 @@ export default function MiniDrawer() {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/thingstodo">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/thingstodo"
+            >
               <ListItem button key="Things to do">
                 <ListItemIcon>
                   {<PhotoCameraIcon style={{ color: "white" }} />}
@@ -192,7 +210,10 @@ export default function MiniDrawer() {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/transportation">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/transportation"
+            >
               <ListItem button key="Transportation">
                 <ListItemIcon>
                   {<CommuteIcon style={{ color: "white" }} />}
@@ -201,7 +222,10 @@ export default function MiniDrawer() {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/accommodation">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/accommodation"
+            >
               <ListItem button key="Accommodation">
                 <ListItemIcon>
                   {<HotelIcon style={{ color: "white" }} />}
@@ -212,7 +236,10 @@ export default function MiniDrawer() {
           </div>
 
           <div>
-            <Link className="mylink" to="/packinglist">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/packinglist"
+            >
               <ListItem button key="Packing List">
                 <ListItemIcon>
                   {<WorkIcon style={{ color: "white" }} />}
@@ -221,7 +248,10 @@ export default function MiniDrawer() {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/budget">
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/budget"
+            >
               <ListItem button key="Budget">
                 <ListItemIcon>
                   {<MoneyIcon style={{ color: "white" }} />}
@@ -230,7 +260,7 @@ export default function MiniDrawer() {
               </ListItem>
             </Link>
 
-            <Link className="mylink" to="/">
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
               <ListItem button key="Home">
                 <ListItemIcon>
                   {<HomeIcon style={{ color: "white" }} />}

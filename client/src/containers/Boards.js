@@ -1,144 +1,104 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Typography from "@material-ui/core/Typography";
+import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import "../components/boards/board.css";
+import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import { Typography } from "@material-ui/core";
+import axios from "axios";
 
-const images = [
-  {
-    title: "August Travels",
-    width: "40%"
-  },
-  {
-    title: "Paris",
-    width: "30%"
-  },
-  {
-    title: "Create a New Board",
-    width: "30%"
-  }
-];
-
-const useStyles = makeStyles(theme => ({
+const BootstrapButton = withStyles({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
-    minWidth: 300,
-    width: "100%"
-  },
-  image: {
-    position: "relative",
-    height: 200,
-    [theme.breakpoints.down("xs")]: {
-      width: "100% !important", // Overrides inline-style
-      height: 100
+    margin: '3',
+    boxShadow: "none",
+    textTransform: "none",
+    fontSize: 18,
+    padding: "30px 40px",
+    border: "5px solid",
+    lineHeight: 1.5,
+    backgroundColor: "#00ACC0",
+    borderColor: "#00ACC0",
+    fontFamily: ["Roboto"].join(","),
+    "&:hover": {
+      backgroundColor: "#0069d9",
+      borderColor: "#0062cc"
     },
-    "&:hover, &$focusVisible": {
-      zIndex: 1,
-      "& $imageBackdrop": {
-        opacity: 0.15
-      },
-      "& $imageMarked": {
-        opacity: 0
-      },
-      "& $imageTitle": {
-        border: "4px solid currentColor"
-      }
+    "&:active": {
+      boxShadow: "none",
+      backgroundColor: "#0062cc",
+      borderColor: "#005cbf"
+    },
+    "&:focus": {
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)"
     }
-  },
-  focusVisible: {},
-  imageButton: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: theme.palette.common.white
-  },
-  imageSrc: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundSize: "cover",
-    backgroundPosition: "center 40%"
-  },
-  imageBackdrop: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: theme.palette.common.black,
-    opacity: 0.4,
-    transition: theme.transitions.create("opacity")
-  },
-  imageTitle: {
-    position: "relative",
-    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) +
-      6}px`
-  },
-  imageMarked: {
-    height: 3,
-    width: 18,
-    backgroundColor: theme.palette.common.white,
-    position: "absolute",
-    bottom: -2,
-    left: "calc(50% - 9px)",
-    transition: theme.transitions.create("opacity")
   }
-}));
+})(Button);
 
-export default function ButtonBases() {
-  const classes = useStyles();
+class Boards extends Component {
+  state = {
+    tripArray: []
+  }
 
-  return (
-    <div>
-      <AppBar position="static" style={{ background: "#494847" }}>
-        <Toolbar>
-          <img class="logo" src="/images/logo.png" alt="example" />
-        </Toolbar>
-      </AppBar>
-      <div className="board-intro">
-        <div className={classes.root}>
-          {images.map(image => (
-            <ButtonBase
-              focusRipple
-              key={image.title}
-              className={classes.image}
-              focusVisibleClassName={classes.focusVisible}
-              style={{
-                width: image.width
-              }}
-            >
-              <span
-                className={classes.imageSrc}
-                style={{
-                  backgroundImage: `url(${image.url})`
-                }}
-              />
-              <span className={classes.imageBackdrop} />
-              <span className={classes.imageButton}>
-                <Typography
-                  component="span"
-                  variant="h5"
-                  color="inherit"
-                  className={classes.imageTitle}
-                >
-                  {image.title}
-                  <span className={classes.imageMarked} />
-                </Typography>
-              </span>
-            </ButtonBase>
-          ))}
+  handleClick = (trip) => {
+
+    console.log(trip.destination);
+
+    //Update user info
+    localStorage.setItem("tripId", trip._id);
+    localStorage.setItem("destination", trip.destination);
+    localStorage.setItem("startDate", trip.startDate);
+    localStorage.setItem("endDate", trip.endDate);
+
+    //Redirect to planner
+    this.props.history.push("/planner");
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get(`/api/trips/${localStorage.getItem('userId')}/all`)
+      this.setState({
+        tripArray: response.data
+      })
+      
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  render() {
+
+    const trip = this.state.tripArray.slice().map(t => {
+      return (
+        <div key={t._id}>
+          <BootstrapButton onClick={() => this.handleClick(t)}
+            variant="contained"
+            color="primary">
+            <Typography variant="h4">
+              {t.title}
+            </Typography>
+          </BootstrapButton>
+        </div>
+      );
+    });
+
+    return (
+      <div>
+        <AppBar position="static" style={{ background: "#494847" }}>
+          <Toolbar>
+            <img className="logo" src="/images/logo.png" alt="example" />
+          </Toolbar>
+        </AppBar>
+        <div className="board-intro" 
+             style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
+
+          {trip}
+
         </div>
       </div>
-    </div>
-  );
+    )
+  }
 }
+
+export default Boards;

@@ -99,8 +99,8 @@ const trip = require("./routes/trips");
 app.use("/api/trips", trip);
 
 
-const activity = require("./routes/activities");
-app.use("/api/activities", activity);
+// const activity = require("./routes/activities");
+// app.use("/api/activities", activity);
 
 const packingList = require("./routes/packingList");
 app.use("/api/packingList", packingList);

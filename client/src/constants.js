@@ -9,7 +9,7 @@ export const category = {
 }
 
 export const activityType = {
-  FOOD: 'Food',
-  EXCURSION: 'Excursion',
-  ACCOMMODATION: 'Accommodation'
+  FOOD: 'food',
+  EXCURSION: 'sightseeing',
+  ACCOMMODATION: 'accommodation'
 }

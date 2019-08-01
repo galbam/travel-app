@@ -1,34 +1,30 @@
-import React, { Component } from 'react';
-import Create from '../containers/Dialogs/Create';
+import React, { Component } from "react";
+import Create from "../containers/Dialogs/Create";
+import SearchBar from "./SearchBar";
+import Typography from "@material-ui/core/Typography";
 
 class UserContainer extends Component {
-
-  handleChange = (event) => {
-
-    const value = event.target.value;
-    this.props.searchActivity(value);
-  }
-
   render() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div className="user-container">
           <div
-            onDragOver={(e) => this.props.onDragOver(e)}
-            onDrop={(e) => { this.props.onDrop(e, "container") }}>
-            <span>CONTAINER</span>
-            <br />
-            <input type="search" name="search" onChange={this.handleChange} />
+            onDragOver={e => this.props.onDragOver(e)}
+            onDrop={e => {
+              this.props.onDrop(e, "container");
+            }}
+          >
+            <SearchBar searchActivity={this.props.searchActivity} />
             {this.props.containerContent}
+            <Create refreshContainer={this.props.refreshContainer} />
           </div>
-          <Create refreshContainer={this.props.refreshContainer} />
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <h6>Total Expenses</h6>
-          <p>{this.props.totalExpenses}</p>
+          <Typography style={{ textAlign: "center" }} variant="button">
+            Total Expenses <br />
+            {this.props.totalExpenses}
+          </Typography>
         </div>
       </div>
-    )
+    );
   }
 }
 

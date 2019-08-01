@@ -13,7 +13,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Link from "@material-ui/core/Link";
 
-
 class ActivityDetail extends Component {
   state = {
     open: false,
@@ -22,9 +21,7 @@ class ActivityDetail extends Component {
       id: this.props.activity._id,
       title: this.props.activity.title,
       description: this.props.activity.description,
-      // imgUrl: this.props.activity.imgUrl,
       expenses: this.props.activity.expenses
-      // bgcolor: this.props.activity.bgcolor
     }
   };
 
@@ -45,15 +42,13 @@ class ActivityDetail extends Component {
 
   handleDelete = event => {
     event.preventDefault();
-    const _id = this.state.form.id;  
+    const _id = this.state.form.id;
 
     this.props.deleteActivity(_id);
     this.setState({
       open: !this.state.open
     });
-  }
-
-
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -62,12 +57,9 @@ class ActivityDetail extends Component {
     const title = this.state.form.title;
     const description = this.state.form.description;
     const expenses = Number(this.state.form.expenses);
-    //const imageUrl = this.state.form.imageUrl;
-    // const bgcolor = this.state.form.bgcolor;
     const type = this.state.form.type;
 
     const updatedActivity = {
-      // _id, title, description, expenses, bgcolor
       _id,
       title,
       description,
@@ -85,16 +77,11 @@ class ActivityDetail extends Component {
     } = this.state;
 
     return (
-      <div >
-        <Link
-          onClick={this.handleToggle}
-          style={{color:'white'}}
-        >
-      {this.state.form.title} 
-      </Link> 
+      <div style={{ textAlign: "start" }}>
+        <Link onClick={this.handleToggle} style={{ color: "white" }}>
+          {this.state.form.title}
+        </Link>
 
-       
-        
         <Dialog
           open={open}
           onClose={this.handleToggle}
@@ -118,7 +105,7 @@ class ActivityDetail extends Component {
                 onChange={this.handleChange("description")}
                 margin="normal"
               />
-               <br />
+              <br />
               <InputLabel htmlFor="type">Activity type</InputLabel>
               <Select
                 value={type}
@@ -129,6 +116,7 @@ class ActivityDetail extends Component {
                 }}
               >
                 <MenuItem value="transportation">Transportation</MenuItem>
+                <MenuItem value="flight">Flight</MenuItem>
                 <MenuItem value="accommodation">Accommodation</MenuItem>
                 <MenuItem value="food">Food & Drinks</MenuItem>
                 <MenuItem value="sightseeing">Sightseeing</MenuItem>

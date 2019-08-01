@@ -30,24 +30,27 @@ router.get("/:id", (req, res) => {
 
 //Create a Draft Activity; we need the id of a Trip
 router.post("/", (req, res) => {
-  const { title, description, type, expenses, color, tripId } = req.body;
+  const { 
+    title, 
+    date,
+    description, 
+    type,
+    expenses, 
+    tripId 
+  } = req.body;
 
   DraftActivity.create({
     title,
+    date,
     description,
     type,
-    expenses,
-    color
+    expenses
   })
     .then(activityObj => {
       return Trip.findByIdAndUpdate(tripId, {
         $push: { draftActivity: activityObj._id }
       }).then(() => {
-        res.json({
-          message: `Draft Activity with id ${
-            activityObj._id
-            } was successfully added to project with id ${tripId}`
-        });
+        res.json(activityObj);
       });
     })
     .catch(error => {
@@ -58,14 +61,20 @@ router.post("/", (req, res) => {
 //Update Draft Activity
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  const { title, description, type, expenses, color } = req.body;
+  const { 
+    title, 
+    date,
+    description, 
+    type, 
+    expenses
+   } = req.body;
 
   DraftActivity.findByIdAndUpdate(id, {
     title,
+    date,
     description,
     type,
-    expenses,
-    color
+    expenses
   })
     .then(() => {
       res.json({ message: `Draft Activity with id ${id} was successfully updated` });
@@ -73,6 +82,21 @@ router.put("/:id", (req, res) => {
     .catch(err => {
       res.json(err);
     });
+});
+
+//Update date
+router.patch("/:id", (req, res) => {
+
+  const id = req.params.id;
+  
+  DraftActivity.findByIdAndUpdate(id, req.body, { new: true })
+    .then(activity => {
+      res.json(activity)
+    })
+    .catch(err => {
+      res.json(err);
+    });
+    
 });
 
 //Delete Draft Activity
@@ -91,5 +115,6 @@ router.delete("/:id", (req, res) => {
       res.json(err);
     });
 });
+
 
 module.exports = router;
