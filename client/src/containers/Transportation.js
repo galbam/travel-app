@@ -156,7 +156,7 @@ handleClick = (message) => {
         <CardMedia
           style={{height: "20vh"}}
           image={require("../assets/flight.jpg")}
-          title="Contemplative Reptile"
+          title="Transportation"
         />
         <CardContent>
 

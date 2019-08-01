@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -52,14 +51,13 @@ class Boards extends Component {
         <div key={t._id}>
           <Card className="card" style={{ width: "400px", minHeight: "150px" }}>
             <CardActionArea>
-              <CardMedia image="/static/images/cards/contemplative-reptile.jpg" />
               <CardContent>
                 <div className="title">
                   <Typography gutterBottom variant="h5" component="h2">
                     {t.title}
                   </Typography>
                 </div>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" color="textSecondary" component="div">
                   <div className="description">{t.description}</div>
                 </Typography>
               </CardContent>
@@ -104,15 +102,6 @@ class Boards extends Component {
                 to="/tripform"
               >
                 Create a New Board
-              </Link>
-            </Button>
-            <Button>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                onClick={() => this.handleLogout()}
-                to="/"
-              >
-                Logout
               </Link>
             </Button>
           </Toolbar>
