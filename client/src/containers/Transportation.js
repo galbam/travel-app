@@ -90,72 +90,50 @@ handleClick = (message) => {
 
     const colum1 = this.state.tableRows1.map((c, index) => {
       return (
-        <TableRow key={index}>
-                  <TableCell align="left">
-                    <TextField>{c.colum1}</TextField> 
-                    </TableCell>
-                  <TableCell align="right">
-                    <TextField>
-                    {c.column2}
-                    </TextField>
-                  </TableCell>
-            </TableRow>
+        <TableRow key={index}>         
+             <TableCell colSpan={2}>
+               <TextField fullWidth>{c.colum1}</TextField> 
+             </TableCell>                 
+       </TableRow>
+
       );
     });
     const colum2 = this.state.tableRows2.map((c, index) => {
       return (
-        <TableRow key={index}>
-                  <TableCell align="left">
-                    <TextField>{c.colum1}</TextField> 
-                    </TableCell>
-                  <TableCell align="right">
-                    <TextField>
-                    {c.column2}
-                    </TextField>
-                  </TableCell>
-            </TableRow>
+        <TableRow key={index}>         
+             <TableCell colSpan={2}>
+               <TextField fullWidth>{c.colum1}</TextField> 
+             </TableCell>                 
+       </TableRow>
+
       );
     });
     const colum3 = this.state.tableRows3.map((c, index) => {
       return (
-        <TableRow key={index}>
-                  <TableCell align="left">
-                    <TextField>{c.colum1}</TextField> 
-                    </TableCell>
-                  <TableCell align="right">
-                    <TextField>
-                    {c.column2}
-                    </TextField>
-                  </TableCell>
-            </TableRow>
+        <TableRow key={index}>         
+             <TableCell colSpan={2}>
+               <TextField fullWidth>{c.colum1}</TextField> 
+             </TableCell>                 
+       </TableRow>
+
       );
     });
     const colum4 = this.state.tableRows4.map((c, index) => {
       return (
-        <TableRow key={index}>
-                  <TableCell align="left">
-                    <TextField>{c.colum1}</TextField> 
-                    </TableCell>
-                  <TableCell align="right">
-                    <TextField>
-                    {c.column2}
-                    </TextField>
-                  </TableCell>
-            </TableRow>
+        <TableRow key={index}>         
+             <TableCell colSpan={2}>
+               <TextField fullWidth>{c.colum1}</TextField> 
+             </TableCell>                 
+       </TableRow>
       );
     });
     const colum5 = this.state.tableRows5.map((c, index) => {
       return (
-        <TableRow key={index}>
-                  <TableCell align="left">
-                    <TextField>{c.colum1}</TextField> 
-                    </TableCell>
-                  <TableCell align="right">
-                    <TextField>
-                    {c.column2}
-                    </TextField>
-                  </TableCell>
-            </TableRow>
+        <TableRow key={index}>         
+                  <TableCell colSpan={2}>
+                    <TextField fullWidth>{c.colum1}</TextField> 
+                  </TableCell>                 
+        </TableRow>
       );
     });
 
@@ -201,8 +179,7 @@ handleClick = (message) => {
                    </TableCell>
             </TableRow>
             <TableRow >
-                  <TableCell align="left"><TextField></TextField></TableCell>
-                  <TableCell align="right"><TextField></TextField></TableCell>
+                  <TableCell colSpan={2}><TextField fullWidth></TextField></TableCell>
             </TableRow>
             {colum1}
             </TableBody>
@@ -234,8 +211,7 @@ handleClick = (message) => {
                    </TableCell>
             </TableRow>
             <TableRow >
-                  <TableCell align="left"><TextField></TextField></TableCell>
-                  <TableCell align="right"><TextField></TextField></TableCell>
+                  <TableCell colSpan={2}><TextField fullWidth></TextField></TableCell>
             </TableRow>
 
             {colum2}
@@ -268,10 +244,8 @@ handleClick = (message) => {
                    </TableCell>
             </TableRow>
             <TableRow >
-                  <TableCell align="left"><TextField></TextField></TableCell>
-                  <TableCell align="right"><TextField></TextField></TableCell>
+                  <TableCell colSpan={2}><TextField fullWidth></TextField></TableCell>
             </TableRow>
-
             {colum3}
             </TableBody>
       </Table>
@@ -302,8 +276,7 @@ handleClick = (message) => {
                    </TableCell>
             </TableRow>
             <TableRow >
-                  <TableCell align="left"><TextField></TextField></TableCell>
-                  <TableCell align="right"><TextField></TextField></TableCell>
+                  <TableCell colSpan={2}><TextField fullWidth></TextField></TableCell>
             </TableRow>
 
             {colum4}
@@ -336,8 +309,7 @@ handleClick = (message) => {
                    </TableCell>
             </TableRow>
             <TableRow >
-                  <TableCell align="left"><TextField></TextField></TableCell>
-                  <TableCell align="right"><TextField></TextField></TableCell>
+                  <TableCell colSpan={2}><TextField fullWidth></TextField></TableCell>
             </TableRow>
 
             {colum5}
