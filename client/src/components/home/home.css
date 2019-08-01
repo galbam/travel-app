@@ -1,10 +1,23 @@
 .home-intro {
   height: 95vh;
-  background-image: url("/images/ian-dooley-3NCA3tbaE5I-unsplash.jpg");
+
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/images/ian-dooley-3NCA3tbaE5I-unsplash.jpg");
   background-size: cover;
   display: flex;
-  justify-content: center;
+
   align-items: center;
+}
+
+.intro-box {
+  margin-left: 15vw;
+  /* display: flex;
+  flex-direction: column;
+  height: 50vh; */
+}
+
+.intro-text {
+  color: white;
 }
 
 .home-button {
@@ -15,16 +28,40 @@
 .home-planner {
   height: 80vh;
   display: flex;
+  justify-content: space-around;
+  background-color: rgb(250, 250, 250);
 }
 
 .home-planner-img {
   margin: auto 50px;
 }
 img {
-  height: 400px;
-  width: auto;
+  height: auto;
+  width: 90%;
+  border-radius: 3%;
 }
 
 .home-planner-text {
   margin: auto 50px;
+}
+
+.footer {
+  background-color: #494847;
+  color: white;
+
+  height: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  padding: 20px;
+}
+
+.footer-text a {
+  text-decoration: none;
+  color: white;
+}
+
+.footer-text a[href] {
+  color: white;
 }
