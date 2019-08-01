@@ -176,7 +176,7 @@ export class Home extends Component {
             </Typography>
           </div>
           <div className="home-planner-img">
-            <img src="/images/Screenshot-planner.png" alt="example" />
+            <img src="/images/Screenshot-packinglist.png" alt="example" />
           </div>
         </div>
 
