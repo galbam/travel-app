@@ -24,7 +24,7 @@ export function loadPlaces(city, categoryId){
   return fetch(apiURL).then(resp => resp.json())
 }
 
-export var groupBy = function(xs, key) {
+export function groupBy(xs, key) {
   return xs.reduce(function(rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
     return rv;
