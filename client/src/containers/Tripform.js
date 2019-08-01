@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { DateRangePicker } from "react-dates";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-import axios from "axios";
-// import moment from "moment";
 
 //style
 import Avatar from "@material-ui/core/Avatar";
@@ -15,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import CommuteIcon from "@material-ui/icons/Commute";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import axios from "axios";
 
 const divStyle = {
   marginTop: "30%",
