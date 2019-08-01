@@ -178,7 +178,7 @@ export default function MiniDrawer(props) {
         <List
           style={{
             background:
-              "linear-gradient(rgba(0,0,0, 0.8), rgba(73,72,71, 0.8)), url('/images/citytrip.jpg')",
+              "linear-gradient(rgba(0,0,0, 0.8), rgba(73,72,71, 0.8)), url('/images/citytrip-small.png')",
             backgroundSize: "cover",
             display: "flex",
             flexDirection: "column",
