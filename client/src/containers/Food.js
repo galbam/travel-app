@@ -5,6 +5,7 @@ import Sidebar from "../components/Food/Sidebar";
 import { loadGoogleMaps, loadPlaces } from "../utils";
 import { category, activityType } from "../constants";
 import { Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 export default class Food extends Component {
   constructor(props) {
@@ -17,33 +18,8 @@ export default class Food extends Component {
 
   componentDidMount() {
     let location = localStorage.getItem("destination");
-
     this.setState({ location: location }, () => {
-      let mapPromise = loadGoogleMaps();
-      let foodPromise = loadPlaces(this.state.location, category.FOOD);
-      let excursionPromise = loadPlaces(this.state.location, category.OUTDOORS);
-
-      Promise.all([mapPromise, foodPromise, excursionPromise]).then(values => {
-        let maps = values[0];
-        this.restaurants = values[1].response.venues;
-        this.excursions = values[2].response.venues;
-
-        this.google = maps;
-        this.markers = [];
-
-        this.infowindow = new maps.maps.InfoWindow();
-        this.map = new maps.maps.Map(document.getElementById("map"), {
-          zoom: 12,
-          scrollwheel: true,
-          center: {
-            lat: this.restaurants[0].location.lat,
-            lng: this.restaurants[0].location.lng
-          }
-        });
-
-        this.loadMarkers(this.restaurants, activityType.FOOD);
-        this.loadMarkers(this.excursions, activityType.EXCURSION);
-      });
+      this.fillingMap();
     });
   }
 
@@ -133,6 +109,39 @@ export default class Food extends Component {
     this.filter(query, this.excursions, activityType.EXCURSION);
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.fillingMap();
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  fillingMap() {
+    let mapPromise = loadGoogleMaps();
+    let foodPromise = loadPlaces(this.state.location, category.FOOD);
+    let excursionPromise = loadPlaces(this.state.location, category.OUTDOORS);
+    Promise.all([mapPromise, foodPromise, excursionPromise]).then(values => {
+      let maps = values[0];
+      this.restaurants = values[1].response.venues;
+      this.excursions = values[2].response.venues;
+      this.google = maps;
+      this.markers = [];
+      this.infowindow = new maps.maps.InfoWindow();
+      this.map = new maps.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        scrollwheel: true,
+        center: {
+          lat: this.restaurants[0].location.lat,
+          lng: this.restaurants[0].location.lng
+        }
+      });
+      this.loadMarkers(this.restaurants, activityType.FOOD);
+      this.loadMarkers(this.excursions, activityType.EXCURSION);
+    });
+  }
+
   render() {
     return (
       <div>
@@ -151,6 +160,40 @@ export default class Food extends Component {
             >
               Things to do in {this.state.location}
             </Typography>
+
+            <form onSubmit={this.handleSubmit}>
+              <Typography
+                variant="h6"
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "20px"
+                }}
+              >
+                Change location to
+                <input
+                  type="text"
+                  name="location"
+                  onChange={this.handleChange}
+                  value={this.state.location}
+                  style={{ margin: "10px" }}
+                />
+                <Button
+                  variant="contained"
+                  style={{
+                    background: "#1bacbf",
+                    textDecoration: "none",
+                    color: "white"
+                  }}
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Typography>
+            </form>
+
             <Sidebar
               filterRestaurants={this.filterRestaurants}
               filterExcursions={this.filterExcursions}
