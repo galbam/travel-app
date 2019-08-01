@@ -18,7 +18,6 @@ const tripSchema = new Schema({
           required: true
      },
 
-     //activity: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
      draftActivity: [{ type: Schema.Types.ObjectId, ref: "DraftActivity" }],
      owner: { type: Schema.Types.ObjectId, ref: "User" }
 });
