@@ -21,7 +21,7 @@ require('./configs/passport');
 // IF YOU STILL DIDN'T, GO TO 'configs/passport.js' AND UN-COMMENT OUT THE WHOLE FILE
 
 mongoose
-  .connect("mongodb://localhost/travel-board", {
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/travel-board", {
     useNewUrlParser: true
   })
   .then(x => {
