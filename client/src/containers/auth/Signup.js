@@ -152,7 +152,7 @@ export default class Signup extends Component {
               )}
             />
             <GoogleLogin
-              clientId="617606078054-dtd6r3bkt33mbsb436f2fip2g5b62h62.apps.googleusercontent.com"
+              clientId="617606078054-rc3kqkqtmfbumi8tuteufep6if17e8k2.apps.googleusercontent.com"
               render={renderProps => (
                 <Button
                   onClick={renderProps.onClick}

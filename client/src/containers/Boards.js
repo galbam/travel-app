@@ -4,12 +4,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import "../components/boards/board.css";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import axios from "axios";
 
 class Boards extends Component {
   state = {
@@ -17,6 +17,7 @@ class Boards extends Component {
   };
 
   handleClick = trip => {
+
     //Update user info
     localStorage.setItem("tripId", trip._id);
     localStorage.setItem("destination", trip.destination);
@@ -40,6 +41,34 @@ class Boards extends Component {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  handleDelete = async (tripId) => {
+
+    try {
+
+      const tripsUpdated = this.state.tripArray.slice();
+      let index = tripsUpdated.findIndex(f => f._id === tripId);
+
+      if (index >= 0) {
+
+        //Update UI
+        tripsUpdated.splice(index, 1);
+
+        this.setState({
+          tripArray: tripsUpdated
+        });
+
+        //Update DB
+        await axios.delete(
+          `/api/trips/${tripId}`
+        );
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 
   render() {
@@ -69,9 +98,17 @@ class Boards extends Component {
                 >
                   Go to Board
                 </Button>
-                <Button size="small" color="primary">
+
+                {t._id === localStorage.getItem("tripId")?
+                  <Button size="small" color="primary" onClick={() => this.handleDelete(t._id)} disabled>
                   Delete
                 </Button>
+                :
+                <Button size="small" color="primary" onClick={() => this.handleDelete(t._id)}>
+                  Delete
+                </Button>
+                }
+                
               </div>
             </CardActions>
           </Card>
