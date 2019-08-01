@@ -40,7 +40,7 @@ const List3 = (props) =>{
     <br />CARRY-ON</TableCell>
    </TableRow>
    <TableRow >
-    <TableCell align="center"><i class="fas fa-check"></i></TableCell>
+    <TableCell align="center"><i className="fas fa-check"></i></TableCell>
     <TableCell align="center">Item</TableCell>
     
    </TableRow>
