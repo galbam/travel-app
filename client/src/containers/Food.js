@@ -164,7 +164,13 @@ export default class Food extends Component {
             <form onSubmit={this.handleSubmit}>
               <Typography
                 variant="h6"
-                style={{ textAlign: "center", margin: "20px" }}
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "20px"
+                }}
               >
                 Change location to
                 <input
@@ -172,8 +178,19 @@ export default class Food extends Component {
                   name="location"
                   onChange={this.handleChange}
                   value={this.state.location}
+                  style={{ margin: "10px" }}
                 />
-                <button type="submit">Submit</button>
+                <Button
+                  variant="contained"
+                  style={{
+                    background: "#1bacbf",
+                    textDecoration: "none",
+                    color: "white"
+                  }}
+                  type="submit"
+                >
+                  Submit
+                </Button>
               </Typography>
             </form>
 
