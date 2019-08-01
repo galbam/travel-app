@@ -6,10 +6,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const BootstrapButton = withStyles({
   root: {
-    margin: '3',
+    margin: "3",
     boxShadow: "none",
     textTransform: "none",
     fontSize: 18,
@@ -37,10 +38,9 @@ const BootstrapButton = withStyles({
 class Boards extends Component {
   state = {
     tripArray: []
-  }
+  };
 
-  handleClick = (trip) => {
-
+  handleClick = trip => {
     console.log(trip.destination);
 
     //Update user info
@@ -51,33 +51,33 @@ class Boards extends Component {
 
     //Redirect to planner
     this.props.history.push("/planner");
-  }
+  };
 
   async componentDidMount() {
     try {
-      const response = await axios.get(`/api/trips/${localStorage.getItem('userId')}/all`)
+      const response = await axios.get(
+        `/api/trips/${localStorage.getItem("userId")}/all`
+      );
       this.setState({
         tripArray: response.data
-      })
-      
+      });
+
       return response.data;
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-
     const trip = this.state.tripArray.slice().map(t => {
       return (
         <div key={t._id}>
-          <BootstrapButton onClick={() => this.handleClick(t)}
+          <BootstrapButton
+            onClick={() => this.handleClick(t)}
             variant="contained"
-            color="primary">
-            <Typography variant="h4">
-              {t.title}
-            </Typography>
+            color="primary"
+          >
+            <Typography variant="h4">{t.title}</Typography>
           </BootstrapButton>
         </div>
       );
@@ -87,17 +87,23 @@ class Boards extends Component {
       <div>
         <AppBar position="static" style={{ background: "#494847" }}>
           <Toolbar>
-            <img className="logo" src="/images/logo.png" alt="example" />
+            <Link to="/">
+              <img className="logo" src="/images/logo.png" alt="example" />
+            </Link>
           </Toolbar>
         </AppBar>
-        <div className="board-intro" 
-             style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
-
+        <div
+          className="board-intro"
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            flexWrap: "wrap"
+          }}
+        >
           {trip}
-
         </div>
       </div>
-    )
+    );
   }
 }
 
