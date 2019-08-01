@@ -18,8 +18,6 @@ class Boards extends Component {
   };
 
   handleClick = trip => {
-    console.log(trip.destination);
-
     //Update user info
     localStorage.setItem("tripId", trip._id);
     localStorage.setItem("destination", trip.destination);
