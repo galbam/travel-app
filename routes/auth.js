@@ -27,7 +27,7 @@ res.json(err);
 });
 
 
-router.get("/facebooklogin",(req,res)=>{
+router.post("/facebooklogin",(req,res)=>{
   console.log(req.body)
   const {userId} = req.body;
   User.findOne({ 

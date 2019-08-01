@@ -30,7 +30,7 @@ import { Link } from "react-router-dom";
 //Routes
 import { Route } from "react-router-dom";
 import ThingsToDo from "../../containers/ThingsToDo";
-import Planner from "../../containers/Planner";
+// import  from "../../containers/";
 import Transportation from "../../containers/Transportation";
 import Accommodation from "../../containers/Accommodation";
 import PackingList from "../../containers/PackingList";
@@ -172,14 +172,14 @@ export default function MiniDrawer() {
             height: "100vh"
           }}
         >
-          {/* {['Home', 'Planner', 'Things to do', 'Transportation', 'Accommodation', 'Packing List', 'Budget'].map((text, index) => ( */}
+          {/* {['Home', '', 'Things to do', 'Transportation', 'Accommodation', 'Packing List', 'Budget'].map((text, index) => ( */}
           <div>
-            <Link className="mylink" to="/planner">
-              <ListItem button key="Planner">
+            <Link className="mylink" to="/">
+              <ListItem button key="">
                 <ListItemIcon>
                   {<CalendarIcon style={{ color: "white" }} />}
                 </ListItemIcon>
-                <ListItemText primary="Planner" />
+                <ListItemText primary="" />
               </ListItem>
             </Link>
 
@@ -244,7 +244,7 @@ export default function MiniDrawer() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        <Route exact path="/planner" component={Planner} />
+        {/* <Route exact path="/" component={} /> */}
         <Route exact path="/thingstodo" component={ThingsToDo} />
         <Route exact path="/transportation" component={Transportation} />
         <Route exact path="/accommodation" component={Accommodation} />
