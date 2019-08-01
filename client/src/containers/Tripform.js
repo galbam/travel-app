@@ -44,7 +44,7 @@ export default class Tripform extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    
+
     const { title, description, destination, startDate, endDate } = this.state;
     const userId = this.state.userId;
 
@@ -56,7 +56,7 @@ export default class Tripform extends Component {
         startDate,
         endDate,
         userId
-       })
+      })
       .then(response => {
         //Save Trip ID and destination
         localStorage.setItem("tripId", response.data._id);
@@ -141,13 +141,14 @@ export default class Tripform extends Component {
                   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
                   endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
                   onDatesChange={({ startDate, endDate }) =>
-                 this.setState({ startDate, endDate })
+                    this.setState({ startDate, endDate })
                   } // PropTypes.func.isRequired,
-                    focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                    onFocusChange={focusedInput =>
+                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  onFocusChange={focusedInput =>
                     this.setState({ focusedInput })
                   } // PropTypes.func.isRequired,
                   firstDayOfWeek={1}
+                  block={true}
                 />
               </Grid>
               ​

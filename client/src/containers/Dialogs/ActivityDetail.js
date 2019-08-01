@@ -13,7 +13,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Link from "@material-ui/core/Link";
 
-
 class ActivityDetail extends Component {
   state = {
     open: false,
@@ -43,13 +42,13 @@ class ActivityDetail extends Component {
 
   handleDelete = event => {
     event.preventDefault();
-    const _id = this.state.form.id;  
+    const _id = this.state.form.id;
 
     this.props.deleteActivity(_id);
     this.setState({
       open: !this.state.open
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -78,14 +77,11 @@ class ActivityDetail extends Component {
     } = this.state;
 
     return (
-      <div >
-        <Link
-          onClick={this.handleToggle}
-          style={{color:'white'}}
-        >
-      {this.state.form.title} 
-      </Link> 
-      
+      <div style={{ textAlign: "start" }}>
+        <Link onClick={this.handleToggle} style={{ color: "white" }}>
+          {this.state.form.title}
+        </Link>
+
         <Dialog
           open={open}
           onClose={this.handleToggle}
@@ -109,7 +105,7 @@ class ActivityDetail extends Component {
                 onChange={this.handleChange("description")}
                 margin="normal"
               />
-               <br />
+              <br />
               <InputLabel htmlFor="type">Activity type</InputLabel>
               <Select
                 value={type}

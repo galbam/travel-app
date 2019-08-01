@@ -1,14 +1,15 @@
 .draggable {
   width: 15vw;
-  height: 8vh;
+  min-height: 8vh;
   margin: 5px auto;
   border-radius: 5%;
   color: "#494847";
 }
 
 .card-details {
-display: flex;
-align-items: center;
-height: 8vh;
-padding: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  min-height: 8vh;
+  padding: 5px;
 }
