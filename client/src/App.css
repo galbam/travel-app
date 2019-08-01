@@ -107,3 +107,28 @@ li {
   /*z-index: 100; */
   background-color: white;
 }
+
+@media (max-width: 900px) {
+  .planner {
+    flex-direction: column;
+  }
+
+  .box-container {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 90vw;
+  }
+
+  .scroll-container {
+    width: 90vw;
+  }
+
+  .box {
+    width: 75vw;
+  }
+
+  .weekend-box {
+    width: 75vw;
+  }
+}
