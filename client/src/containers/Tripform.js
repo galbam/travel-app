@@ -63,6 +63,7 @@ export default class Tripform extends Component {
         localStorage.setItem("destination", destination);
         localStorage.setItem("startDate", startDate);
         localStorage.setItem("endDate", endDate);
+        localStorage.setItem("userId", userId);
 
         this.props.history.push({
           pathname: "/planner",

@@ -12,6 +12,9 @@ export class Home extends Component {
   handleLogout =()  => {
     logout().then(() => {
       this.props.setUser(null);
+
+      // Clear all items
+      //localStorage.clear();
     });
   };
 
