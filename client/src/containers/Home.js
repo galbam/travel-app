@@ -195,7 +195,7 @@ export class Home extends Component {
             <a href="https://www.ironhack.com/en/courses/web-development-bootcamp">
               Ironhack
             </a>{" "}
-            bootcamp. © 2019
+            Bootcamp. © 2019
           </div>
         </div>
       </div>

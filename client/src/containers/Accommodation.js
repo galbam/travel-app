@@ -153,13 +153,23 @@ export class Accommodation extends Component {
             </Typography>
 
             <form onSubmit={this.handleSubmit}>
-              <Typography variant="h6" style={{ textAlign: "center" }}>
-                Change location to
+              <Typography
+                variant="h6"
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "20px"
+                }}
+              >
+                Change location to{" "}
                 <input
                   type="text"
                   name="location"
                   onChange={this.handleChange}
                   value={this.state.location}
+                  style={{ margin: "10px" }}
                 />
                 <Button
                   variant="contained"
