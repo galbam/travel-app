@@ -180,7 +180,7 @@ export class Accommodation extends Component {
                   }}
                   type="submit"
                 >
-                  Submit
+                  Search
                 </Button>
               </Typography>
             </form>

@@ -189,7 +189,7 @@ export default class Food extends Component {
                   }}
                   type="submit"
                 >
-                  Submit
+                  Search
                 </Button>
               </Typography>
             </form>
