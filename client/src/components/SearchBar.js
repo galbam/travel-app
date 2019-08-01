@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: "15vw"
+    width: "inherit"
   },
   input: {
     marginLeft: 8,
