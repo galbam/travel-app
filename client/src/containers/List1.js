@@ -47,7 +47,7 @@ const List1 = (props) =>{
           <br />CLOTHES/ACCESSORIES </TableCell>
          </TableRow>
          <TableRow >
-          <TableCell align="center"><i class="fas fa-check"></i></TableCell>
+          <TableCell align="center"><i className="fas fa-check"></i></TableCell>
           <TableCell align="center">Item</TableCell>
           
          </TableRow>

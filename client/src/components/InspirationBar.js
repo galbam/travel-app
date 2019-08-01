@@ -36,7 +36,7 @@ export class InspirationBar extends Component {
                         this.props.listItemClick(venue);
                       }}
                     >
-                      <Typography variant="button" component="subtitle1">
+                      <Typography variant="button">
                         {venue.name}
                       </Typography>
                     </div>

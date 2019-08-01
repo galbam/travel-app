@@ -2,45 +2,23 @@ import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import "../components/boards/board.css";
-import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import axios from "axios";
-
-const BootstrapButton = withStyles({
-  root: {
-    margin: '3',
-    boxShadow: "none",
-    textTransform: "none",
-    fontSize: 18,
-    padding: "30px 40px",
-    border: "5px solid",
-    lineHeight: 1.5,
-    backgroundColor: "#00ACC0",
-    borderColor: "#00ACC0",
-    fontFamily: ["Roboto"].join(","),
-    "&:hover": {
-      backgroundColor: "#0069d9",
-      borderColor: "#0062cc"
-    },
-    "&:active": {
-      boxShadow: "none",
-      backgroundColor: "#0062cc",
-      borderColor: "#005cbf"
-    },
-    "&:focus": {
-      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)"
-    }
-  }
-})(Button);
+import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 class Boards extends Component {
   state = {
     tripArray: []
-  }
+  };
 
-  handleClick = (trip) => {
-
+  handleClick = trip => {
     console.log(trip.destination);
 
     //Update user info
@@ -51,54 +29,106 @@ class Boards extends Component {
 
     //Redirect to planner
     this.props.history.push("/planner");
-  }
+  };
 
   async componentDidMount() {
     try {
-      const response = await axios.get(`/api/trips/${localStorage.getItem('userId')}/all`)
+      const response = await axios.get(
+        `/api/trips/${localStorage.getItem("userId")}/all`
+      );
       this.setState({
         tripArray: response.data
-      })
-      
+      });
+
       return response.data;
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-
     const trip = this.state.tripArray.slice().map(t => {
       return (
         <div key={t._id}>
-          <BootstrapButton onClick={() => this.handleClick(t)}
-            variant="contained"
-            color="primary">
-            <Typography variant="h4">
-              {t.title}
-            </Typography>
-          </BootstrapButton>
+          <Card className="card" style={{ width: "400px", minHeight: "150px" }}>
+            <CardActionArea>
+              <CardMedia image="/static/images/cards/contemplative-reptile.jpg" />
+              <CardContent>
+                <div className="title">
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {t.title}
+                  </Typography>
+                </div>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <div className="description">{t.description}</div>
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <div className="button">
+                <Button
+                  onClick={() => this.handleClick(t)}
+                  size="small"
+                  color="primary"
+                  style={{ justifySelf: "flex-end" }}
+                >
+                  Go to Board
+                </Button>
+                <Button size="small" color="primary">
+                  Delete
+                </Button>
+              </div>
+            </CardActions>
+          </Card>
         </div>
       );
     });
-
     return (
       <div>
         <AppBar position="static" style={{ background: "#494847" }}>
-          <Toolbar>
-            <img className="logo" src="/images/logo.png" alt="example" />
+          <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <Link to="/">
+                <img
+                  className="logo"
+                  src="/images/logo.png"
+                  alt="example"
+                  style={{ marginRight: "auto" }}
+                />
+              </Link>
+            </div>
+
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/tripform"
+              >
+                Create a New Board
+              </Link>
+            </Button>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                onClick={() => this.handleLogout()}
+                to="/"
+              >
+                Logout
+              </Link>
+            </Button>
           </Toolbar>
         </AppBar>
-        <div className="board-intro" 
-             style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
-
+        <div
+          className="board-intro"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap"
+          }}
+        >
           {trip}
-
         </div>
       </div>
-    )
+    );
   }
 }
-
 export default Boards;

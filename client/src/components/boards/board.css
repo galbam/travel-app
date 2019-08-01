@@ -1,11 +1,19 @@
 .board-intro {
- height: 90vh;
- background-image: url("/images/croatia.jpg");
- background-size: cover;
- align-items: center;
+  height: 95vh;
+  width: 100vw;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/images/croatia.jpg");
+  background-size: cover;
+  align-items: center;
 }
 
 .logo {
- height: 55px;
- width: 198px;
+  height: 4.5vh;
+  width: auto;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 30px;
 }
