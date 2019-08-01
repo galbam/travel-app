@@ -1,24 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import "../components/boards/board.css";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
+import axios from "axios";
 
 const BootstrapButton = withStyles({
   root: {
+    margin: '3',
     boxShadow: "none",
     textTransform: "none",
-    fontSize: 36,
+    fontSize: 18,
     padding: "30px 40px",
     border: "5px solid",
     lineHeight: 1.5,
     backgroundColor: "#00ACC0",
-    maxWidth: "442px",
-    maxHeight: "214px",
-    minWidth: "442px",
-    minHeight: "214px",
     borderColor: "#00ACC0",
     fontFamily: ["Roboto"].join(","),
     "&:hover": {
@@ -36,93 +34,71 @@ const BootstrapButton = withStyles({
   }
 })(Button);
 
-const useStyles = makeStyles(theme => ({
-  margin: {
-    margin: theme.spacing(3)
+class Boards extends Component {
+  state = {
+    tripArray: []
   }
-}));
 
-export default function Boards() {
-  const classes = useStyles();
+  handleClick = (trip) => {
 
-  return (
-    <div>
-      <AppBar position="static" style={{ background: "#494847" }}>
-        <Toolbar>
-          <img className="logo" src="/images/logo.png" alt="example" />
-        </Toolbar>
-      </AppBar>
-      <div className="board-intro">
-        <BootstrapButton
-          variant="contained"
-          color="primary"
-          disableRipple
-          className={classes.margin}
-        >
-          <Typography variant="h4">Bootstrap</Typography>
-        </BootstrapButton>
+    console.log(trip.destination);
 
-        <BootstrapButton
-          variant="contained"
-          color="primary"
-          disableRipple
-          style={{
-            background: "#EEEEEE",
-            borderColor: "#EEEEEE",
-            color: "black"
-          }}
-          className={classes.margin}
-        >
-          {" "}
-          <Typography variant="h4">Create a New Trip</Typography>
-        </BootstrapButton>
+    //Update user info
+    localStorage.setItem("tripId", trip._id);
+    localStorage.setItem("destination", trip.destination);
+    localStorage.setItem("startDate", trip.startDate);
+    localStorage.setItem("endDate", trip.endDate);
+
+    //Redirect to planner
+    this.props.history.push("/planner");
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get(`/api/trips/${localStorage.getItem('userId')}/all`)
+      this.setState({
+        tripArray: response.data
+      })
+      
+      return response.data;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  render() {
+
+    const trip = this.state.tripArray.slice().map(t => {
+      return (
+        <div key={t._id}>
+          <BootstrapButton onClick={() => this.handleClick(t)}
+            variant="contained"
+            color="primary">
+            <Typography variant="h4">
+              {t.title}
+            </Typography>
+          </BootstrapButton>
+        </div>
+      );
+    });
+
+    return (
+      <div>
+        <AppBar position="static" style={{ background: "#494847" }}>
+          <Toolbar>
+            <img className="logo" src="/images/logo.png" alt="example" />
+          </Toolbar>
+        </AppBar>
+        <div className="board-intro" 
+             style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
+
+          {trip}
+
+        </div>
       </div>
-    </div>
-  );
+    )
+  }
 }
-// export default function ButtonBases() {
 
-//   return (
-//     <div>
-//       <AppBar position="static" style={{ background: "#494847" }}>
-//         <Toolbar>
-//           <img class="logo" src="/images/logo.png" alt="example" />
-//         </Toolbar>
-//       </AppBar>
-//       <div className="board-intro">
-//         <div className={classes.root}>
-//           {images.map(image => (
-//             <ButtonBase
-//               focusRipple
-//               key={image.title}
-//               className={classes.image}
-//               focusVisibleClassName={classes.focusVisible}
-//               style={{
-//                 width: image.width
-//               }}
-//             >
-//               <span
-//                 className={classes.imageSrc}
-//                 style={{
-//                   backgroundImage: `url(${image.url})`
-//                 }}
-//               />
-//               <span className={classes.imageBackdrop} />
-//               <span className={classes.imageButton}>
-//                 <Typography
-//                   component="span"
-//                   variant="h5"
-//                   color="inherit"
-//                   className={classes.imageTitle}
-//                 >
-//                   {image.title}
-//                   <span className={classes.imageMarked} />
-//                 </Typography>
-//               </span>
-//             </ButtonBase>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+export default Boards;
