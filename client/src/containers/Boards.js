@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -104,15 +103,6 @@ class Boards extends Component {
                 to="/tripform"
               >
                 Create a New Board
-              </Link>
-            </Button>
-            <Button>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                onClick={() => this.handleLogout()}
-                to="/"
-              >
-                Logout
               </Link>
             </Button>
           </Toolbar>
