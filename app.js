@@ -56,9 +56,16 @@ app.use(
   })
 );
 
+// /!\
+
+//app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+// /!\
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
-app.use(express.static(path.join(__dirname, "public")));
+
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
 // ADD SESSION SETTINGS HERE:
@@ -99,15 +106,14 @@ const trip = require("./routes/trips");
 app.use("/api/trips", trip);
 
 
-// const activity = require("./routes/activities");
-// app.use("/api/activities", activity);
-
 const packingList = require("./routes/packingList");
 app.use("/api/packingList", packingList);
+
 
 // Draft Activity
 const draftActivity = require("./routes/draftActivity");
 app.use("/api/draftActivities", draftActivity);
+
 
 //DOCUMENTATION
 const swaggerUi = require('swagger-ui-express');
@@ -115,6 +121,11 @@ const swaggerDocument = require('./swagger.json');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/client/build/index.html");
+});
 
 
 module.exports = app;
