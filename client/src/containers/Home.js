@@ -125,59 +125,61 @@ export class Home extends Component {
           </div>
         </div>
 
-        <div className="home-planner">
-          <div className="home-planner-text">
-            <Typography variant="h2" gutterBottom>
-              Plan your trip
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              With our planner, you can schedule all your activities during your
-              trip. You can fill each day with sightseeing while also scheduling
-              accomodations, flights, bus and train connections. Don’t forget to
-              add must-try cafes and restaurants! Drag and drop, play around.
-              See your expenses for each particular day. It all-in-one planning
-              tool!
-            </Typography>
+        <div className="content">
+          <div className="home-planner">
+            <div className="home-planner-text notmiddle1">
+              <Typography variant="h2" gutterBottom>
+                Plan your trip
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                With our planner, you can schedule all your activities during
+                your trip. You can fill each day with sightseeing while also
+                scheduling accomodations, flights, bus and train connections.
+                Don’t forget to add must-try cafes and restaurants! Drag and
+                drop, play around. See your expenses for each particular day. It
+                all-in-one planning tool!
+              </Typography>
+            </div>
+            <div className="home-planner-img notmiddle2">
+              <img src="/images/Screenshot-planner.png" alt="example" />
+            </div>
           </div>
-          <div className="home-planner-img">
-            <img src="/images/Screenshot-planner.png" alt="example" />
-          </div>
-        </div>
 
-        <div className="home-planner">
-          <div className="home-planner-img">
-            <img src="/images/Screenshot-map.png" alt="example" />
+          <div className="home-planner">
+            <div className="home-planner-img">
+              <img src="/images/Screenshot-map.png" alt="example" />
+            </div>
+            <div className="home-planner-text">
+              <Typography variant="h2" gutterBottom>
+                Get inspired
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                Don’t know where to start? We get you covered! Use an integrated
+                Google Map to find excursions, cafes and restaurants, plus local
+                hotels and hostels. Find something worth a visit? Just push a
+                plus button and it will magically appear in the container of
+                your planner. Drag and drop to the calendar and you’re almost
+                ready to go!
+              </Typography>
+            </div>
           </div>
-          <div className="home-planner-text">
-            <Typography variant="h2" gutterBottom>
-              Get inspired
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Don’t know where to start? We get you covered! Use an integrated
-              Google Map to find excursions, cafes and restaurants, plus local
-              hotels and hostels. Find something worth a visit? Just push a plus
-              button and it will magically appear in the container of your
-              planner. Drag and drop to the calendar and you’re almost ready to
-              go!
-            </Typography>
-          </div>
-        </div>
 
-        <div className="home-planner">
-          <div className="home-planner-text">
-            <Typography variant="h2" gutterBottom>
-              Be prepared
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Last, but not least, make sure your have everything you need for
-              your trip. Our extended packing list will help you not forget
-              anything important. Finally get your finances under control in our
-              budget tool. See your expenses per each category and calculate the
-              total for the whole trip.
-            </Typography>
-          </div>
-          <div className="home-planner-img">
-            <img src="/images/Screenshot-packinglist.png" alt="example" />
+          <div className="home-planner">
+            <div className="home-planner-text notmiddle1">
+              <Typography variant="h2" gutterBottom>
+                Be prepared
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                Last, but not least, make sure your have everything you need for
+                your trip. Our extended packing list will help you not forget
+                anything important. Finally get your finances under control in
+                our budget tool. See your expenses per each category and
+                calculate the total for the whole trip.
+              </Typography>
+            </div>
+            <div className="home-planner-img notmiddle2">
+              <img src="/images/Screenshot-packinglist.png" alt="example" />
+            </div>
           </div>
         </div>
 
