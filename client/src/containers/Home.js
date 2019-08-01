@@ -48,17 +48,18 @@ export class Home extends Component {
                 <img
                   style={{ height: "4.5vh", width: "auto" }}
                   src="/images/logo.png"
-                  alt="example"
+                  alt="logo"
                 />
               </Link>
             </div>
-            <div>
+            <div className="buttons-box">
               {!this.props.user ? (
                 <span>
-                  <Button>
+                  <Button className="button">
                     <Link
                       style={{ textDecoration: "none", color: "white" }}
                       to="/signup"
+                      className="button"
                     >
                       Sign Up
                     </Link>
@@ -67,6 +68,7 @@ export class Home extends Component {
                     <Link
                       to="/login"
                       style={{ textDecoration: "none", color: "white" }}
+                      className="button"
                     >
                       Log In
                     </Link>
@@ -79,6 +81,7 @@ export class Home extends Component {
                       style={{ textDecoration: "none", color: "white" }}
                       onClick={() => this.handleLogout()}
                       to="/"
+                      className="button"
                     >
                       Logout
                     </Link>
@@ -87,6 +90,7 @@ export class Home extends Component {
                     <Link
                       to="/boards"
                       style={{ textDecoration: "none", color: "white" }}
+                      className="button"
                     >
                       My trips
                     </Link>

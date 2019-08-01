@@ -11,9 +11,6 @@
 
 .intro-box {
   margin-left: 15vw;
-  /* display: flex;
-  flex-direction: column;
-  height: 50vh; */
 }
 
 .intro-text {
@@ -75,8 +72,12 @@ img {
 @media (max-width: 1100px) {
   .home-planner {
     flex-direction: column;
-    margin: 0 3vh;
+    margin: 20px;
     height: 100vh;
+  }
+
+  .home-planner-text {
+    margin: auto 10px;
   }
 
   .notmiddle1 {
@@ -89,5 +90,23 @@ img {
 
   .footer-text {
     text-align: center;
+  }
+
+  .intro-text {
+    font-size: 40px;
+  }
+
+  .intro-box {
+    margin: 0;
+    text-align: center;
+  }
+
+  .home-intro {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button {
+    font-size: 12px;
   }
 }
