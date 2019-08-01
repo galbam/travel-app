@@ -109,20 +109,6 @@ export default class Tripform extends Component {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  fullWidth
-                  type="textarea"
-                  name="description"
-                  id="description"
-                  label="Trip description"
-                  autoComplete="trip description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-              </Grid>
-              ​
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
                   required
                   fullWidth
                   type="destination"
@@ -134,6 +120,20 @@ export default class Tripform extends Component {
                   onChange={this.handleChange}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  type="textarea"
+                  name="description"
+                  id="description"
+                  label="Trip description"
+                  autoComplete="trip description"
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              ​
               <Grid item xs={12}>
                 <DateRangePicker
                   startDate={this.state.startDate} // momentPropTypes.momentObj or null,
