@@ -13,3 +13,9 @@
   min-height: 8vh;
   padding: 5px;
 }
+
+@media (max-width: 900px) {
+  .draggable {
+    width: 70vw;
+  }
+}
