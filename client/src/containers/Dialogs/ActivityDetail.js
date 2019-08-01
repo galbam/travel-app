@@ -116,6 +116,7 @@ class ActivityDetail extends Component {
                 }}
               >
                 <MenuItem value="transportation">Transportation</MenuItem>
+                <MenuItem value="flight">Flight</MenuItem>
                 <MenuItem value="accommodation">Accommodation</MenuItem>
                 <MenuItem value="food">Food & Drinks</MenuItem>
                 <MenuItem value="sightseeing">Sightseeing</MenuItem>

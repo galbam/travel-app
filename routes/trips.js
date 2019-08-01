@@ -7,7 +7,7 @@ const User = require("../models/User");
 router.get("/", (req, res) => {
 
   Trip.find()
-    .populate("activity")
+    .populate("draftActivity")
     .populate("owner")
     .then(trip => {
       res.json(trip);
@@ -22,7 +22,7 @@ router.get("/:id", (req, res) => {
   const id = req.params.id;
 
   Trip.findById(id)
-    .populate("activity")
+    .populate("draftActivity")
     .populate("owner")
     .then(trip => {
       res.json(trip);
@@ -153,5 +153,7 @@ router.get("/:id/all", (req, res) => {
     })
 
 });
+
+
 
 module.exports = router;
