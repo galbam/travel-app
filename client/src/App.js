@@ -42,6 +42,7 @@ class App extends Component {
           />
 
           <Route exact path="/boards" component={Boards} />
+          
           <Protected
             exact
             path="/login"

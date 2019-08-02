@@ -9,11 +9,11 @@ const PackingList = require("../models/PackingList");
 //Get PackingList
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  console.log("called")
+  
   Trip.findOne({_id:id})
   .populate("packingList")
    .then(trip => {
-     console.log("here",trip)
+     
      res.json(trip.packingList);
    })
    .catch(error => {

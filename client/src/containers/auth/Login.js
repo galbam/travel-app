@@ -47,6 +47,10 @@ export default class Login extends Component {
         if (response.data.message) {
           this.setState({ error: response.data.message });
         } else {
+          
+          localStorage.setItem("username", username);
+          localStorage.setItem("userId", response.data._id);
+          
           this.props.setUser(response.data);
           this.props.history.push("/");
         }
@@ -57,13 +61,13 @@ export default class Login extends Component {
   };
 
   responseFacebook = response => {
-    console.log(response);
+    //console.log(response);
     const { userId } = response;
     facebookLogin(userId)
       .then(response => {
-        console.log("here", response.data);
-        this.props.setUser(response.data);
-        this.props.history.push("/");
+        //console.log("here", response.data);
+        //this.props.setUser(response.data);
+        //this.props.history.push("/");
       })
       .catch(err => {
         this.setState({ err: err });
@@ -71,13 +75,13 @@ export default class Login extends Component {
   };
 
   responseGoogle = response => {
-    console.log(response.googleId);
+    //console.log(response.googleId);
     const { googleId } = response;
     googleLogin(googleId)
       .then(response => {
-        console.log("here", response.data);
-        this.props.setUser(response.data);
-        this.props.history.push("/");
+        //console.log("here", response.data);
+        //this.props.setUser(response.data);
+        //this.props.history.push("/");
       })
       .catch(err => {
         this.setState({ err: err });
