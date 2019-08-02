@@ -25,8 +25,8 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    // width: "100%",
-    // height: "100%",
+    width: "100%",
+    height: "100%",
     backgroundColor: theme.palette.background.paper,
     overflowY: "scroll"
   }
@@ -61,8 +61,8 @@ export class Sidebar extends Component {
             indicatorColor="primary"
             textColor="primary"
             variant="fullWidth"
-            // scrollable
-            scrollButtons="auto"
+            
+            //scrollButtons="auto"
           >
             <Tab icon={<FoodIcon />} label="Food and Drinks" />
             <Tab icon={<PhotoCameraIcon />} label="Excursion/Sightseeing" />

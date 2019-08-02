@@ -155,14 +155,7 @@ export default class Food extends Component {
   render() {
     return (
       <div>
-        <div
-          className="map-page"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            height: "100vh"
-          }}
-        >
+        <div style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
           <div id="map"> </div>
           <div>
             <Typography
