@@ -149,8 +149,8 @@ export class Accommodation extends Component {
   render() {
     return (
       <div>
-        <div style={{ display: "flex", height: "100vh" }}>
-          <div id="map" />
+        <div style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
+          <div id="map"> </div>
           <div>
             <Typography
               variant="h4"
@@ -194,13 +194,15 @@ export class Accommodation extends Component {
                 </Button>
               </Typography>
             </form>
-
+            
+            <div style={{ width: "100%", height: "100%", overflowY: "scroll"}}>
             <InspirationBar
               filterVenues={this.filterAccommodations}
               filteredVenues={this.state.filteredVenues}
               listItemClick={this.listItemClick}
               selectVenue={this.selectVenue}
             />
+            </div>
           </div>
         </div>
       </div>

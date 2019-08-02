@@ -13,7 +13,7 @@ export class InspirationBar extends Component {
     return (
       <div
         id="sidebar"
-        style={{ width: "100%", height: "100%", overflowY: "scroll" }}
+        style={{ width: "100%", height: "100%" }}
       >
         <input
           style={{ width: "100%" }}

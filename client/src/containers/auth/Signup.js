@@ -36,8 +36,7 @@ export default class Signup extends Component {
 
     signup(username, password)
       .then(response => {
-        localStorage.setItem("username", username);
-        // console.log(response.data)
+        
         if (response.data.errorMessage) {
           this.setState({ error: response.data.errorMessage });
         } else {

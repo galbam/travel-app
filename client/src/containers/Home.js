@@ -10,10 +10,12 @@ import { logout } from "./services/auth-service";
 export class Home extends Component {
   handleLogout = () => {
     logout().then(() => {
-      this.props.setUser(null);
 
       // Clear all items
-      //localStorage.clear();
+      localStorage.clear();
+
+      this.props.setUser(null);
+
     });
   };
 
