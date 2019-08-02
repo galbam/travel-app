@@ -71,7 +71,7 @@ export class Sidebar extends Component {
         {value === 0 && (
           <TabContainer>
             <InspirationBar
-              filterVenues={this.state.filterVenues}
+              filterVenues={this.props.filterRestaurants}
               filteredVenues={this.props.filteredVenues}
               listItemClick={this.props.listItemClick}
               selectVenue={this.props.selectVenue}

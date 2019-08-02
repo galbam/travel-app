@@ -352,7 +352,14 @@ class Planner extends Component {
   //Search draft activity in container
   searchActivity = async search => {
     let dAct = await this.getDraftActivities();
-    const newContainer = { ...this.state.container, activities: dAct }
+
+    
+    const filtered = dAct.filter(m => {
+      return moment(m.date).isBefore(moment(localStorage.getItem("startDate")))
+    });
+
+
+    const newContainer = { ...this.state.container, activities: filtered }
 
     if (search && dAct.length > 0) {
 

@@ -72,49 +72,58 @@ class Boards extends Component {
   }
 
   render() {
-    const trip = this.state.tripArray.slice().map(t => {
-      return (
-        <div key={t._id}>
-          <Card className="card" style={{ width: "400px", minHeight: "150px" }}>
-            <CardActionArea>
-              <CardContent>
-                <div className="title">
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {t.title}
+
+    let trip = [];
+    if (this.state.tripArray.length === undefined || this.state.tripArray.length === 0){
+      
+    }
+    else{
+      
+      trip = this.state.tripArray.slice().map(t => {
+        return (
+          <div key={t._id}>
+            <Card className="card" style={{ width: "400px", minHeight: "150px" }}>
+              <CardActionArea>
+                <CardContent>
+                  <div className="title">
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {t.title}
+                    </Typography>
+                  </div>
+                  <Typography variant="body2" color="textSecondary" component="div">
+                    <div className="description">{t.description}</div>
                   </Typography>
-                </div>
-                <Typography variant="body2" color="textSecondary" component="div">
-                  <div className="description">{t.description}</div>
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <div className="button">
-                <Button
-                  onClick={() => this.handleClick(t)}
-                  size="small"
-                  color="primary"
-                  style={{ justifySelf: "flex-end" }}
-                >
-                  Go to Board
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <div className="button">
+                  <Button
+                    onClick={() => this.handleClick(t)}
+                    size="small"
+                    color="primary"
+                    style={{ justifySelf: "flex-end" }}
+                  >
+                    Go to Board
                 </Button>
 
-                {t._id === localStorage.getItem("tripId")?
-                  <Button size="small" color="primary" onClick={() => this.handleDelete(t._id)} disabled>
-                  Delete
+                  {t._id === localStorage.getItem("tripId") ?
+                    <Button size="small" color="primary" onClick={() => this.handleDelete(t._id)} disabled>
+                      Delete
                 </Button>
-                :
-                <Button size="small" color="primary" onClick={() => this.handleDelete(t._id)}>
-                  Delete
+                    :
+                    <Button size="small" color="primary" onClick={() => this.handleDelete(t._id)}>
+                      Delete
                 </Button>
-                }
-                
-              </div>
-            </CardActions>
-          </Card>
-        </div>
-      );
-    });
+                  }
+
+                </div>
+              </CardActions>
+            </Card>
+          </div>
+        );
+      });
+    }
+
     return (
       <div>
         <AppBar position="static" style={{ background: "#494847" }}>
@@ -154,4 +163,5 @@ class Boards extends Component {
     );
   }
 }
+
 export default Boards;

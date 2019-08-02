@@ -13,7 +13,7 @@ export class Home extends Component {
       this.props.setUser(null);
 
       // Clear all items
-      //localStorage.clear();
+      localStorage.clear();
     });
   };
 

@@ -123,7 +123,7 @@ export default class Food extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  fillingMap() {
+  fillingMap = () => {
     try {
       let mapPromise = loadGoogleMaps();
       let foodPromise = loadPlaces(this.state.location, category.FOOD);
