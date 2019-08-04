@@ -10,12 +10,10 @@ import { logout } from "./services/auth-service";
 export class Home extends Component {
   handleLogout = () => {
     logout().then(() => {
-
       // Clear all items
       localStorage.clear();
 
       this.props.setUser(null);
-
     });
   };
 
@@ -142,8 +140,8 @@ export class Home extends Component {
                 your trip. You can fill each day with sightseeing while also
                 scheduling accomodations, flights, bus and train connections.
                 Don’t forget to add must-try cafes and restaurants! Drag and
-                drop, play around. See your expenses for each particular day. It
-                all-in-one planning tool!
+                drop, play around. See your expenses for each particular day.
+                It's an all-in-one planning tool!
               </Typography>
             </div>
             <div className="home-planner-img notmiddle2">
@@ -162,7 +160,7 @@ export class Home extends Component {
               <Typography variant="body1" gutterBottom>
                 Don’t know where to start? We get you covered! Use an integrated
                 Google Map to find excursions, cafes and restaurants, plus local
-                hotels and hostels. Find something worth a visit? Just push a
+                hotels and hostels. Found something worth a visit? Just push a
                 plus button and it will magically appear in the container of
                 your planner. Drag and drop to the calendar and you’re almost
                 ready to go!

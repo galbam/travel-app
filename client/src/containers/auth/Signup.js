@@ -36,7 +36,6 @@ export default class Signup extends Component {
 
     signup(username, password)
       .then(response => {
-        
         if (response.data.errorMessage) {
           this.setState({ error: response.data.errorMessage });
         } else {
@@ -131,7 +130,7 @@ export default class Signup extends Component {
           </form>
           <p>{this.state.error}</p>
 
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          {/* <div style={{ display: "flex", flexDirection: "row" }}>
             <FacebookLogin
               appId="2511839425504211"
               fields="name,email,picture"
@@ -171,7 +170,7 @@ export default class Signup extends Component {
               onFailure={this.responseGoogle}
               cookiePolicy={"single_host_origin"}
             />
-          </div>
+          </div> */}
           <br />
           <Grid container justify="flex-end">
             <Grid item>

@@ -47,10 +47,9 @@ export default class Login extends Component {
         if (response.data.message) {
           this.setState({ error: response.data.message });
         } else {
-          
           localStorage.setItem("username", username);
           localStorage.setItem("userId", response.data._id);
-          
+
           this.props.setUser(response.data);
           this.props.history.push("/");
         }
@@ -144,7 +143,7 @@ export default class Login extends Component {
             </Button>
           </form>
           <p>{this.state.error}</p>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          {/* <div style={{ display: "flex", flexDirection: "row" }}>
             <FacebookLogin
               appId="2511839425504211"
               fields="name,email,picture"
@@ -184,7 +183,7 @@ export default class Login extends Component {
               onFailure={this.responseGoogle}
               cookiePolicy={"single_host_origin"}
             />
-          </div>
+          </div> */}
           <br />
           <Grid container justify="flex-end">
             <Grid item>
